@@ -1,0 +1,12 @@
+stages:
+- build
+
+auto-build:
+  tags:
+  - centos-builder
+  stage: build
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"  || $CI_COMMIT_BRANCH == "dev"
+    when: on_success
+  script:
+  - make web

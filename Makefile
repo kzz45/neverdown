@@ -42,6 +42,10 @@ gen-authx-grpc-proto:
 gen-authx-http-proto:
 	cd hack && bash authx_proto.sh
 
+gen-authx-frontend-protox:
+	cd authx_frontend && ./node_modules/protobufjs-cli/bin/pbjs \
+	-t static-module --es6 -w es6 -o src/proto/proto.js src/proto/protos/*.proto
+
 run-authx-local:
 	DISCOVERY_SERVICE_HOST="127.0.0.1" \
 	DISCOVERY_SERVICE_PORT=9443 \
@@ -51,6 +55,9 @@ run-authx-local:
 	AUTHX_SECRET="$(SECRET)" \
 	TOKEN_EXPIRATION=36000 \
 	go run ./cmd/authx/main.go
+
+run-authx-frontend-local:
+	cd authx_frontend && npm run dev
 
 gen-jingx-http-proto:
 	cd hack && bash jingx_proto.sh

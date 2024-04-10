@@ -1,0 +1,7 @@
+FROM nginx
+
+LABEL maintainer="kongzz"
+
+COPY /dist /usr/share/nginx/html
+
+COPY /dist/default.conf /etc/nginx/conf.d/
