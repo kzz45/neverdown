@@ -55,7 +55,7 @@ const mutations = {
   },
   // 发生错误
   SOCKET_ONERROR(state, event) {
-    if (!localStorage.getItem("neverdown_token")) {
+    if (!localStorage.getItem("neverdown_authx_token")) {
       clearInterval(state.socket.heartBeatTimer);
     }
     console.error(state, event);

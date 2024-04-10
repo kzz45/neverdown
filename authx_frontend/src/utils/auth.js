@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
-const TokenKeyName = "Token";
-const TokenKeyExpire = "Token_Expitation";
+const TokenKeyName = "neverdown_authx_token";
+const TokenKeyExpire = "neverdown_authx_token_expire";
 
 export function getToken() {
   // return Cookies.get(TokenKeyName);

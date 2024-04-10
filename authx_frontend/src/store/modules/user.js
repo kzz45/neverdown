@@ -87,8 +87,8 @@ const actions = {
     // removeToken(); // must remove  token  first
     // removeTokenExpire();
     // localStorage.clear()
-    localStorage.removeItem("Token");
-    localStorage.removeItem("Token_Expitation");
+    localStorage.removeItem("neverdown_authx_token");
+    localStorage.removeItem("neverdown_authx_token_expire");
     localStorage.removeItem("appId");
     localStorage.removeItem("appName");
     resetRouter();
