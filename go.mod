@@ -11,6 +11,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/google/uuid v1.6.0
+	github.com/gorilla/websocket v1.4.2
 	github.com/orcaman/concurrent-map v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/thanhpk/randstr v1.0.6

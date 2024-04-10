@@ -51,3 +51,17 @@ run-authx-local:
 	AUTHX_SECRET="$(SECRET)" \
 	TOKEN_EXPIRATION=36000 \
 	go run ./cmd/authx/main.go
+
+gen-jingx-http-proto:
+	cd hack && bash jingx_proto.sh
+
+run-jingx-local:
+	DISCOVERY_SERVICE_HOST="127.0.0.1" \
+	DISCOVERY_SERVICE_PORT=9443 \
+	DISCOVERY_SERVICE_CAFILE=${CUR_PATH}/certs/ca.crt \
+	AUTHORITY_SERVICE_HOST="127.0.0.1" \
+	AUTHORITY_SERVICE_PORT=9443 \
+	AUTHORITY_SERVICE_CAFILE=${CUR_PATH}/certs/ca.crt \
+	TLS_OPTION_CERT_FILE=${CUR_PATH}/certs/server.crt \
+	TLS_OPTION_KEY_FILE=${CUR_PATH}/certs/server.key \
+	go run ./cmd/jingx/main.go -listenPort=8083
