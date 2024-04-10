@@ -16,7 +16,7 @@ mod:
 
 gen-clientset:
 	cd hack && bash generate-internal-groups.sh \
-	"client,deepcopy,informer,lister" \
+	"client,conversion,deepcopy,defaulter,informer,lister" \
 	github.com/kzz45/neverdown/pkg/client-go \
 	github.com/kzz45/neverdown/pkg/apis \
 	github.com/kzz45/neverdown/pkg/apis \
@@ -26,3 +26,12 @@ gen-api-protobuf:
 	cd hack && bash generated.sh rbac v1
 	cd hack && bash generated.sh audit v1 "-github.com/kzz45/neverdown/pkg/apis/rbac/v1"
 	cd hack && bash generated.sh jingx v1 "-github.com/kzz45/neverdown/pkg/apis/rbac/v1"
+
+gen-certs:
+	cd certs && bash gen-certs.sh
+
+run-discovery-local:
+	TLS_OPTION_CERT_FILE=${CUR_PATH}/certs/server.crt \
+	TLS_OPTION_KEY_FILE=${CUR_PATH}/certs/server.key \
+	ETCD_PREFIX="/registry" \
+	go run ./cmd/discovery/main.go -listenPort=9443

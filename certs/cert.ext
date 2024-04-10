@@ -1,0 +1,13 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+IP.1 = 0.0.0.0
+IP.2 = 127.0.0.1
+DNS.1 = localhost
+DNS.2 = neverdown.com
+DNS.3 = *.k8s.neverdown.com
+DNS.4 = *.*.k8s.neverdown.com
+DNS.5 = *.*.svc.cluster.local
