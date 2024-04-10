@@ -2,7 +2,7 @@
 
 ## 本地测试
 
-启动 etcd
+- 启动 etcd
 
 ```sh
 docker run -d \
@@ -12,12 +12,39 @@ docker run -d \
 --env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd
 ```
 
-启动 discovery
+- 启动 discovery
 
-启动 authx
+```sh
+make run-discovery-local
+```
 
-启动 jingx
+- 启动 authx apiserver
 
-启动 openx
+```sh
+make run-authx-local
+```
+
+- 启动 authx frontend
+
+```sh
+make run-authx-frontend-local
+```
+
+- 启动 jingx apiserver
+
+```sh
+make run-jingx-local
+```
+
+- 启动 jingx frontend
+
+```sh
+make run-jingx-frontend-local
+```
+
+- 启动 openx
+
+```sh
+```
 
 ## 线上部署

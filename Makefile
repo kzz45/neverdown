@@ -62,6 +62,10 @@ run-authx-frontend-local:
 gen-jingx-http-proto:
 	cd hack && bash jingx_proto.sh
 
+gen-jingx-frontend-protox:
+	cd jingx_frontend && ./node_modules/protobufjs-cli/bin/pbjs \
+	-t static-module --es6 -w es6 -o src/proto/proto.js src/proto/protos/*.proto
+
 run-jingx-local:
 	DISCOVERY_SERVICE_HOST="127.0.0.1" \
 	DISCOVERY_SERVICE_PORT=9443 \
@@ -72,3 +76,6 @@ run-jingx-local:
 	TLS_OPTION_CERT_FILE=${CUR_PATH}/certs/server.crt \
 	TLS_OPTION_KEY_FILE=${CUR_PATH}/certs/server.key \
 	go run ./cmd/jingx/main.go -listenPort=8083
+
+run-jingx-frontend-local:
+	cd jingx_frontend && npm run dev
