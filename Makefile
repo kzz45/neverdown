@@ -2,7 +2,7 @@
 
 CUR_PATH := $(shell pwd)
 ROOT_PATH := $(shell echo ${HOME})
-SECRET := "demo"
+SECRET := "authx-secret"
 PROJECT := "neverdown"
 TAG := "latest"
 
@@ -35,3 +35,19 @@ run-discovery-local:
 	TLS_OPTION_KEY_FILE=${CUR_PATH}/certs/server.key \
 	ETCD_PREFIX="/registry" \
 	go run ./cmd/discovery/main.go -listenPort=9443
+
+gen-authx-grpc-proto:
+	protoc --go_out=pkg/authx/grpc --go-grpc_out=pkg/authx/grpc pkg/authx/grpc/proto/*.proto
+
+gen-authx-http-proto:
+	cd hack && bash authx_proto.sh
+
+run-authx-local:
+	DISCOVERY_SERVICE_HOST="127.0.0.1" \
+	DISCOVERY_SERVICE_PORT=9443 \
+	DISCOVERY_SERVICE_CAFILE=${CUR_PATH}/certs/ca.crt \
+	TLS_OPTION_CERT_FILE=${CUR_PATH}/certs/server.crt \
+	TLS_OPTION_KEY_FILE=${CUR_PATH}/certs/server.key \
+	AUTHX_SECRET="$(SECRET)" \
+	TOKEN_EXPIRATION=36000 \
+	go run ./cmd/authx/main.go

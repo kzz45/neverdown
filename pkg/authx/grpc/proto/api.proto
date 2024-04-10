@@ -1,0 +1,83 @@
+// Protocol for AuthxApi.
+
+syntax = "proto2";
+
+package api . v1;
+
+// Package-wide variables from generator "generated".
+option go_package = "./proto";
+
+service AuthxApi {
+  rpc KeepAlive (Ping) returns (Pong) {}
+  rpc RegisterRule (RegisterRuleRequest) returns (RegisterRuleReply) {}
+  rpc ClusterRole (ClusterRoleRequest) returns (ClusterRoleReply) {}
+  rpc ValidateRule (ValidateRuleRequest) returns (ValidateRuleReply) {}
+}
+
+message Ping {
+  required string hostname = 1;
+}
+
+message Pong {
+  required string hostname = 1;
+}
+
+message AppMeta {
+  required string appId = 1;
+  required string appSecret = 2;
+}
+
+message AccountMeta {
+  required string username = 1;
+  required string nickname = 2;
+  required string password = 3;
+  required string email = 4;
+}
+
+message ClusterRoleRequest {
+  required AppMeta appMeta = 1;
+  required AccountMeta accountMeta = 2;
+}
+
+message StandardReply {
+  required bool success = 1;
+  optional string reason = 2;
+}
+
+message ClusterRoleReply {
+  required StandardReply result = 1;
+  optional bytes role = 2;
+}
+
+message GroupVersionKind {
+  required string group = 1;
+  required string version = 2;
+  required string kind = 3;
+}
+
+message Rule {
+  required string namespace = 1;
+  required GroupVersionKind groupVersionKind = 2;
+  required string verb = 3;
+}
+
+message ValidateRuleRequest {
+  required AppMeta appMeta = 1;
+  required AccountMeta accountMeta = 2;
+  required Rule rule = 3;
+}
+
+message ValidateRuleReply {
+  required StandardReply result = 1;
+  optional bool root = 2;
+}
+
+message RegisterRuleRequest {
+  required AppMeta appMeta = 1;
+  required AccountMeta accountMeta = 2;
+  required bytes groupVersionKindRuleList = 3;
+}
+
+message RegisterRuleReply {
+  required StandardReply result = 1;
+}
