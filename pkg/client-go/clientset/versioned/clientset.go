@@ -24,6 +24,7 @@ import (
 
 	auditv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/audit/v1"
 	jingxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/jingx/v1"
+	openxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/openx/v1"
 	rbacv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/rbac/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
@@ -34,6 +35,7 @@ type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	AuditV1() auditv1.AuditV1Interface
 	JingxV1() jingxv1.JingxV1Interface
+	OpenxV1() openxv1.OpenxV1Interface
 	RbacV1() rbacv1.RbacV1Interface
 }
 
@@ -42,6 +44,7 @@ type Clientset struct {
 	*discovery.DiscoveryClient
 	auditV1 *auditv1.AuditV1Client
 	jingxV1 *jingxv1.JingxV1Client
+	openxV1 *openxv1.OpenxV1Client
 	rbacV1  *rbacv1.RbacV1Client
 }
 
@@ -53,6 +56,11 @@ func (c *Clientset) AuditV1() auditv1.AuditV1Interface {
 // JingxV1 retrieves the JingxV1Client
 func (c *Clientset) JingxV1() jingxv1.JingxV1Interface {
 	return c.jingxV1
+}
+
+// OpenxV1 retrieves the OpenxV1Client
+func (c *Clientset) OpenxV1() openxv1.OpenxV1Interface {
+	return c.openxV1
 }
 
 // RbacV1 retrieves the RbacV1Client
@@ -112,6 +120,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.openxV1, err = openxv1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 	cs.rbacV1, err = rbacv1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
@@ -139,6 +151,7 @@ func New(c rest.Interface) *Clientset {
 	var cs Clientset
 	cs.auditV1 = auditv1.New(c)
 	cs.jingxV1 = jingxv1.New(c)
+	cs.openxV1 = openxv1.New(c)
 	cs.rbacV1 = rbacv1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)

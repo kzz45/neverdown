@@ -207,7 +207,7 @@ func (r *Repository) checkBeforeDelete(ctx context.Context, meta jingxv1.Reposit
 		return err
 	}
 	if len(items.Items) > 0 {
-		return fmt.Errorf("error please delete linked guldan.v1.Tag before delete guldan.v1.Repository, there was %d remains", len(items.Items))
+		return fmt.Errorf("error please delete linked jingx.v1.Tag before delete jingx.v1.Repository, there was %d remains", len(items.Items))
 	}
 	return nil
 }

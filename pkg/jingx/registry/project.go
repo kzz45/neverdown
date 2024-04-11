@@ -210,7 +210,7 @@ func (p *Project) checkBeforeDelete(ctx context.Context, projectName string) err
 		return err
 	}
 	if len(items.Items) > 0 {
-		return fmt.Errorf("error please delete linked guldan.v1.Repository before delete guldan.v1.Project, there was %d remains", len(items.Items))
+		return fmt.Errorf("error please delete linked jingx.v1.Repository before delete jingx.v1.Project, there was %d remains", len(items.Items))
 	}
 	return nil
 }

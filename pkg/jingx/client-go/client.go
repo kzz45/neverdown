@@ -32,7 +32,7 @@ type Option struct {
 	Password string
 }
 
-// Tag was the shortage struct of the guldan object
+// Tag was the shortage struct of the jingx object
 type Tag struct {
 	Tag            string
 	RepositoryMeta jingxv1.RepositoryMeta

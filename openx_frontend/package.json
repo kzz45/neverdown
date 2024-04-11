@@ -1,0 +1,49 @@
+{
+  "name": "kubernetes-dashboard",
+  "version": "0.1.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "proto": "node ./node_modules/protobufjs/bin/pbjs -t static-module --es6 -w es6 -o ./proto/temp.js ./proto/protos/*.proto",
+    "protots": "node ./node_modules/protobufjs/bin/pbts -o ./proto/proto.d.ts ./proto/proto.js"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.0.9",
+    "@vuedx/typescript-plugin-vue": "^0.7.4",
+    "axios": "^0.21.1",
+    "codemirror": "^5.61.1",
+    "element-plus": "^2.2.16",
+    "escodegen": "^2.0.0",
+    "esprima": "^4.0.1",
+    "estraverse": "^5.3.0",
+    "file-saver": "^2.0.5",
+    "install": "^0.13.0",
+    "js-yaml": "^4.1.0",
+    "json2yaml": "^1.1.0",
+    "jsonlint": "^1.6.3",
+    "lodash": "^4.17.21",
+    "lzm-namefilter": "0.0.2-alpha3",
+    "moment": "^2.29.1",
+    "npm": "^6.14.15",
+    "protobufjs": "^6.9.0",
+    "vue": "^3.2.36",
+    "vue-i18n": "^9.1.6",
+    "vue-router": "^4.0.13",
+    "vuex": "^4.0.2",
+    "xterm": "4.13.0",
+    "xterm-addon-fit": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^18.7.0",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vue/compiler-sfc": "^3.2.39",
+    "sass": "^1.35.1",
+    "typescript": "^4.5.2",
+    "unplugin-auto-import": "^0.11.2",
+    "unplugin-vue-components": "^0.22.7",
+    "vite": "^4.1.0",
+    "vue-tsc": "0.40.5"
+  }
+}

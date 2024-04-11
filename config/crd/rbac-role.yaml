@@ -1,0 +1,145 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openx-controller
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - services
+  - endpoints
+  - secrets
+  - namespaces
+  - configmaps
+  - pods
+  - pods/log
+  - pods/exec
+  - nodes
+  - nodes/proxy
+  - persistentvolumes
+  - persistentvolumeclaims
+  - serviceaccounts
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "apps"
+  resources:
+  - statefulsets
+  - deployments
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "autoscaling"
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "coordination.k8s.io"
+  resources:
+  - leases
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "openx.neverdown.io"
+  resources:
+  - aliyunloadbalancers
+  - aliyunaccesscontrols
+  - mysqls
+  - mysqls/status
+  - redises
+  - redises/status
+  - openxes
+  - openxes/status
+  - affinities
+  - tolerations
+  - nodeselectors
+  - etcds
+  - etcds/status
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "metrics.k8s.io"
+  resources:
+  - nodes
+  - pods
+  verbs:
+  - watch
+  - get
+  - list
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openx-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openx-controller
+subjects:
+- kind: ServiceAccount
+  name: openx-controller
+  namespace: kube-neverdown
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: openx-controller
+  namespace: kube-neverdown
+# automountServiceAccountToken: true

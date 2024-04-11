@@ -24,6 +24,8 @@ import (
 	fakeauditv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/audit/v1/fake"
 	jingxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/jingx/v1"
 	fakejingxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/jingx/v1/fake"
+	openxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/openx/v1"
+	fakeopenxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/openx/v1/fake"
 	rbacv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/rbac/v1"
 	fakerbacv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/rbac/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -91,6 +93,11 @@ func (c *Clientset) AuditV1() auditv1.AuditV1Interface {
 // JingxV1 retrieves the JingxV1Client
 func (c *Clientset) JingxV1() jingxv1.JingxV1Interface {
 	return &fakejingxv1.FakeJingxV1{Fake: &c.Fake}
+}
+
+// OpenxV1 retrieves the OpenxV1Client
+func (c *Clientset) OpenxV1() openxv1.OpenxV1Interface {
+	return &fakeopenxv1.FakeOpenxV1{Fake: &c.Fake}
 }
 
 // RbacV1 retrieves the RbacV1Client

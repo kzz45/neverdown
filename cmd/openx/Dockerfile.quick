@@ -1,0 +1,8 @@
+FROM ubuntu:20.04
+
+LABEL maintainer="kongzz"
+
+WORKDIR /server/
+COPY openx-apiserver /server/
+
+CMD ["/server/openx-apiserver", "-alsologtostderr=true", "-v=4"]

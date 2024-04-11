@@ -1,0 +1,59 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: aliyunloadbalancers.openx.neverdown.io
+spec:
+  group: openx.neverdown.io
+  scope: Namespaced
+  names:
+    plural: aliyunloadbalancers
+    singular: aliyunloadbalancer
+    kind: AliyunLoadBalancer
+    shortNames:
+    - alb
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+      priority: 0
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: aliyunaccesscontrols.openx.neverdown.io
+spec:
+  group: openx.neverdown.io
+  scope: Namespaced
+  names:
+    plural: aliyunaccesscontrols
+    singular: aliyunaccesscontrol
+    kind: AliyunAccessControl
+    shortNames:
+    - acl
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+      priority: 0
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            x-kubernetes-preserve-unknown-fields: true

@@ -13,7 +13,7 @@ import (
 	"github.com/kzz45/neverdown/pkg/jwttoken"
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
-	guldanv1 "github.com/kzz45/neverdown/pkg/apis/jingx/v1"
+	jingxv1 "github.com/kzz45/neverdown/pkg/apis/jingx/v1"
 	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
 
 	authority "github.com/kzz45/neverdown/pkg/authx/client-go"
@@ -172,7 +172,7 @@ func (r *Resource) AllSupportGVKs() []rbacv1.GroupVersionKind {
 		if gvk.Group == "" {
 			continue
 		}
-		if gvk.Group != guldanv1.GroupName {
+		if gvk.Group != jingxv1.GroupName {
 			continue
 		}
 		if gvk.Version == runtime.APIVersionInternal {

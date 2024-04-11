@@ -1,0 +1,42 @@
+.meta-title{
+  font-size: 16px;
+  font-weight: bold;
+  color: #303133;
+  text-align: left;
+}
+.mysql-content{
+  .meta-item{
+    .meta-label{
+      width: 100%;
+      text-align: left;
+      margin: 20px 0px 10px 0px;
+    }
+    .meta-value{
+      width: 80%;
+      padding-right: 30px;
+      text-align: left;
+      line-height: 2rem;
+      font-weight: 400;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
+
+.mysql-spec{
+  //display: flex;
+  overflow: auto;
+  max-height: calc(100vh - 380px);
+  .mysql-menu{
+    //width: 100px;
+    margin-right: 20px;
+    position: sticky;
+    background-color: #fff;
+    z-index: 10;
+    top: 0;
+  }
+  .mysql-content{
+    width: 100%;
+  }
+}

@@ -22,6 +22,7 @@ import (
 	"fmt"
 
 	v1 "github.com/kzz45/neverdown/pkg/apis/audit/v1"
+	openxv1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
 	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
@@ -56,6 +57,26 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 	// Group=audit, Version=v1
 	case v1.SchemeGroupVersion.WithResource("recorders"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Audit().V1().Recorders().Informer()}, nil
+
+		// Group=openx, Version=v1
+	case openxv1.SchemeGroupVersion.WithResource("affinities"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Affinities().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("aliyunaccesscontrols"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().AliyunAccessControls().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("aliyunloadbalancers"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().AliyunLoadBalancers().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("etcds"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Etcds().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("mysqls"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Mysqls().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("nodeselectors"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().NodeSelectors().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("openxes"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Openxes().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("redises"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Redises().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("tolerations"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Tolerations().Informer()}, nil
 
 		// Group=rbac, Version=v1
 	case rbacv1.SchemeGroupVersion.WithResource("apps"):
