@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    openx-app: controlplane
+  name: discovery-controlplane
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      openx-app: controlplane
+  template:
+    metadata:
+      labels:
+        openx-app: controlplane
+    spec:
+      containers:
+      - args:
+        - -listenPort=9443
+        command:
+        - /server/discovery-controlplane
+        env:
+        - name: ETCD_ENDPOINTS
+          value: http://etcd-headless.test.svc.cluster.local:2379
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        image: kongzz45/discovery-controlplane:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: discovery-controlplane
+        ports:
+        - containerPort: 9443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    openx-app: controlplane
+  name: discovery-controlplane
+  namespace: test
+spec:
+  ports:
+  - name: http
+    port: 9443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    openx-app: controlplane
+  sessionAffinity: None
+  type: ClusterIP

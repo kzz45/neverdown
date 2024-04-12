@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app.openx.openx.neverdown.io: apiserver
+    jingx-project.openx.neverdown.io: neverdown
+    jingx-repository.openx.neverdown.io: authx-apiserver
+    jingx-tag.openx.neverdown.io: latest
+    kind.openx.neverdown.io: Openx
+    watch-policy.openx.neverdown.io: in-place-upgrade
+  name: authx-apiserver
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.openx.openx.neverdown.io: apiserver
+      jingx-project.openx.neverdown.io: neverdown
+      jingx-repository.openx.neverdown.io: authx-apiserver
+      jingx-tag.openx.neverdown.io: latest
+      kind.openx.neverdown.io: Openx
+      watch-policy.openx.neverdown.io: in-place-upgrade
+  template:
+    metadata:
+      labels:
+        app.openx.openx.neverdown.io: apiserver
+        jingx-project.openx.neverdown.io: neverdown
+        jingx-repository.openx.neverdown.io: authx-apiserver
+        jingx-tag.openx.neverdown.io: latest
+        kind.openx.neverdown.io: Openx
+        watch-policy.openx.neverdown.io: in-place-upgrade
+    spec:
+      containers:
+      - args:
+        - -httpListenPort=8086
+        - -grpcListenPort=8087
+        command:
+        - /server/authx-apiserver
+        env:
+        - name: AUTHX_SECRET
+          value: 0saml@mdslamw10sml;'LJsmnalm
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        - name: DISCOVERY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: DISCOVERY_SERVICE_HOST
+          value: discovery-controlplane.test.svc.cluster.local
+        - name: DISCOVERY_SERVICE_PORT
+          value: "9443"
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/authx-apiserver:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: authx-apiserver
+        ports:
+        - containerPort: 8086
+          name: http
+          protocol: TCP
+        - containerPort: 8087
+          name: apigrpc
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
