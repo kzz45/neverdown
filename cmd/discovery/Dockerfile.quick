@@ -1,0 +1,9 @@
+FROM ubuntu:20.04
+
+LABEL maintainer="kongzz"
+
+WORKDIR /server/
+
+COPY discovery-controlplane .
+
+CMD ["/server/discovery-controlplane"]

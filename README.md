@@ -2,21 +2,21 @@
 
 ## 说明
 
-一个 K8S 管理平台
+一个 K8S 管理平台, 包含权限管理, 镜像管理, K8S 集群管理
 
 ## 架构图
 
 ## 模块说明
 
-| 模块           | 说明                      |
-| :------------- | :------------------------ |
-| discovery      | 服务发现                  |
-| authx          | 权限管理                  |
-| authx_frontend | 权限管理, 前端            |
-| jingx          | 镜像管理                  |
-| jingx_frontend | 镜像管理, 前端            |
-| openx          | 负责 K8S 集群的管理       |
-| openx_frontend | 负责 K8S 集群的管理, 前端 |
+| 模块            | 说明                 |
+| :-------------- | :------------------- |
+| discovery       | 服务发现             |
+| authx-apiserver | 权限管理             |
+| authx-frontend  | 权限管理, 前端       |
+| jingx-apiserver | 镜像管理             |
+| jingx-frontend  | 镜像管理, 前端       |
+| openx-apiserver | K8S 集群的管理       |
+| openx-frontend  | K8S 集群的管理, 前端 |
 
 ## 安装部署
 
@@ -70,6 +70,9 @@ docker run -d --name etcd-server -p 2379:2379 -p 2380:2380 \
 
 # 部署 CRD
 kubectl apply -f ./config/crd/
+
+# 生成证书
+make gen-certs
 
 # 启动 discovery
 make run-discovery-local
