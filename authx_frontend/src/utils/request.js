@@ -9,11 +9,18 @@ const requestproto = protoRoot.github.com.kzz45.neverdown.pkg.authx.http.proto;
 const rbacproto = protoRoot.github.com.kzz45.neverdown.pkg.apis.rbac.v1;
 
 async function getService() {
-  const service = axios.create({
-    // baseURL: "https://127.0.0.1:8087",
-    baseURL: process.env.VUE_APP_BASE_API,
+  const cig = await axios.get("config/config.json");
+  let env = cig.data;
+  let config = {
+    baseURL: "https://" + String(env.VUE_APP_BASE_API),
     timeout: 8000,
-  });
+  };
+  let service = axios.create(config);
+  // const service = axios.create({
+  //   // baseURL: "https://127.0.0.1:8087",
+  //   baseURL: process.env.VUE_APP_BASE_API,
+  //   timeout: 8000,
+  // });
 
   service.interceptors.request.use(
     (config) => {

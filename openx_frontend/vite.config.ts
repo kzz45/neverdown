@@ -5,8 +5,8 @@ import styleImport from 'vite-plugin-style-import'
 import fs from 'fs'
 
 const options = {
-  key: fs.readFileSync('cert/key.pem'),
-  cert: fs.readFileSync('cert/cert.pem')
+  // key: fs.readFileSync('cert/key.pem'),
+  // cert: fs.readFileSync('cert/cert.pem')
 }
 // https://vitejs.dev/config/
 export default defineConfig({

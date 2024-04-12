@@ -53,7 +53,6 @@ run-discovery-docker:
 	-e TLS_OPTION_KEY_FILE=/certs/server.key \
 	-e ETCD_ENDPOINTS="http://$(shell docker inspect --format '{{ .NetworkSettings.IPAddress }}' etcd-server):2379" \
 	--name=discovery-controlplane kongzz45/discovery-controlplane:0.0.1
-	
 
 gen-authx-grpc-proto:
 	protoc --go_out=pkg/authx/grpc --go-grpc_out=pkg/authx/grpc pkg/authx/grpc/proto/*.proto
@@ -95,6 +94,13 @@ build-authx:
 run-authx-frontend-local:
 	cd authx_frontend && npm run dev
 
+build-authx-frontend:
+	-i docker image rm $(AUTHX_DASHBOARD_IMAGE)
+	cd authx_frontend && npm run build
+	cp -r authx_frontend/dist .
+	cp authx_frontend/Dockerfile . && docker build -t $(AUTHX_DASHBOARD_IMAGE) .
+	rm -f Dockerfile && rm -rf dist
+
 gen-jingx-http-proto:
 	cd hack && bash jingx_proto.sh
 
@@ -121,6 +127,13 @@ build-jingx:
 
 run-jingx-frontend-local:
 	cd jingx_frontend && npm run dev
+
+build-jingx-frontend:
+	-i docker image rm $(JINGX_DASHBOARD_IMAGE)
+	cd jingx_frontend && npm run build
+	cp -r jingx_frontend/dist .
+	cp jingx_frontend/Dockerfile.quick . && docker build -f Dockerfile.quick -t $(JINGX_DASHBOARD_IMAGE) .
+	rm -f Dockerfile.quick && rm -rf dist
 
 gen-openx-proto:
 	cd hack && bash openx_proto.sh
@@ -151,8 +164,8 @@ run-openx-frontend-local:
 	cd openx_frontend && npm run dev
 
 build-openx-frontend:
-	cd openx_frontend
-	npm run build
-	rm -rf dist/config
-	docker build -t $(OPENX_DASHBOARD_IMAGE) .
-	rm -rf dist
+	-i docker image rm $(OPENX_DASHBOARD_IMAGE)
+	cd openx_frontend && npm run build
+	cp -r openx_frontend/dist .
+	cp openx_frontend/Dockerfile . && docker build -t $(OPENX_DASHBOARD_IMAGE) .
+	rm -f Dockerfile && rm -rf dist
