@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: authx-dashboard
+  name: authx-dashboard
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: authx-dashboard
+  template:
+    metadata:
+      labels:
+        appname: authx-dashboard
+    spec:
+      containers:
+      - env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/authx-dashboard:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: authx-dashboard
+        ports:
+        - containerPort: 443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+        - mountPath: /usr/share/nginx/html/config
+          name: dashboard-config-json
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: config.json
+            path: config.json
+          name: authx-dashboard-config-json
+        name: dashboard-config-json
+---
+apiVersion: v1
+data:
+  config.json: '{"VUE_APP_BASE_API":"authx-apiserver.test.svc.cluster.local:8086"}'
+kind: ConfigMap
+metadata:
+  name: authx-dashboard-config-json
+  namespace: test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: authx-dashboard
+  name: authx-dashboard
+  namespace: test
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    appname: authx-dashboard
+  type: ClusterIP

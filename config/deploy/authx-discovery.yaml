@@ -65,5 +65,4 @@ spec:
     targetPort: 9443
   selector:
     openx-app: controlplane
-  sessionAffinity: None
   type: ClusterIP

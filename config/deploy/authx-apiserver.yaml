@@ -1,35 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
   labels:
-    app.openx.openx.neverdown.io: apiserver
-    jingx-project.openx.neverdown.io: neverdown
-    jingx-repository.openx.neverdown.io: authx-apiserver
-    jingx-tag.openx.neverdown.io: latest
-    kind.openx.neverdown.io: Openx
-    watch-policy.openx.neverdown.io: in-place-upgrade
+    appname: authx-apiserver
   name: authx-apiserver
   namespace: test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.openx.openx.neverdown.io: apiserver
-      jingx-project.openx.neverdown.io: neverdown
-      jingx-repository.openx.neverdown.io: authx-apiserver
-      jingx-tag.openx.neverdown.io: latest
-      kind.openx.neverdown.io: Openx
-      watch-policy.openx.neverdown.io: in-place-upgrade
+      appname: authx-apiserver
   template:
     metadata:
       labels:
-        app.openx.openx.neverdown.io: apiserver
-        jingx-project.openx.neverdown.io: neverdown
-        jingx-repository.openx.neverdown.io: authx-apiserver
-        jingx-tag.openx.neverdown.io: latest
-        kind.openx.neverdown.io: Openx
-        watch-policy.openx.neverdown.io: in-place-upgrade
+        appname: authx-apiserver
     spec:
       containers:
       - args:
@@ -39,7 +23,7 @@ spec:
         - /server/authx-apiserver
         env:
         - name: AUTHX_SECRET
-          value: 0saml@mdslamw10sml;'LJsmnalm
+          value: "authx-secret"
         - name: GET_HOSTS_FROM
           value: dns
         - name: TLS_OPTION_CERT_FILE
@@ -87,3 +71,25 @@ spec:
             path: server.key
           name: neverdown-certs
         name: certs-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: authx-apiserver
+  name: authx-apiserver
+  namespace: test
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8086
+    protocol: TCP
+    targetPort: 8086
+  - name: grpc
+    port: 8087
+    protocol: TCP
+    targetPort: 8087
+  selector:
+    appname: authx-apiserver
