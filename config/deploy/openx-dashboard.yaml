@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: openx-dashboard
+  name: openx-dashboard
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: openx-dashboard
+  template:
+    metadata:
+      labels:
+        appname: openx-dashboard
+    spec:
+      containers:
+      - env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/openx-dashboard:0.12.0
+        imagePullPolicy: IfNotPresent
+        name: openx-dashboard
+        ports:
+        - containerPort: 443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+        - mountPath: /usr/share/nginx/html/config
+          name: dashboard-config-json
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: config.json
+            path: config.json
+          name: openx-dashboard-config-json
+        name: dashboard-config-json
+---
+apiVersion: v1
+data:
+  config.json: '{"VITE_BASE_URL":"openx-apiserver.test.svc.cluster.local:8080"}'
+kind: ConfigMap
+metadata:
+  name: openx-dashboard-config-json
+  namespace: test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: openx-dashboard
+  name: openx-dashboard
+  namespace: test
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    appname: openx-dashboard
+  type: ClusterIP

@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: jingx-dashboard
+  name: jingx-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: jingx-dashboard
+  template:
+    metadata:
+      labels:
+        appname: jingx-dashboard
+    spec:
+      containers:
+      - env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/jingx-dashboard:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: jingx-dashboard
+        ports:
+        - containerPort: 443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+        - mountPath: /usr/share/nginx/html/config
+          name: dashboard-config-json
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: config.json
+            path: config.json
+          name: jingx-dashboard-config-json
+        name: dashboard-config-json
+---
+apiVersion: v1
+data:
+  config.json: '{"VUE_APP_BASE_API":"jingx-apiserver.test.svc.cluster.local:8083"}'
+kind: ConfigMap
+metadata:
+  name: jingx-dashboard-config-json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: jingx-dashboard
+  name: jingx-dashboard
+  namespace: test
+spec:
+  ports:
+  - port: 4443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    appname: jingx-dashboard
+  type: ClusterIP
