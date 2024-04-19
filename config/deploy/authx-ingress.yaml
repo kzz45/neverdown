@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authx-dashboard-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  tls:
+  - secretName: ingress-secret
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: authx-dashboard
+            port:
+              number: 443
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authx-apiserver-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  tls:
+  - secretName: ingress-secret
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /authx
+        backend:
+          service:
+            name: authx-apiserver
+            port:
+              number: 8086

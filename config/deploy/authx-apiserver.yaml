@@ -4,7 +4,6 @@ metadata:
   labels:
     appname: authx-apiserver
   name: authx-apiserver
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -33,7 +32,7 @@ spec:
         - name: DISCOVERY_SERVICE_CAFILE
           value: /var/conf/ca.crt
         - name: DISCOVERY_SERVICE_HOST
-          value: discovery-controlplane.test.svc.cluster.local
+          value: authx-discovery.kube-authx.svc.cluster.local
         - name: DISCOVERY_SERVICE_PORT
           value: "9443"
         - name: POD_NAMESPACE
@@ -79,7 +78,6 @@ metadata:
   labels:
     appname: authx-apiserver
   name: authx-apiserver
-  namespace: test
 spec:
   type: ClusterIP
   ports:

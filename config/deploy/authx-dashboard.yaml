@@ -4,7 +4,6 @@ metadata:
   labels:
     appname: authx-dashboard
   name: authx-dashboard
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -58,11 +57,10 @@ spec:
 ---
 apiVersion: v1
 data:
-  config.json: '{"VUE_APP_BASE_API":"authx-apiserver.test.svc.cluster.local:8086"}'
+  config.json: '{"VUE_APP_BASE_API":"authx-apiserver.kube-authx.svc.cluster.local:8086"}'
 kind: ConfigMap
 metadata:
   name: authx-dashboard-config-json
-  namespace: test
 ---
 apiVersion: v1
 kind: Service
@@ -70,7 +68,6 @@ metadata:
   labels:
     appname: authx-dashboard
   name: authx-dashboard
-  namespace: test
 spec:
   ports:
   - port: 443

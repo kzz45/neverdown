@@ -4,7 +4,6 @@ metadata:
   labels:
     appname: authx-discovery
   name: authx-discovery
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -22,7 +21,7 @@ spec:
         - /server/discovery-controlplane
         env:
         - name: ETCD_ENDPOINTS
-          value: http://authx-etcd-headless.test.svc.cluster.local:2379
+          value: http://authx-etcd-headless.kube-authx.svc.cluster.local:2379
         - name: GET_HOSTS_FROM
           value: dns
         - name: TLS_OPTION_CERT_FILE
@@ -56,7 +55,6 @@ metadata:
   labels:
     appname: authx-discovery
   name: authx-discovery
-  namespace: test
 spec:
   ports:
   - name: http

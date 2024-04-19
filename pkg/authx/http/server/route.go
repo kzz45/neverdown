@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	RouterApi    = "/authz"
-	RouterHealth = "/healthz"
+	RouterApi    = "/authx/authz"
+	RouterHealth = "/authx/healthz"
 )
 
 func (s *Server) registerRouters(router *gin.Engine) {

@@ -17,8 +17,6 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"github.com/kzz45/neverdown/pkg/env"
-
 	grpcapi "github.com/kzz45/neverdown/pkg/authx/grpc"
 	pb "github.com/kzz45/neverdown/pkg/authx/grpc/proto"
 )
@@ -64,7 +62,8 @@ func (s *Server) Shutdown() {
 func Init(opt *GrpcApiOption) *Server {
 	grpcAddr := fmt.Sprintf(":%d", opt.ListenPort)
 	s := &Server{
-		hostname:   env.GetHostNameMustSpecified(),
+		// hostname:   env.GetHostNameMustSpecified(),
+		hostname:   "authx-apiserver",
 		addr:       grpcAddr,
 		secret:     opt.Secret,
 		aggregator: opt.Aggregator,
