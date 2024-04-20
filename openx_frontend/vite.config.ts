@@ -5,8 +5,8 @@ import styleImport from 'vite-plugin-style-import'
 import fs from 'fs'
 
 const options = {
-  // key: fs.readFileSync('cert/key.pem'),
-  // cert: fs.readFileSync('cert/cert.pem')
+  key: fs.readFileSync('cert/key.pem'),
+  cert: fs.readFileSync('cert/cert.pem')
 }
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,7 +43,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://api.k8s.neverdown.io:9090',
+        target: 'http://127.0.0.1:8080',
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, '')

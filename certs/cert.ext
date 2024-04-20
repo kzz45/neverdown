@@ -4,18 +4,13 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 
 [alt_names]
-IP.1 = 0.0.0.0
-IP.2 = 127.0.0.1
+IP.1 = 127.0.0.1
 DNS.1 = localhost
 DNS.2 = *.*.svc.cluster.local
 DNS.3 = discovery-controlplane
-DNS.4 = authx-apiserver
-DNS.5 = jingx-apiserver
-DNS.6 = openx-apiserver
-DNS.7 = *.test.svc.cluster.local
-DNS.8 = *.kube-api.svc.cluster.local
-DNS.9 = *.kube-authx.svc.cluster.local
-DNS.10 = *.kube-neverdown.svc.cluster.local
-DNS.11 = *.kube-discovery.svc.cluster.local
-DNS.12 = *.kube-authority.svc.cluster.local
-DNS.13 = *.kube-system.svc.cluster.local
+DNS.4 = *.test.svc.cluster.local
+DNS.5 = *.kube-api.svc.cluster.local
+DNS.6 = *.kube-authx.svc.cluster.local
+DNS.7 = *.kube-neverdown.svc.cluster.local
+DNS.8 = *.kube-discovery.svc.cluster.local
+DNS.9 = *.kube-authority.svc.cluster.local

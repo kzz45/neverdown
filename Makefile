@@ -9,11 +9,11 @@ tag ?= "0.0.1"
 # docker hub
 DISCOVERY_APISERVER := "kongzz45/discovery-controlplane:$(tag)"
 AUTHX_APISERVER := "kongzz45/authx-apiserver:$(tag)"
-AUTHX_DASHBOARD_IMAGE := "kongzz45/authx-dashboard:$(tag)"
+AUTHX_DASHBOARD := "kongzz45/authx-dashboard:$(tag)"
 JINGX_APISERVER := "kongzz45/jingx-apiserver:$(tag)"
-JINGX_DASHBOARD_IMAGE := "kongzz45/jingx-dashboard:$(tag)"
+JINGX_DASHBOARD := "kongzz45/jingx-dashboard:$(tag)"
 OPENX_APISERVER := "kongzz45/openx-apiserver:$(tag)"
-OPENX_DASHBOARD_IMAGE := "kongzz45/openx-dashboard:$(tag)"
+OPENX_DASHBOARD := "kongzz45/openx-dashboard:$(tag)"
 
 mod:
 	go mod tidy
@@ -72,7 +72,7 @@ run-authx-local:
 	TLS_OPTION_KEY_FILE=${WORK_PATH}/certs/server.key \
 	AUTHX_SECRET="$(SECRET)" \
 	TOKEN_EXPIRATION=36000 \
-	go run ./cmd/authx/main.go
+	go run ./cmd/authx/main.go -httpListenPort=8087 -grpcListenPort=8088
 
 run-authx-docker:
 	docker run -d -p 8087:8087 -v ${PWD}/certs:/certs \
@@ -95,10 +95,10 @@ run-authx-frontend-local:
 	cd authx_frontend && npm run dev
 
 build-authx-frontend:
-	-i docker image rm $(AUTHX_DASHBOARD_IMAGE)
+	-i docker image rm $(AUTHX_DASHBOARD)
 	cd authx_frontend && npm run build
 	cp -r authx_frontend/dist .
-	cp authx_frontend/Dockerfile . && docker build -t $(AUTHX_DASHBOARD_IMAGE) .
+	cp authx_frontend/Dockerfile . && docker build -t $(AUTHX_DASHBOARD) .
 	rm -f Dockerfile && rm -rf dist
 
 gen-jingx-http-proto:
@@ -129,10 +129,10 @@ run-jingx-frontend-local:
 	cd jingx_frontend && npm run dev
 
 build-jingx-frontend:
-	-i docker image rm $(JINGX_DASHBOARD_IMAGE)
+	-i docker image rm $(JINGX_DASHBOARD)
 	cd jingx_frontend && npm run build
 	cp -r jingx_frontend/dist .
-	cp jingx_frontend/Dockerfile.quick . && docker build -f Dockerfile.quick -t $(JINGX_DASHBOARD_IMAGE) .
+	cp jingx_frontend/Dockerfile.quick . && docker build -f Dockerfile.quick -t $(JINGX_DASHBOARD) .
 	rm -f Dockerfile.quick && rm -rf dist
 
 gen-openx-proto:
@@ -164,8 +164,8 @@ run-openx-frontend-local:
 	cd openx_frontend && npm run dev
 
 build-openx-frontend:
-	-i docker image rm $(OPENX_DASHBOARD_IMAGE)
+	-i docker image rm $(OPENX_DASHBOARD)
 	cd openx_frontend && npm run build
 	cp -r openx_frontend/dist .
-	cp openx_frontend/Dockerfile . && docker build -t $(OPENX_DASHBOARD_IMAGE) .
+	cp openx_frontend/Dockerfile . && docker build -t $(OPENX_DASHBOARD) .
 	rm -f Dockerfile && rm -rf dist

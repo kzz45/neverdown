@@ -135,8 +135,10 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: openx-controller
+  namespace: kube-neverdown
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: openx-controller
+  namespace: kube-neverdown

@@ -41,7 +41,7 @@ import (
 )
 
 const (
-	AppName = "openx-aggregator"
+	AppName = "openx-apiserver"
 )
 
 var PodsGroupVersionKind = schema.GroupVersionKind{Group: "native", Version: "v1", Kind: "Pod"}
