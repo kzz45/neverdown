@@ -16,8 +16,8 @@ export default async () => {
   let service = axios.create(config)
   service.interceptors.request.use(
     config => {
-      if (localStorage.getItem('token')) {
-        config.headers['Token'] = localStorage.getItem('token')
+      if (localStorage.getItem('neverdown_openx_token')) {
+        config.headers['Token'] = localStorage.getItem('neverdown_openx_token')
       }
       return config
     },

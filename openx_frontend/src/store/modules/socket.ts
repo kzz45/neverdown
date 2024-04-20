@@ -67,7 +67,7 @@ const store: Module<StoreSock, unknown> = {
     },
     // 发生错误
     SOCKET_ONERROR(state, event) {
-      if (!localStorage.getItem('token')) {
+      if (!localStorage.getItem('neverdown_openx_token')) {
         clearInterval(state.socket.heartBeatTimer)
       }
       console.error(state, event);

@@ -12,7 +12,7 @@ const protoRbac: any = proto.k8s.io.api.rbac
 export async function openTerm(data: any, container: any, type: string, logSeconds: number) {
   const cig = await axios.get('config/config.json')
   let env = cig.data
-  localStorage.setItem('termToken', String(localStorage.getItem('token')))
+  localStorage.setItem('termToken', String(localStorage.getItem('neverdown_openx_token')))
   if (type === 'log') {
     const routeData = router.resolve({
       path: '/log',
@@ -42,7 +42,7 @@ export async function download(data: any, container: any, type: boolean, current
   const url = `https://${String(env.VITE_BASE_URL)}/log/download/namespace/${data.namespace}/pod/${data.name}/container/${container.name}/previous/${type}/sinceSeconds/${sinceTime}/sinceTime/nil`
 
   console.log('url', url)
-  axios({ url: url, method: 'get', timeout: 30000, headers: { 'Token': localStorage.getItem('token') } }).then(res => {
+  axios({ url: url, method: 'get', timeout: 30000, headers: { 'Token': localStorage.getItem('neverdown_openx_token') } }).then(res => {
 
     const str = new Blob([res.data], { type: 'text/plain;charset=utf-8' })
     const ispre = type ? '_previous' : ''

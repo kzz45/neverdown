@@ -79,7 +79,7 @@ async function download(data: any, container: any, type: boolean) {
     url: url,
     method: "get",
     timeout: 30000,
-    headers: { Token: localStorage.getItem("token") },
+    headers: { Token: localStorage.getItem("neverdown_openx_token") },
   })
     .then((res) => {
       const str = new Blob([res.data], { type: "text/plain;charset=utf-8" });

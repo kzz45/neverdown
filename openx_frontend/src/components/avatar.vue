@@ -106,7 +106,7 @@ function translateChange(lang: string) {
 import { useRouter } from "vue-router";
 const router = useRouter();
 function logout() {
-  localStorage.removeItem("token");
+  localStorage.removeItem("neverdown_openx_token");
   localStorage.removeItem("nsList");
   localStorage.removeItem("rtList");
   localStorage.removeItem("configMapStorage");

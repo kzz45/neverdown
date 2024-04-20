@@ -175,7 +175,7 @@ function login() {
           }
           if (res.token) {
             localStorage.setItem("username", AccountMeta.username);
-            localStorage.setItem("token", res.token);
+            localStorage.setItem("neverdown_openx_token", res.token);
             localStorage.setItem(
               "clusterRole",
               JSON.stringify(initRule(res.clusterRole.spec.rules))

@@ -48,8 +48,8 @@ export const connectSocket = async (token: string, store: any) => {
   socket.onclose = function () {
     store.dispatch('socket/socket_onclose')
     
-    if (localStorage.getItem('token') && router.currentRoute.value.fullPath != '/') {
-      connectSocket(String(localStorage.getItem('token')), store)
+    if (localStorage.getItem('neverdown_openx_token') && router.currentRoute.value.fullPath != '/') {
+      connectSocket(String(localStorage.getItem('neverdown_openx_token')), store)
     }
   };
   socket.onmessage = (msg: any) => {
@@ -60,7 +60,7 @@ export const connectSocket = async (token: string, store: any) => {
 
 export const sendSocketMessage = async (msg: any, store: any) => {
   if (socket === null) {
-    await connectSocket(String(localStorage.getItem('token')), store)
+    await connectSocket(String(localStorage.getItem('neverdown_openx_token')), store)
   }
   if (socket && socket.readyState === socket.OPEN) {
     // 若是ws开启状态

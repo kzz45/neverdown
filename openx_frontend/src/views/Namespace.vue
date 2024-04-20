@@ -61,7 +61,7 @@ import { routerToNamespace } from "./resource/util";
 const store = useStore();
 
 onMounted(() => {
-  if (!localStorage.getItem("token")) {
+  if (!localStorage.getItem("neverdown_openx_token")) {
     ElNotification({ title: "未登陆", type: "error", duration: 3000 });
     router.push({ name: "Index" });
   }
