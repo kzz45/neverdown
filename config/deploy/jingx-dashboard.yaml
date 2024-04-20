@@ -57,7 +57,7 @@ spec:
 ---
 apiVersion: v1
 data:
-  config.json: '{"VUE_APP_BASE_API":"jingx-apiserver.test.svc.cluster.local:8083"}'
+  config.json: '{"VUE_APP_BASE_API":"jingx-apiserver.kube-discovery.svc.cluster.local:8083"}'
 kind: ConfigMap
 metadata:
   name: jingx-dashboard-config-json

@@ -45,7 +45,7 @@ const actions = {
       login({ username: username.trim(), password: password })
         .then((response) => {
           // const { data } = response;
-          console.log("login resp: ===", response);
+          // console.log("login resp: ===", response);
           // console.log("login resp: ===", response.token);
           commit("SET_TOKEN", response.token);
           commit("SET_TOKEN_EXPIRE", response.expireAt);
@@ -84,7 +84,9 @@ const actions = {
 
   // user logout
   logout({ commit, state }) {
-    removeToken(); // must remove  token  first
+    // removeToken(); // must remove  token  first
+    localStorage.removeItem("neverdown_jingx_token");
+    localStorage.removeItem("neverdown_jingx_token_expire");
     resetRouter();
     commit("RESET_STATE");
     // resolve();

@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	RouterAuthority = "/jingx/authz"
-	RouterApi       = "/jingx/api/:token"
+	RouterAuthority = "/authz"
+	RouterApi       = "/api/:token"
 )
 
 func (s *Server) registerRouters(router *gin.Engine) {

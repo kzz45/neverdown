@@ -9,7 +9,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/kzz45/neverdown/pkg/jwttoken"
-	"github.com/kzz45/neverdown/pkg/websocket/env"
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
 	cmap "github.com/orcaman/concurrent-map"
@@ -22,18 +21,19 @@ import (
 )
 
 func NewMembers(ctx context.Context, authorityClientSet kubernetes.Interface, api aggregator.Api) *Members {
-	hostname, err := env.GetHostName()
-	if err != nil {
-		zaplogger.Sugar().Fatal(err)
-	}
+	// hostname, err := env.GetHostName()
+	// if err != nil {
+	// zaplogger.Sugar().Fatal(err)
+	// }
 	m := &Members{
 		incr:        0,
 		removedChan: make(chan int64, 4096),
 		players:     cmap.New(),
 		resource:    resources.New(ctx, authorityClientSet, api),
 		watchEvent:  make(chan *proto.Response, 4096),
-		hostname:    hostname,
-		ctx:         ctx,
+		// hostname:    hostname,
+		hostname: "hostname",
+		ctx:      ctx,
 	}
 	go m.LoopRemoved()
 	go m.Watch()

@@ -54,7 +54,7 @@ export const connectSocket = async (token, store) => {
   };
   socket.onclose = function () {
     store.dispatch("socket/socket_onclose");
-    let realToken = localStorage.getItem("neverdown_authx_token") || "";
+    let realToken = localStorage.getItem("neverdown_jingx_token") || "";
     connectSocket(realToken, store);
   };
   socket.onmessage = (msg) => {
@@ -65,7 +65,7 @@ export const connectSocket = async (token, store) => {
 
 export const sendSocketMessage = async (msg, store) => {
   if (socket === null) {
-    let realToken = localStorage.getItem("neverdown_authx_token") || "";
+    let realToken = localStorage.getItem("neverdown_jingx_token") || "";
     await connectSocket(realToken, store);
   }
   if (socket && socket.readyState === socket.OPEN) {

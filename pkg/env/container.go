@@ -2,6 +2,7 @@ package env
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -27,4 +28,13 @@ func GetHostNameMustSpecified() string {
 		klog.Fatal(err)
 	}
 	return t
+}
+
+func GetHostName() (string, error) {
+	hostName := os.Getenv("HOST_NAME")
+	if hostName != "" {
+		return hostName, nil
+	}
+	klog.Info("get HOST_NAME from env failed, is env.(\"HOST_NAME\") already set? Will use hostname instead")
+	return getHostName()
 }

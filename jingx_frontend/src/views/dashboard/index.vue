@@ -210,6 +210,7 @@ export default {
           version: "v1",
           kind: "Project",
         };
+        console.log(projectObj, gvk);
         const senddata = getProtoParam(projectObj, gvk);
         const new_create_data = init_socket_data(
           "discovery-jingx",
