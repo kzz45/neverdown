@@ -15,7 +15,6 @@ spec:
         prometheus.io/path: /metrics
         prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
-      creationTimestamp: null
       labels:
         appname: openx-apiserver
     spec:
@@ -34,13 +33,13 @@ spec:
         - name: DISCOVERY_SERVICE_CAFILE
           value: /var/conf/ca.crt
         - name: DISCOVERY_SERVICE_HOST
-          value: jingx-discovery.test.svc.cluster.local
+          value: authx-discovery.kube-neverdown.svc.cluster.local
         - name: DISCOVERY_SERVICE_PORT
           value: "9443"
         - name: AUTHORITY_SERVICE_CAFILE
           value: /var/conf/ca.crt
         - name: AUTHORITY_SERVICE_HOST
-          value: authx-discovery.test.svc.cluster.local
+          value: authx-discovery.kube-neverdown.svc.cluster.local
         - name: AUTHORITY_SERVICE_PORT
           value: "9443"
         - name: ENV_ZAP_ENCODING
@@ -79,7 +78,7 @@ metadata:
   labels:
     appname: openx-apiserver
   name: openx-apiserver
-  namespace: test
+  namespace: kube-neverdown
 spec:
   ports:
   - name: http

@@ -28,6 +28,8 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
+	"k8s.io/component-base/version"
+	"k8s.io/klog/v2"
 )
 
 const (
@@ -60,7 +62,7 @@ func ResyncPeriod(c *config.CompletedConfig) func() time.Duration {
 // Run runs the KubeControllerManagerOptions.  This should never exit.
 func Run(c *config.CompletedConfig, stopCh <-chan struct{}) error {
 	// To help debugging, immediately log version
-	//klog.Infof("Version: %+v", version.Get())
+	klog.Infof("Version: %+v", version.Get())
 
 	// Setup any healthz checks we will want to use.
 	var checks []healthz.HealthChecker

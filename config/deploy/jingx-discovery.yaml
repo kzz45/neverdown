@@ -21,7 +21,7 @@ spec:
         - /server/discovery-controlplane
         env:
         - name: ETCD_ENDPOINTS
-          value: http://jingx-etcd-headless.test.svc.cluster.local:2379
+          value: http://jingx-etcd-headless.kube-neverdown.svc.cluster.local:2379
         - name: GET_HOSTS_FROM
           value: dns
         - name: TLS_OPTION_CERT_FILE

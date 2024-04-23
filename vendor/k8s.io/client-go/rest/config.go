@@ -540,6 +540,9 @@ func InClusterConfig() (*Config, error) {
 		// TODO: switch to using cluster DNS.
 		Host:            "https://" + net.JoinHostPort(host, port),
 		TLSClientConfig: tlsClientConfig,
+		ContentConfig: ContentConfig{
+			ContentType: runtime.ContentTypeProtobuf,
+		},
 		// BearerToken:     string(token),
 		// BearerTokenFile: tokenFile,
 	}, nil
@@ -547,7 +550,7 @@ func InClusterConfig() (*Config, error) {
 
 func InAuthorityClusterConfig() (*Config, error) {
 	const (
-	// tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+		tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	// rootCAFile = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	)
 	host, port := os.Getenv("AUTHORITY_SERVICE_HOST"), os.Getenv("AUTHORITY_SERVICE_PORT")
@@ -576,6 +579,9 @@ func InAuthorityClusterConfig() (*Config, error) {
 		// TODO: switch to using cluster DNS.
 		Host:            "https://" + net.JoinHostPort(host, port),
 		TLSClientConfig: tlsClientConfig,
+		ContentConfig: ContentConfig{
+			ContentType: runtime.ContentTypeProtobuf,
+		},
 		// BearerToken:     string(token),
 		// BearerTokenFile: tokenFile,
 	}, nil

@@ -148,13 +148,13 @@ run-openx-local:
 	AUTHORITY_SERVICE_CAFILE=${WORK_PATH}/certs/ca.crt \
 	TLS_OPTION_CERT_FILE=${WORK_PATH}/certs/server.crt \
 	TLS_OPTION_KEY_FILE=${WORK_PATH}/certs/server.key \
-	go run cmd/openx/main.go -kubeconfig=$(WORK_PATH)/config/kind.config -listenPort=8080
+	go run cmd/openx/main.go -kubeconfig=$(ROOT_PATH)/.kube/config -listenPort=8080
 
 build-openx:
 	-i docker image rm $(OPENX_APISERVER)
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o openx-apiserver cmd/openx/main.go
-	cp cmd/openx/Dockerfile . && docker build -t $(OPENX_APISERVER) .
-	rm -f Dockerfile && rm -f openx-apiserver
+	cp cmd/openx/Dockerfile.quick . && docker build -f Dockerfile.quick -t $(OPENX_APISERVER) .
+	rm -f Dockerfile.quick && rm -f openx-apiserver
 
 gen-openx-frontend-protox:
 	cd openx_frontend && ./node_modules/protobufjs/bin/pbjs \
