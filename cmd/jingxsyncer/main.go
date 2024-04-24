@@ -61,7 +61,7 @@ func main() {
 }
 
 func loadDiscoveryKubernetes() kubernetes.Interface {
-	kubeconfig, err := rest.InClusterConfig()
+	kubeconfig, err := rest.InDicoveryClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}

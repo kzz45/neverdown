@@ -33,6 +33,7 @@ rules:
   resources:
   - statefulsets
   - deployments
+  - daemonsets
   verbs:
   - create
   - get

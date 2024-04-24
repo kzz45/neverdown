@@ -31,18 +31,7 @@ type Handler struct {
 }
 
 func NewResource(ctx context.Context) kubernetes.Interface {
-	// out_of_cluster
-	// certFile, keyFile := os.Getenv(StaticCertFile), os.Getenv(StaticKeyFile)
-	// kubeconfig := &rest.Config{
-	// 	Host: "127.0.0.1:9443",
-	// 	TLSClientConfig: rest.TLSClientConfig{
-	// 		Insecure: true,
-	// 		CertFile: certFile,
-	// 		KeyFile:  keyFile,
-	// 	},
-	// }
-	// in_cluster
-	kubeconfig, err := rest.InClusterConfig()
+	kubeconfig, err := rest.InDicoveryClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}

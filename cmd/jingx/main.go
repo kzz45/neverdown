@@ -60,7 +60,7 @@ func main() {
 }
 
 func loadDiscoveryKubernetes() kubernetes.Interface {
-	kubeconfig, err := rest.InClusterConfig()
+	kubeconfig, err := rest.InDicoveryClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}
@@ -69,19 +69,6 @@ func loadDiscoveryKubernetes() kubernetes.Interface {
 		zaplogger.Sugar().Fatal(err)
 	}
 	return cfg
-	// certFile, keyFile := os.Getenv(StaticCertFile), os.Getenv(StaticKeyFile)
-	// clientset, err := kubernetes.NewForConfig(&rest.Config{
-	// 	Host: "127.0.0.1:9443",
-	// 	TLSClientConfig: rest.TLSClientConfig{
-	// 		Insecure: true,
-	// 		CertFile: certFile,
-	// 		KeyFile:  keyFile,
-	// 	},
-	// })
-	// if err != nil {
-	// 	zaplogger.Sugar().Fatal(err)
-	// }
-	// return clientset
 }
 
 func loadAuthorityKubernetes() kubernetes.Interface {
@@ -94,17 +81,4 @@ func loadAuthorityKubernetes() kubernetes.Interface {
 		zaplogger.Sugar().Fatal(err)
 	}
 	return cfg
-	// certFile, keyFile := os.Getenv(StaticCertFile), os.Getenv(StaticKeyFile)
-	// clientset, err := kubernetes.NewForConfig(&rest.Config{
-	// 	Host: "127.0.0.1:9443",
-	// 	TLSClientConfig: rest.TLSClientConfig{
-	// 		Insecure: true,
-	// 		CertFile: certFile,
-	// 		KeyFile:  keyFile,
-	// 	},
-	// })
-	// if err != nil {
-	// 	zaplogger.Sugar().Fatal(err)
-	// }
-	// return clientset
 }

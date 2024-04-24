@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/scheme"
+	"github.com/kzz45/neverdown/pkg/kubernetes/api/legacyscheme"
 	"github.com/kzz45/neverdown/pkg/kubernetes/providers"
 
 	"github.com/kzz45/neverdown/pkg/apiserver/registry/generic"
@@ -50,7 +51,8 @@ func New(storeConfig *storagebackend.Config) *Instance {
 
 // InstallAPIs will install the APIs for the restStorageProviders if they are enabled.
 func (m *Instance) InstallAPIs(apiResourceConfigSource serverstorage.APIResourceConfigSource, restOptionsGetter generic.RESTOptionsGetter, restStorageProviders ...providers.RESTStorageProvider) error {
-	// klog.Info(legacyscheme.Scheme.AllKnownTypes())
+	klog.Info(legacyscheme.Scheme.AllKnownTypes())
+
 	apiGroupsInfo := make([]*server.APIGroupInfo, 0)
 	for _, restStorageBuilder := range restStorageProviders {
 		apiGroupInfo, err := restStorageBuilder.NewRESTStorage(apiResourceConfigSource, m.restOptionsGetter)

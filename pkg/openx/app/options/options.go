@@ -127,7 +127,7 @@ func createRecorder(kubeClient clientset.Interface, userAgent string) record.Eve
 }
 
 func loadDiscoveryKubernetes() *restclient.Config {
-	kubeconfig, err := restclient.InClusterConfig()
+	kubeconfig, err := restclient.InDicoveryClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}
