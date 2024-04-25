@@ -1,3 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-discovery
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-neverdown
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-authx
+spec:
+  finalizers:
+  - kubernetes
+---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -135,5 +159,11 @@ roleRef:
   name: openx-controller
 subjects:
 - kind: ServiceAccount
+  name: openx-controller
+  namespace: kube-neverdown
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
   name: openx-controller
   namespace: kube-neverdown

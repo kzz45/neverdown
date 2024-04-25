@@ -22,76 +22,72 @@
 
 ### 本地测试
 
-本地测试环境通过 kind 来创建一个 K8S 集群 , 需要安装 metrics-server 用来获取资源使用情况
+- 本地测试环境通过 kind 来创建一个 K8S 集群
+
+![install k8s](./doc/install_k8s_with_kind.png)
+
+- 需要安装 metrics-server 用来获取资源使用情况
+
+![install metrics-server](./doc/install_metrics_server.png)
+
+- 在 K8S 环境部署好之后, 需要外部启动 etcd 服务
+
+![install etcd](./doc/install_etcd_out_cluster.png)
+
+- 安装 CRD
+
+![install crd](./doc/install_crd.png)
+
+- 安装 RBAC Role
+  
+![install rbac](./doc/install_rbac.png)
+
+- 启动 disovery 服务
+
+![run-discovery-local](./doc/run-discovery-local.png)
+
+- 启动 authx-apiserver
+
+![run-authx-local](./doc/run-authx-local.png)
+
+- 启动 jingx-apiserver
+
+![run-jingx-local](./doc/run-jingx-local.png)
+
+- 启动 openx-apiserver
+
+![run-openx-local](./doc/run-openx-local.png)
+
+- 启动 authx-frontend 并复制 openx-apiserver 的密码
 
 ```sh
-# 部署一个 K8S 集群
-kind create cluster --config=./config/kind.yml
-
-# 部署 metrics-server
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-# 等待 metrics-server 启动 可能会面临如下的错误
-
-Events:
-  Type     Reason     Age                   From               Message
-  ----     ------     ----                  ----               -------
- ...
- ...
- ...
-  Warning  Unhealthy  59s (x31 over 5m29s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 500
-
-# 修改 metrics-server 的配置 进行如下修改操作
-
-kubectl -n kube-system edit deploy metrics-server
-spec:
-      containers:
-      - args:
-        - --cert-dir=/tmp
-        - --secure-port=10250
-        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-        - --kubelet-use-node-status-port
-        - --metric-resolution=15s
-        - --kubelet-insecure-tls
-
-# 等待 metrics-server 启动正常
-kubectl get pods -n kube-system | grep metrics
-
+make run-authx-frontend-local
 ```
 
-在 K8S 环境部署好之后, 需要外部启动 etcd 服务
+![run-authx-frontend](./doc/run-authx-frontend.png)
 
-然后启动 discovery, authx-apiserver, authx-frontend, openx-apiserver, openx-frontend 来体验
+- 启动 openx-frontend 并登录
 
 ```sh
-# 直接通过 docker 启动一个 etcd 服务
-docker run -d --name etcd-server -p 2379:2379 -p 2380:2380 \
---env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd
-
-# 启动 discovery
-make run-discovery-local
-
-# 启动 authx apiserver
-make run-authx-local
-
-# 启动 authx frontend
-make run-authx-frontend-local
-
-# 部署 CRD
-kubectl apply -f config/crd/
-
-# 启动 openx-apiserver
-make run-openx-local
-
-# 启动 openx-frontend
 make run-openx-frontend-local
 ```
 
-### 线上部署
+![run-openx-frontend-local](./doc/run-openx-frontend-local.png)
 
-线上部署, 我们这边是使用的阿里云的 ACK
+- 测试创建 nginx 服务
 
-```sh
-kubectl apply -f config/crd/
-kubectl apply -f config/deploy/neverdown-deploy.yaml
-```
+![nginx-1](./doc/nginx-1.png)
+
+![nginx-2](./doc/nginx-2.png)
+
+![nginx-3](./doc/nginx-3.png)
+
+![nginx-4](./doc/nginx-4.png)
+
+![nginx-5](./doc/nginx-5.png)
+
+![nginx-6](./doc/nginx-6.png)
+
+![nginx-7](./doc/nginx-7.png)
+
+![nginx-8](./doc/nginx-8.png)
