@@ -135,6 +135,10 @@ build-jingx-frontend:
 	cp jingx_frontend/Dockerfile.quick . && docker build -f Dockerfile.quick -t $(JINGX_DASHBOARD) .
 	rm -f Dockerfile.quick && rm -rf dist
 
+build-jingx-cli:
+	CGO_ENABLED=0 go build -o bin/jingx-cli-darwin cmd/jingxcli/main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/jingx-cli cmd/jingxcli/main.go
+
 gen-openx-proto:
 	cd hack && bash openx_proto.sh
 
