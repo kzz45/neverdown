@@ -9,7 +9,6 @@ import (
 
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
-	// discoveryscheme "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/scheme"
 	openxv1scheme "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/scheme"
 	openxinformers "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions"
 	"github.com/kzz45/neverdown/pkg/openx/aggregator/proto"
@@ -24,6 +23,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	autoscalingv2 "k8s.io/api/autoscaling/v2"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/klog/v2"
 
 	// networkingv1 "k8s.io/api/networking/v1"
 	nativerbacv1 "k8s.io/api/rbac/v1"
@@ -248,6 +248,7 @@ func GetRegisterKinds() []rbacv1.GroupVersionKind {
 	}
 	// openxv1
 	for gvk, _ := range openxv1scheme.Scheme.AllKnownTypes() {
+		klog.Infof("--- %v --- %v --- %v", gvk.Group, gvk.Version, gvk.Kind)
 		if gvk.Version == runtime.APIVersionInternal {
 			continue
 		}

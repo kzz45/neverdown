@@ -68,12 +68,6 @@ kubectl get pods -n kube-system | grep metrics
 docker run -d --name etcd-server -p 2379:2379 -p 2380:2380 \
 --env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd
 
-# 部署 CRD
-kubectl apply -f ./config/crd/
-
-# 生成证书
-make gen-certs
-
 # 启动 discovery
 make run-discovery-local
 
@@ -82,6 +76,9 @@ make run-authx-local
 
 # 启动 authx frontend
 make run-authx-frontend-local
+
+# 部署 CRD
+kubectl apply -f config/crd/
 
 # 启动 openx-apiserver
 make run-openx-local
@@ -93,3 +90,8 @@ make run-openx-frontend-local
 ### 线上部署
 
 线上部署, 我们这边是使用的阿里云的 ACK
+
+```sh
+kubectl apply -f config/crd/
+kubectl apply -f config/deploy/neverdown-deploy.yaml
+```

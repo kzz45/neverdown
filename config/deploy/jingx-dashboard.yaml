@@ -4,6 +4,7 @@ metadata:
   labels:
     appname: jingx-dashboard
   name: jingx-dashboard
+  namespace: kube-discovery
 spec:
   replicas: 1
   selector:
@@ -36,7 +37,7 @@ spec:
         - mountPath: /var/conf
           name: certs-volume
         - mountPath: /usr/share/nginx/html/config
-          name: dashboard-config-json
+          name: dashboard-config
       volumes:
       - configMap:
           defaultMode: 420
@@ -52,15 +53,16 @@ spec:
           items:
           - key: config.json
             path: config.json
-          name: jingx-dashboard-config-json
-        name: dashboard-config-json
+          name: jingx-dashboard-config
+        name: dashboard-config
 ---
 apiVersion: v1
 data:
   config.json: '{"VUE_APP_BASE_API":"jingx-apiserver.kube-discovery.svc.cluster.local:8083"}'
 kind: ConfigMap
 metadata:
-  name: jingx-dashboard-config-json
+  name: jingx-dashboard-config
+  namespace: kube-discovery
 ---
 apiVersion: v1
 kind: Service
@@ -68,10 +70,10 @@ metadata:
   labels:
     appname: jingx-dashboard
   name: jingx-dashboard
-  namespace: test
+  namespace: kube-discovery
 spec:
   ports:
-  - port: 4443
+  - port: 7443
     protocol: TCP
     targetPort: 443
   selector:

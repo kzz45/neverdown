@@ -4,6 +4,7 @@ metadata:
   labels:
     appname: authx-dashboard
   name: authx-dashboard
+  namespace: kube-authx
 spec:
   replicas: 1
   selector:
@@ -36,7 +37,7 @@ spec:
         - mountPath: /var/conf
           name: certs-volume
         - mountPath: /usr/share/nginx/html/config
-          name: dashboard-config-json
+          name: dashboard-config
       volumes:
       - configMap:
           defaultMode: 420
@@ -52,15 +53,16 @@ spec:
           items:
           - key: config.json
             path: config.json
-          name: authx-dashboard-config-json
-        name: dashboard-config-json
+          name: authx-dashboard-config
+        name: dashboard-config
 ---
 apiVersion: v1
 data:
   config.json: '{"VUE_APP_BASE_API":"authx-apiserver.kube-authx.svc.cluster.local:8086"}'
 kind: ConfigMap
 metadata:
-  name: authx-dashboard-config-json
+  name: authx-dashboard-config
+  namespace: kube-authx
 ---
 apiVersion: v1
 kind: Service
@@ -68,9 +70,10 @@ metadata:
   labels:
     appname: authx-dashboard
   name: authx-dashboard
+  namespace: kube-authx
 spec:
   ports:
-  - port: 443
+  - port: 8443
     protocol: TCP
     targetPort: 443
   selector:

@@ -1,0 +1,996 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-discovery
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-neverdown
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-authx
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: openx-controller
+  namespace: kube-neverdown
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openx-controller
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - services
+  - endpoints
+  - secrets
+  - namespaces
+  - configmaps
+  - pods
+  - pods/log
+  - pods/exec
+  - nodes
+  - nodes/proxy
+  - persistentvolumes
+  - persistentvolumeclaims
+  - serviceaccounts
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "apps"
+  resources:
+  - statefulsets
+  - deployments
+  - daemonsets
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "autoscaling"
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "coordination.k8s.io"
+  resources:
+  - leases
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "openx.neverdown.io"
+  resources:
+  - aliyunloadbalancers
+  - aliyunaccesscontrols
+  - mysqls
+  - mysqls/status
+  - redises
+  - redises/status
+  - openxes
+  - openxes/status
+  - affinities
+  - tolerations
+  - nodeselectors
+  - etcds
+  - etcds/status
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+  - patch
+- apiGroups:
+  - "metrics.k8s.io"
+  resources:
+  - nodes
+  - pods
+  verbs:
+  - watch
+  - get
+  - list
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openx-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openx-controller
+subjects:
+- kind: ServiceAccount
+  name: openx-controller
+  namespace: kube-neverdown
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neverdown-certs
+  namespace: kube-discovery
+data:
+  ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIDoTCCAomgAwIBAgIUVWT8AzIZoj5pjU9IRxsJmun5tGYwDQYJKoZIhvcNAQEL
+    BQAwYDELMAkGA1UEBhMCQ04xETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVY
+    dUh1aTESMBAGA1UECgwJTmV2ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9v
+    dCBDQTAeFw0yNDA0MTYwNjU0MjNaFw0zNDA0MTQwNjU0MjNaMGAxCzAJBgNVBAYT
+    AkNOMREwDwYDVQQIDAhTaGFuZ2hhaTEOMAwGA1UEBwwFWHVIdWkxEjAQBgNVBAoM
+    CU5ldmVyRG93bjEaMBgGA1UEAwwRTmV2ZXJEb3duIHJvb3QgQ0EwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDak4F2yGVRBP0zwsg60oE3tovFnFR4TVoJ
+    5SVpHTED8z/sTOJPZ24SUPOROoSga1vTfv5q94BsoNfpEc/YXqys1iRb1n6MjqO/
+    r/YSIIJI1yIcSwjcqTTomJY6rK7pHmvs0hu70b4eDM2P6CnprqWY9ZCJfJHnsqHW
+    be9Sd5ldr4mZv1OeQbmbuoCYZOyQBjm71dz3RGhaxVmsnuc6mZ2ouLpwDFn8Pta4
+    i1uODLaSseaQPDGXocozur+wd0FWxEUpqyMf8Ipv9EcqV67UHWYjTOLvkCUxq27q
+    ODgjeC9pbxT42rBuFGEAUDOyKV+uDhZvPxlOzZ8lgyFIdSBN6dt/AgMBAAGjUzBR
+    MB0GA1UdDgQWBBTDFcvgrIoxZZuYntq2d/g5V0K+IjAfBgNVHSMEGDAWgBTDFcvg
+    rIoxZZuYntq2d/g5V0K+IjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUA
+    A4IBAQDYbLfwlYIz6PVaLzM6wGCq+9l7OaAvfsYoTI/Xq3cU8ChI7+qDLPUgOdu4
+    0Daamlws/gSkXwrMc81wCVVnOic1MBOl9ojeRrOQEIDBsBe3nowuS6sB3J8NjrN0
+    iIT9oPrjXfmkrX1QLAhW7gNW24zIkFPUdy7+i01da9+0cKicCik6heIF3IMgNNte
+    9iZS/O5SLKzFqCBKhf+SE+Ws1l/3RlM/yJVAYLyK2h457RwymR2aoesvFrofaqaO
+    g/b+2jrG/STheC4QhJncPN38Y/pbdgdi5oav/CoNL04qOb1Xx7JRrJdIZ/oM8wo6
+    2K0JLgTlb/15+pYtDNZqx52Apuzb
+    -----END CERTIFICATE-----
+  server.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIFBzCCA++gAwIBAgIQDLe4huFWtawF8hQPErXBpTANBgkqhkiG9w0BAQsFADBg
+    MQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hhbmdoYWkxDjAMBgNVBAcMBVh1SHVp
+    MRIwEAYDVQQKDAlOZXZlckRvd24xGjAYBgNVBAMMEU5ldmVyRG93biByb290IENB
+    MB4XDTI0MDQxNjA2NTQyM1oXDTM0MDQxNDA2NTQyM1owYDELMAkGA1UEBhMCQ04x
+    ETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVYdUh1aTESMBAGA1UECgwJTmV2
+    ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9vdCBDQTCCASIwDQYJKoZIhvcN
+    AQEBBQADggEPADCCAQoCggEBAMXNFvcHSNwS9vBZgC3fofRrYGWh4lPZg6eTA7Xy
+    rbRQzwijgwNvlmVHNpFMXDes34Ehotyl9VToXbJYsMbOlqkPBMXLeQYcclbKjgRO
+    zHEwuUIZjj/Eus/uN03CUMR6WDQx+lDFxzj3Kek3uA1lCAtWBmG6w2S0cfF1ZM8I
+    Ysy3XgD04EOrAqQXppRbrCNJQ2gn30UXap+tCVq6nyZCTFptAaOuqNaITGsxfEy1
+    /1FDjdwBkRvev8SU5QyxmBpYa0p3srBLTWJmgTrPsuHqVP8BQ4vYlcCerl46rmSY
+    ZVaPSXS2CE4fmawIeAbGFOqP8N2PKpc0PbwRU5toKtNdvSkCAwEAAaOCAbswggG3
+    MB8GA1UdIwQYMBaAFMMVy+CsijFlm5ie2rZ3+DlXQr4iMAkGA1UdEwQCMAAwCwYD
+    VR0PBAQDAgTwMIIBWwYDVR0RBIIBUjCCAU6HBH8AAAGCCWxvY2FsaG9zdIIVKi4q
+    LnN2Yy5jbHVzdGVyLmxvY2FsghgqLnRlc3Quc3ZjLmNsdXN0ZXIubG9jYWyCHCou
+    a3ViZS1hcGkuc3ZjLmNsdXN0ZXIubG9jYWyCHioua3ViZS1qaW5neC5zdmMuY2x1
+    c3Rlci5sb2NhbIIeKi5rdWJlLWF1dGh4LnN2Yy5jbHVzdGVyLmxvY2Fsgh8qLmt1
+    YmUtc3lzdGVtLnN2Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtbmV2ZXJkb3duLnN2
+    Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtZGlzY292ZXJ5LnN2Yy5jbHVzdGVyLmxv
+    Y2FsgiIqLmt1YmUtYXV0aG9yaXR5LnN2Yy5jbHVzdGVyLmxvY2Fsgg4qLmhlcm9n
+    YW1lLmNvbYIPKi55aW5neGlvbmcuY29tMB0GA1UdDgQWBBTI3jJg09MECXcKorZg
+    PlN83myRbjANBgkqhkiG9w0BAQsFAAOCAQEAH5QOrcDEPTt2DqAji2lfv66cxLeB
+    lAV4KEAnyUXEt9oc/x/1fxoS36KsDmFYPTxn7qhneqqu2y35PjPEAyjD9vje0h9I
+    O/bw+XtvXOhd6/C+Y0D3lgzwVAdoHi8fWYZRpo4NEseWR4gsM8CytCSOxRfShQ98
+    wsk27SVbRr4SEhrbDKQ9zdK+KPtYMNrjtO44OjPiUCXjX/8JnEulbslAoCM9qbc/
+    3AX/tqDC6lTk9gJgRLvqyiZpw5b04GWfGFGcPzIvmfaJ3ZjsI6KpIx+E9KIZ23hs
+    plqgBia1oQbrkZQO2kRPJGChXE/HA6yNmm5PBaKrTOPNwUaO38+rDxCLbg==
+    -----END CERTIFICATE-----
+  server.key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzRb3B0jcEvbw
+    WYAt36H0a2BloeJT2YOnkwO18q20UM8Io4MDb5ZlRzaRTFw3rN+BIaLcpfVU6F2y
+    WLDGzpapDwTFy3kGHHJWyo4ETsxxMLlCGY4/xLrP7jdNwlDEelg0MfpQxcc49ynp
+    N7gNZQgLVgZhusNktHHxdWTPCGLMt14A9OBDqwKkF6aUW6wjSUNoJ99FF2qfrQla
+    up8mQkxabQGjrqjWiExrMXxMtf9RQ43cAZEb3r/ElOUMsZgaWGtKd7KwS01iZoE6
+    z7Lh6lT/AUOL2JXAnq5eOq5kmGVWj0l0tghOH5msCHgGxhTqj/DdjyqXND28EVOb
+    aCrTXb0pAgMBAAECggEALPvAiILlWLlOY+gyzJvyeMPPqyVW86NAu+QlAKS1SM/k
+    2Y3YDni63wMEP6R6R2Ye+T7FS0FJyxrCLjxZzYivfjiOaQ4mUpO3FBJiHEwwVeCT
+    DRuDPHDY3E9MT/iMRjadpxcjmml0LnoVU7bKem9a1jsk3eZrp9QaoqNEPwok7/Gw
+    OCrS+6Q9mY0t85Fn78LSDHYg50jPBoieZIsTSU9QwsZ1iHsxc8tR532hvgVQCBLl
+    rOv2MPvDIHoQ5cKv31IADAQbIwvdSNAgR17HLtpRWsCk8t9BTCtpZjWeCURewcs6
+    mw6/u4R90W+ekKTqh7ZKF4daggxIPttJJviaPkl01QKBgQDptH4W0CBnuRGmzj2a
+    FKH3iJxqtAwxofYtKt9wVGr7xZmF5Bfks7uAJpRnzQd4Pv7JWm5/3U8G9Or1A/Pd
+    1EI6SB9i7LxAkZ6KBFwFjZwkLBs2JDzxpXsVOCasH4/pYjzusrl8x68IBXAkQShH
+    BKS1DTD/Jc6S6/5GFaNDZwlYNQKBgQDYq8Hmj7yeUF8qY2uo/tez1inXJJWuCHxU
+    LG4YQ871EH3jd/OE9RfsdsbBH1FCZew6YJxcslFRiNaaPLcWMmwIRnfGpI9QnbEU
+    udhpMWUCmv+U3HEoJVjGYE0f3LSyn65vJCA3GVlhJE4iV7OFTw/9chIjXPplafBz
+    dIl1GGK3pQKBgCoqFlWnVzFfgn/F1fdmoZI3Y4Ec2tZZkkCz63wovuSN0hUGAgmR
+    I9MLIttXcnGPbAiH+Ee5dfibV4i9HdJ36Tr6qC8A5zX/D8t23eNimTkte/tYrmYq
+    pPo/FzsWtrA0uSmXtT9+B2Y7FPB1kP6/J7hCmQRvncWELmwWm04d2OHBAoGBANZ4
+    7e6zyRlMpWboEuGtoQa6r5/u7treO3N2p2QNewbJ1FMdoUey9IN07zirL1xyV2tR
+    xnVbbXMv6H20K+ck8hse5eETc2lxLqA9diJqanoxw1wu+TOsBDwZhz5K0fMebSRG
+    tjzUMs0ditojxefnYwSVra6jkphgTUt7x7TI9q6hAoGANDWqkbxPphgectriXmK7
+    PeevbpUf6a0PsBBpACUiumGbRde2whVV7onC4+1hbRBpEIfmfep4Rpr2jKj3urel
+    zbVFmMajs1gitrs/xrOmeoxJoSjCLIYmcblEhbBHWrcnFvgN5o/xr/lUvCMPrB8O
+    7MC6+2gRmFP9v6n1xvxCwMs=
+    -----END PRIVATE KEY-----
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jingx-etcd-headless
+  namespace: kube-discovery
+spec:
+  clusterIP: None
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  - name: peer
+    port: 2380
+    protocol: TCP
+    targetPort: 2380
+  selector:
+    app: jingx-etcd
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jingx-etcd
+  namespace: kube-discovery
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jingx-etcd
+  serviceName: jingx-etcd-headless
+  template:
+    metadata:
+      labels:
+        app: jingx-etcd
+      name: jingx-etcd
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - "\nPEERS=\"jingx-etcd-0=http://jingx-etcd-0.jingx-etcd-headless:2380,jingx-etcd-1=http://jingx-etcd-1.jingx-etcd-headless:2380,jingx-etcd-2=http://jingx-etcd-2.jingx-etcd-headless:2380\"\nexec etcd --name ${HOSTNAME} \\\n\t--listen-peer-urls http://0.0.0.0:2380 \\\n\t--listen-client-urls http://0.0.0.0:2379 \\\n\t--advertise-client-urls http://${HOSTNAME}.jingx-etcd-headless:2379 \\\n\t--initial-advertise-peer-urls http://${HOSTNAME}.jingx-etcd-headless:2380 \\\n\t--initial-cluster-token etcd-cluster-1 \\\n\t--initial-cluster ${PEERS} \\\n\t--initial-cluster-state new \\\n\t--data-dir /var/run/etcd/${HOSTNAME}.etcd \\\n\t--logger=zap\n"
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        image: bitnami/etcd:3.5.4
+        imagePullPolicy: IfNotPresent
+        name: jingx-etcd
+        securityContext:
+          runAsUser: 0
+        ports:
+        - containerPort: 2379
+          name: client
+          protocol: TCP
+        - containerPort: 2380
+          name: peer
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/run/etcd
+          name: task-pv-storage
+          readOnly: false
+      restartPolicy: Always
+      volumes:
+      - hostPath:
+          path: /jingx/etcd-clusters/etcd
+          type: DirectoryOrCreate
+        name: task-pv-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: jingx-discovery
+  name: jingx-discovery
+  namespace: kube-discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: jingx-discovery
+  template:
+    metadata:
+      labels:
+        appname: jingx-discovery
+    spec:
+      containers:
+      - args:
+        - -listenPort=9443
+        command:
+        - /server/discovery-controlplane
+        env:
+        - name: ETCD_ENDPOINTS
+          value: http://jingx-etcd-headless.kube-discovery.svc.cluster.local:2379
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        image: kongzz45/discovery-controlplane:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: jingx-discovery
+        ports:
+        - containerPort: 9443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: jingx-discovery
+  name: jingx-discovery
+  namespace: kube-discovery
+spec:
+  ports:
+  - name: http
+    port: 9443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    appname: jingx-discovery
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authx-etcd-headless
+  namespace: kube-authx
+spec:
+  clusterIP: None
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  - name: peer
+    port: 2380
+    protocol: TCP
+    targetPort: 2380
+  selector:
+    app: authx-etcd
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: authx-etcd
+  namespace: kube-authx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: authx-etcd
+  serviceName: authx-etcd-headless
+  template:
+    metadata:
+      labels:
+        app: authx-etcd
+      name: authx-etcd
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - "\nPEERS=\"authx-etcd-0=http://authx-etcd-0.authx-etcd-headless:2380,authx-etcd-1=http://authx-etcd-1.authx-etcd-headless:2380,authx-etcd-2=http://authx-etcd-2.authx-etcd-headless:2380\"\nexec etcd --name ${HOSTNAME} \\\n\t--listen-peer-urls http://0.0.0.0:2380 \\\n\t--listen-client-urls http://0.0.0.0:2379 \\\n\t--advertise-client-urls http://${HOSTNAME}.authx-etcd-headless:2379 \\\n\t--initial-advertise-peer-urls http://${HOSTNAME}.authx-etcd-headless:2380 \\\n\t--initial-cluster-token etcd-cluster-1 \\\n\t--initial-cluster ${PEERS} \\\n\t--initial-cluster-state new \\\n\t--data-dir /var/run/etcd/${HOSTNAME}.etcd \\\n\t--logger=zap\n"
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        image: bitnami/etcd:3.5.4
+        imagePullPolicy: IfNotPresent
+        name: authx-etcd
+        securityContext:
+          runAsUser: 0
+        ports:
+        - containerPort: 2379
+          name: client
+          protocol: TCP
+        - containerPort: 2380
+          name: peer
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/run/etcd
+          name: task-pv-storage
+          readOnly: false
+      restartPolicy: Always
+      volumes:
+      - hostPath:
+          path: /authx/etcd-clusters/etcd
+          type: DirectoryOrCreate
+        name: task-pv-storage
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neverdown-certs
+  namespace: kube-authx
+data:
+  ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIDoTCCAomgAwIBAgIUVWT8AzIZoj5pjU9IRxsJmun5tGYwDQYJKoZIhvcNAQEL
+    BQAwYDELMAkGA1UEBhMCQ04xETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVY
+    dUh1aTESMBAGA1UECgwJTmV2ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9v
+    dCBDQTAeFw0yNDA0MTYwNjU0MjNaFw0zNDA0MTQwNjU0MjNaMGAxCzAJBgNVBAYT
+    AkNOMREwDwYDVQQIDAhTaGFuZ2hhaTEOMAwGA1UEBwwFWHVIdWkxEjAQBgNVBAoM
+    CU5ldmVyRG93bjEaMBgGA1UEAwwRTmV2ZXJEb3duIHJvb3QgQ0EwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDak4F2yGVRBP0zwsg60oE3tovFnFR4TVoJ
+    5SVpHTED8z/sTOJPZ24SUPOROoSga1vTfv5q94BsoNfpEc/YXqys1iRb1n6MjqO/
+    r/YSIIJI1yIcSwjcqTTomJY6rK7pHmvs0hu70b4eDM2P6CnprqWY9ZCJfJHnsqHW
+    be9Sd5ldr4mZv1OeQbmbuoCYZOyQBjm71dz3RGhaxVmsnuc6mZ2ouLpwDFn8Pta4
+    i1uODLaSseaQPDGXocozur+wd0FWxEUpqyMf8Ipv9EcqV67UHWYjTOLvkCUxq27q
+    ODgjeC9pbxT42rBuFGEAUDOyKV+uDhZvPxlOzZ8lgyFIdSBN6dt/AgMBAAGjUzBR
+    MB0GA1UdDgQWBBTDFcvgrIoxZZuYntq2d/g5V0K+IjAfBgNVHSMEGDAWgBTDFcvg
+    rIoxZZuYntq2d/g5V0K+IjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUA
+    A4IBAQDYbLfwlYIz6PVaLzM6wGCq+9l7OaAvfsYoTI/Xq3cU8ChI7+qDLPUgOdu4
+    0Daamlws/gSkXwrMc81wCVVnOic1MBOl9ojeRrOQEIDBsBe3nowuS6sB3J8NjrN0
+    iIT9oPrjXfmkrX1QLAhW7gNW24zIkFPUdy7+i01da9+0cKicCik6heIF3IMgNNte
+    9iZS/O5SLKzFqCBKhf+SE+Ws1l/3RlM/yJVAYLyK2h457RwymR2aoesvFrofaqaO
+    g/b+2jrG/STheC4QhJncPN38Y/pbdgdi5oav/CoNL04qOb1Xx7JRrJdIZ/oM8wo6
+    2K0JLgTlb/15+pYtDNZqx52Apuzb
+    -----END CERTIFICATE-----
+  server.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIFBzCCA++gAwIBAgIQDLe4huFWtawF8hQPErXBpTANBgkqhkiG9w0BAQsFADBg
+    MQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hhbmdoYWkxDjAMBgNVBAcMBVh1SHVp
+    MRIwEAYDVQQKDAlOZXZlckRvd24xGjAYBgNVBAMMEU5ldmVyRG93biByb290IENB
+    MB4XDTI0MDQxNjA2NTQyM1oXDTM0MDQxNDA2NTQyM1owYDELMAkGA1UEBhMCQ04x
+    ETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVYdUh1aTESMBAGA1UECgwJTmV2
+    ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9vdCBDQTCCASIwDQYJKoZIhvcN
+    AQEBBQADggEPADCCAQoCggEBAMXNFvcHSNwS9vBZgC3fofRrYGWh4lPZg6eTA7Xy
+    rbRQzwijgwNvlmVHNpFMXDes34Ehotyl9VToXbJYsMbOlqkPBMXLeQYcclbKjgRO
+    zHEwuUIZjj/Eus/uN03CUMR6WDQx+lDFxzj3Kek3uA1lCAtWBmG6w2S0cfF1ZM8I
+    Ysy3XgD04EOrAqQXppRbrCNJQ2gn30UXap+tCVq6nyZCTFptAaOuqNaITGsxfEy1
+    /1FDjdwBkRvev8SU5QyxmBpYa0p3srBLTWJmgTrPsuHqVP8BQ4vYlcCerl46rmSY
+    ZVaPSXS2CE4fmawIeAbGFOqP8N2PKpc0PbwRU5toKtNdvSkCAwEAAaOCAbswggG3
+    MB8GA1UdIwQYMBaAFMMVy+CsijFlm5ie2rZ3+DlXQr4iMAkGA1UdEwQCMAAwCwYD
+    VR0PBAQDAgTwMIIBWwYDVR0RBIIBUjCCAU6HBH8AAAGCCWxvY2FsaG9zdIIVKi4q
+    LnN2Yy5jbHVzdGVyLmxvY2FsghgqLnRlc3Quc3ZjLmNsdXN0ZXIubG9jYWyCHCou
+    a3ViZS1hcGkuc3ZjLmNsdXN0ZXIubG9jYWyCHioua3ViZS1qaW5neC5zdmMuY2x1
+    c3Rlci5sb2NhbIIeKi5rdWJlLWF1dGh4LnN2Yy5jbHVzdGVyLmxvY2Fsgh8qLmt1
+    YmUtc3lzdGVtLnN2Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtbmV2ZXJkb3duLnN2
+    Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtZGlzY292ZXJ5LnN2Yy5jbHVzdGVyLmxv
+    Y2FsgiIqLmt1YmUtYXV0aG9yaXR5LnN2Yy5jbHVzdGVyLmxvY2Fsgg4qLmhlcm9n
+    YW1lLmNvbYIPKi55aW5neGlvbmcuY29tMB0GA1UdDgQWBBTI3jJg09MECXcKorZg
+    PlN83myRbjANBgkqhkiG9w0BAQsFAAOCAQEAH5QOrcDEPTt2DqAji2lfv66cxLeB
+    lAV4KEAnyUXEt9oc/x/1fxoS36KsDmFYPTxn7qhneqqu2y35PjPEAyjD9vje0h9I
+    O/bw+XtvXOhd6/C+Y0D3lgzwVAdoHi8fWYZRpo4NEseWR4gsM8CytCSOxRfShQ98
+    wsk27SVbRr4SEhrbDKQ9zdK+KPtYMNrjtO44OjPiUCXjX/8JnEulbslAoCM9qbc/
+    3AX/tqDC6lTk9gJgRLvqyiZpw5b04GWfGFGcPzIvmfaJ3ZjsI6KpIx+E9KIZ23hs
+    plqgBia1oQbrkZQO2kRPJGChXE/HA6yNmm5PBaKrTOPNwUaO38+rDxCLbg==
+    -----END CERTIFICATE-----
+  server.key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzRb3B0jcEvbw
+    WYAt36H0a2BloeJT2YOnkwO18q20UM8Io4MDb5ZlRzaRTFw3rN+BIaLcpfVU6F2y
+    WLDGzpapDwTFy3kGHHJWyo4ETsxxMLlCGY4/xLrP7jdNwlDEelg0MfpQxcc49ynp
+    N7gNZQgLVgZhusNktHHxdWTPCGLMt14A9OBDqwKkF6aUW6wjSUNoJ99FF2qfrQla
+    up8mQkxabQGjrqjWiExrMXxMtf9RQ43cAZEb3r/ElOUMsZgaWGtKd7KwS01iZoE6
+    z7Lh6lT/AUOL2JXAnq5eOq5kmGVWj0l0tghOH5msCHgGxhTqj/DdjyqXND28EVOb
+    aCrTXb0pAgMBAAECggEALPvAiILlWLlOY+gyzJvyeMPPqyVW86NAu+QlAKS1SM/k
+    2Y3YDni63wMEP6R6R2Ye+T7FS0FJyxrCLjxZzYivfjiOaQ4mUpO3FBJiHEwwVeCT
+    DRuDPHDY3E9MT/iMRjadpxcjmml0LnoVU7bKem9a1jsk3eZrp9QaoqNEPwok7/Gw
+    OCrS+6Q9mY0t85Fn78LSDHYg50jPBoieZIsTSU9QwsZ1iHsxc8tR532hvgVQCBLl
+    rOv2MPvDIHoQ5cKv31IADAQbIwvdSNAgR17HLtpRWsCk8t9BTCtpZjWeCURewcs6
+    mw6/u4R90W+ekKTqh7ZKF4daggxIPttJJviaPkl01QKBgQDptH4W0CBnuRGmzj2a
+    FKH3iJxqtAwxofYtKt9wVGr7xZmF5Bfks7uAJpRnzQd4Pv7JWm5/3U8G9Or1A/Pd
+    1EI6SB9i7LxAkZ6KBFwFjZwkLBs2JDzxpXsVOCasH4/pYjzusrl8x68IBXAkQShH
+    BKS1DTD/Jc6S6/5GFaNDZwlYNQKBgQDYq8Hmj7yeUF8qY2uo/tez1inXJJWuCHxU
+    LG4YQ871EH3jd/OE9RfsdsbBH1FCZew6YJxcslFRiNaaPLcWMmwIRnfGpI9QnbEU
+    udhpMWUCmv+U3HEoJVjGYE0f3LSyn65vJCA3GVlhJE4iV7OFTw/9chIjXPplafBz
+    dIl1GGK3pQKBgCoqFlWnVzFfgn/F1fdmoZI3Y4Ec2tZZkkCz63wovuSN0hUGAgmR
+    I9MLIttXcnGPbAiH+Ee5dfibV4i9HdJ36Tr6qC8A5zX/D8t23eNimTkte/tYrmYq
+    pPo/FzsWtrA0uSmXtT9+B2Y7FPB1kP6/J7hCmQRvncWELmwWm04d2OHBAoGBANZ4
+    7e6zyRlMpWboEuGtoQa6r5/u7treO3N2p2QNewbJ1FMdoUey9IN07zirL1xyV2tR
+    xnVbbXMv6H20K+ck8hse5eETc2lxLqA9diJqanoxw1wu+TOsBDwZhz5K0fMebSRG
+    tjzUMs0ditojxefnYwSVra6jkphgTUt7x7TI9q6hAoGANDWqkbxPphgectriXmK7
+    PeevbpUf6a0PsBBpACUiumGbRde2whVV7onC4+1hbRBpEIfmfep4Rpr2jKj3urel
+    zbVFmMajs1gitrs/xrOmeoxJoSjCLIYmcblEhbBHWrcnFvgN5o/xr/lUvCMPrB8O
+    7MC6+2gRmFP9v6n1xvxCwMs=
+    -----END PRIVATE KEY-----
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: authx-discovery
+  name: authx-discovery
+  namespace: kube-authx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: authx-discovery
+  template:
+    metadata:
+      labels:
+        appname: authx-discovery
+    spec:
+      containers:
+      - args:
+        - -listenPort=9443
+        command:
+        - /server/discovery-controlplane
+        env:
+        - name: ETCD_ENDPOINTS
+          value: http://authx-etcd-headless.kube-authx.svc.cluster.local:2379
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        image: kongzz45/discovery-controlplane:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: authx-discovery
+        ports:
+        - containerPort: 9443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: authx-discovery
+  name: authx-discovery
+  namespace: kube-authx
+spec:
+  ports:
+  - name: http
+    port: 9443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    appname: authx-discovery
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neverdown-certs
+  namespace: kube-neverdown
+data:
+  ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIDoTCCAomgAwIBAgIUVWT8AzIZoj5pjU9IRxsJmun5tGYwDQYJKoZIhvcNAQEL
+    BQAwYDELMAkGA1UEBhMCQ04xETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVY
+    dUh1aTESMBAGA1UECgwJTmV2ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9v
+    dCBDQTAeFw0yNDA0MTYwNjU0MjNaFw0zNDA0MTQwNjU0MjNaMGAxCzAJBgNVBAYT
+    AkNOMREwDwYDVQQIDAhTaGFuZ2hhaTEOMAwGA1UEBwwFWHVIdWkxEjAQBgNVBAoM
+    CU5ldmVyRG93bjEaMBgGA1UEAwwRTmV2ZXJEb3duIHJvb3QgQ0EwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDak4F2yGVRBP0zwsg60oE3tovFnFR4TVoJ
+    5SVpHTED8z/sTOJPZ24SUPOROoSga1vTfv5q94BsoNfpEc/YXqys1iRb1n6MjqO/
+    r/YSIIJI1yIcSwjcqTTomJY6rK7pHmvs0hu70b4eDM2P6CnprqWY9ZCJfJHnsqHW
+    be9Sd5ldr4mZv1OeQbmbuoCYZOyQBjm71dz3RGhaxVmsnuc6mZ2ouLpwDFn8Pta4
+    i1uODLaSseaQPDGXocozur+wd0FWxEUpqyMf8Ipv9EcqV67UHWYjTOLvkCUxq27q
+    ODgjeC9pbxT42rBuFGEAUDOyKV+uDhZvPxlOzZ8lgyFIdSBN6dt/AgMBAAGjUzBR
+    MB0GA1UdDgQWBBTDFcvgrIoxZZuYntq2d/g5V0K+IjAfBgNVHSMEGDAWgBTDFcvg
+    rIoxZZuYntq2d/g5V0K+IjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUA
+    A4IBAQDYbLfwlYIz6PVaLzM6wGCq+9l7OaAvfsYoTI/Xq3cU8ChI7+qDLPUgOdu4
+    0Daamlws/gSkXwrMc81wCVVnOic1MBOl9ojeRrOQEIDBsBe3nowuS6sB3J8NjrN0
+    iIT9oPrjXfmkrX1QLAhW7gNW24zIkFPUdy7+i01da9+0cKicCik6heIF3IMgNNte
+    9iZS/O5SLKzFqCBKhf+SE+Ws1l/3RlM/yJVAYLyK2h457RwymR2aoesvFrofaqaO
+    g/b+2jrG/STheC4QhJncPN38Y/pbdgdi5oav/CoNL04qOb1Xx7JRrJdIZ/oM8wo6
+    2K0JLgTlb/15+pYtDNZqx52Apuzb
+    -----END CERTIFICATE-----
+  server.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIFBzCCA++gAwIBAgIQDLe4huFWtawF8hQPErXBpTANBgkqhkiG9w0BAQsFADBg
+    MQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hhbmdoYWkxDjAMBgNVBAcMBVh1SHVp
+    MRIwEAYDVQQKDAlOZXZlckRvd24xGjAYBgNVBAMMEU5ldmVyRG93biByb290IENB
+    MB4XDTI0MDQxNjA2NTQyM1oXDTM0MDQxNDA2NTQyM1owYDELMAkGA1UEBhMCQ04x
+    ETAPBgNVBAgMCFNoYW5naGFpMQ4wDAYDVQQHDAVYdUh1aTESMBAGA1UECgwJTmV2
+    ZXJEb3duMRowGAYDVQQDDBFOZXZlckRvd24gcm9vdCBDQTCCASIwDQYJKoZIhvcN
+    AQEBBQADggEPADCCAQoCggEBAMXNFvcHSNwS9vBZgC3fofRrYGWh4lPZg6eTA7Xy
+    rbRQzwijgwNvlmVHNpFMXDes34Ehotyl9VToXbJYsMbOlqkPBMXLeQYcclbKjgRO
+    zHEwuUIZjj/Eus/uN03CUMR6WDQx+lDFxzj3Kek3uA1lCAtWBmG6w2S0cfF1ZM8I
+    Ysy3XgD04EOrAqQXppRbrCNJQ2gn30UXap+tCVq6nyZCTFptAaOuqNaITGsxfEy1
+    /1FDjdwBkRvev8SU5QyxmBpYa0p3srBLTWJmgTrPsuHqVP8BQ4vYlcCerl46rmSY
+    ZVaPSXS2CE4fmawIeAbGFOqP8N2PKpc0PbwRU5toKtNdvSkCAwEAAaOCAbswggG3
+    MB8GA1UdIwQYMBaAFMMVy+CsijFlm5ie2rZ3+DlXQr4iMAkGA1UdEwQCMAAwCwYD
+    VR0PBAQDAgTwMIIBWwYDVR0RBIIBUjCCAU6HBH8AAAGCCWxvY2FsaG9zdIIVKi4q
+    LnN2Yy5jbHVzdGVyLmxvY2FsghgqLnRlc3Quc3ZjLmNsdXN0ZXIubG9jYWyCHCou
+    a3ViZS1hcGkuc3ZjLmNsdXN0ZXIubG9jYWyCHioua3ViZS1qaW5neC5zdmMuY2x1
+    c3Rlci5sb2NhbIIeKi5rdWJlLWF1dGh4LnN2Yy5jbHVzdGVyLmxvY2Fsgh8qLmt1
+    YmUtc3lzdGVtLnN2Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtbmV2ZXJkb3duLnN2
+    Yy5jbHVzdGVyLmxvY2FsgiIqLmt1YmUtZGlzY292ZXJ5LnN2Yy5jbHVzdGVyLmxv
+    Y2FsgiIqLmt1YmUtYXV0aG9yaXR5LnN2Yy5jbHVzdGVyLmxvY2Fsgg4qLmhlcm9n
+    YW1lLmNvbYIPKi55aW5neGlvbmcuY29tMB0GA1UdDgQWBBTI3jJg09MECXcKorZg
+    PlN83myRbjANBgkqhkiG9w0BAQsFAAOCAQEAH5QOrcDEPTt2DqAji2lfv66cxLeB
+    lAV4KEAnyUXEt9oc/x/1fxoS36KsDmFYPTxn7qhneqqu2y35PjPEAyjD9vje0h9I
+    O/bw+XtvXOhd6/C+Y0D3lgzwVAdoHi8fWYZRpo4NEseWR4gsM8CytCSOxRfShQ98
+    wsk27SVbRr4SEhrbDKQ9zdK+KPtYMNrjtO44OjPiUCXjX/8JnEulbslAoCM9qbc/
+    3AX/tqDC6lTk9gJgRLvqyiZpw5b04GWfGFGcPzIvmfaJ3ZjsI6KpIx+E9KIZ23hs
+    plqgBia1oQbrkZQO2kRPJGChXE/HA6yNmm5PBaKrTOPNwUaO38+rDxCLbg==
+    -----END CERTIFICATE-----
+  server.key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFzRb3B0jcEvbw
+    WYAt36H0a2BloeJT2YOnkwO18q20UM8Io4MDb5ZlRzaRTFw3rN+BIaLcpfVU6F2y
+    WLDGzpapDwTFy3kGHHJWyo4ETsxxMLlCGY4/xLrP7jdNwlDEelg0MfpQxcc49ynp
+    N7gNZQgLVgZhusNktHHxdWTPCGLMt14A9OBDqwKkF6aUW6wjSUNoJ99FF2qfrQla
+    up8mQkxabQGjrqjWiExrMXxMtf9RQ43cAZEb3r/ElOUMsZgaWGtKd7KwS01iZoE6
+    z7Lh6lT/AUOL2JXAnq5eOq5kmGVWj0l0tghOH5msCHgGxhTqj/DdjyqXND28EVOb
+    aCrTXb0pAgMBAAECggEALPvAiILlWLlOY+gyzJvyeMPPqyVW86NAu+QlAKS1SM/k
+    2Y3YDni63wMEP6R6R2Ye+T7FS0FJyxrCLjxZzYivfjiOaQ4mUpO3FBJiHEwwVeCT
+    DRuDPHDY3E9MT/iMRjadpxcjmml0LnoVU7bKem9a1jsk3eZrp9QaoqNEPwok7/Gw
+    OCrS+6Q9mY0t85Fn78LSDHYg50jPBoieZIsTSU9QwsZ1iHsxc8tR532hvgVQCBLl
+    rOv2MPvDIHoQ5cKv31IADAQbIwvdSNAgR17HLtpRWsCk8t9BTCtpZjWeCURewcs6
+    mw6/u4R90W+ekKTqh7ZKF4daggxIPttJJviaPkl01QKBgQDptH4W0CBnuRGmzj2a
+    FKH3iJxqtAwxofYtKt9wVGr7xZmF5Bfks7uAJpRnzQd4Pv7JWm5/3U8G9Or1A/Pd
+    1EI6SB9i7LxAkZ6KBFwFjZwkLBs2JDzxpXsVOCasH4/pYjzusrl8x68IBXAkQShH
+    BKS1DTD/Jc6S6/5GFaNDZwlYNQKBgQDYq8Hmj7yeUF8qY2uo/tez1inXJJWuCHxU
+    LG4YQ871EH3jd/OE9RfsdsbBH1FCZew6YJxcslFRiNaaPLcWMmwIRnfGpI9QnbEU
+    udhpMWUCmv+U3HEoJVjGYE0f3LSyn65vJCA3GVlhJE4iV7OFTw/9chIjXPplafBz
+    dIl1GGK3pQKBgCoqFlWnVzFfgn/F1fdmoZI3Y4Ec2tZZkkCz63wovuSN0hUGAgmR
+    I9MLIttXcnGPbAiH+Ee5dfibV4i9HdJ36Tr6qC8A5zX/D8t23eNimTkte/tYrmYq
+    pPo/FzsWtrA0uSmXtT9+B2Y7FPB1kP6/J7hCmQRvncWELmwWm04d2OHBAoGBANZ4
+    7e6zyRlMpWboEuGtoQa6r5/u7treO3N2p2QNewbJ1FMdoUey9IN07zirL1xyV2tR
+    xnVbbXMv6H20K+ck8hse5eETc2lxLqA9diJqanoxw1wu+TOsBDwZhz5K0fMebSRG
+    tjzUMs0ditojxefnYwSVra6jkphgTUt7x7TI9q6hAoGANDWqkbxPphgectriXmK7
+    PeevbpUf6a0PsBBpACUiumGbRde2whVV7onC4+1hbRBpEIfmfep4Rpr2jKj3urel
+    zbVFmMajs1gitrs/xrOmeoxJoSjCLIYmcblEhbBHWrcnFvgN5o/xr/lUvCMPrB8O
+    7MC6+2gRmFP9v6n1xvxCwMs=
+    -----END PRIVATE KEY-----
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: openx-apiserver
+  name: openx-apiserver
+  namespace: kube-neverdown
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: openx-apiserver
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8081"
+        prometheus.io/scrape: "true"
+      labels:
+        appname: openx-apiserver
+    spec:
+      containers:
+      - args:
+        - -listenPort=8080
+        command:
+        - /server/openx-apiserver
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        - name: DISCOVERY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: DISCOVERY_SERVICE_HOST
+          value: jingx-discovery.kube-discovery.svc.cluster.local
+        - name: DISCOVERY_SERVICE_PORT
+          value: "9443"
+        - name: AUTHORITY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: AUTHORITY_SERVICE_HOST
+          value: authx-discovery.kube-authx.svc.cluster.local
+        - name: AUTHORITY_SERVICE_PORT
+          value: "9443"
+        - name: ENV_ZAP_ENCODING
+          value: json
+        - name: TOKEN_EXPIRATION
+          value: "36000"
+        - name: ENV_ZAP_LEVEL
+          value: "0"
+        image: kongzz45/openx-apiserver:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: openx-apiserver
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      serviceAccount: openx-controller
+      serviceAccountName: openx-controller
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: openx-apiserver
+  name: openx-apiserver
+  namespace: kube-neverdown
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    appname: openx-apiserver
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: authx-apiserver
+  name: authx-apiserver
+  namespace: kube-authx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: authx-apiserver
+  template:
+    metadata:
+      labels:
+        appname: authx-apiserver
+    spec:
+      containers:
+      - args:
+        - -httpListenPort=8086
+        - -grpcListenPort=8087
+        command:
+        - /server/authx-apiserver
+        env:
+        - name: AUTHX_SECRET
+          value: "authx-secret"
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        - name: DISCOVERY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: DISCOVERY_SERVICE_HOST
+          value: authx-discovery.kube-authx.svc.cluster.local
+        - name: DISCOVERY_SERVICE_PORT
+          value: "9443"
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/authx-apiserver:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: authx-apiserver
+        ports:
+        - containerPort: 8086
+          name: http
+          protocol: TCP
+        - containerPort: 8087
+          name: apigrpc
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: authx-apiserver
+  name: authx-apiserver
+  namespace: kube-authx
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8086
+    protocol: TCP
+    targetPort: 8086
+  - name: grpc
+    port: 8087
+    protocol: TCP
+    targetPort: 8087
+  selector:
+    appname: authx-apiserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: jingx-apiserver
+  name: jingx-apiserver
+  namespace: kube-discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: jingx-apiserver
+  template:
+    metadata:
+      labels:
+        appname: jingx-apiserver
+    spec:
+      containers:
+      - args:
+        - -listenPort=8083
+        command:
+        - /server/jingx-apiserver
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: TLS_OPTION_CERT_FILE
+          value: /var/conf/server.crt
+        - name: TLS_OPTION_KEY_FILE
+          value: /var/conf/server.key
+        - name: DISCOVERY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: DISCOVERY_SERVICE_HOST
+          value: jingx-discovery.kube-discovery.svc.cluster.local
+        - name: DISCOVERY_SERVICE_PORT
+          value: "9443"
+        - name: AUTHORITY_SERVICE_CAFILE
+          value: /var/conf/ca.crt
+        - name: AUTHORITY_SERVICE_HOST
+          value: authx-discovery.kube-authx.svc.cluster.local
+        - name: AUTHORITY_SERVICE_PORT
+          value: "9443"
+        - name: ENV_ZAP_ENCODING
+          value: json
+        - name: TOKEN_EXPIRATION
+          value: "3600"
+        - name: ENV_ZAP_LEVEL
+          value: "0"
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: kongzz45/jingx-apiserver:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: jingx-apiserver
+        ports:
+        - containerPort: 8083
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/conf
+          name: certs-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: ca.crt
+            path: ca.crt
+          - key: server.crt
+            path: server.crt
+          - key: server.key
+            path: server.key
+          name: neverdown-certs
+        name: certs-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: jingx-apiserver
+  name: jingx-apiserver
+  namespace: kube-discovery
+spec:
+  ports:
+  - name: http
+    port: 8083
+    protocol: TCP
+    targetPort: 8083
+  selector:
+    appname: jingx-apiserver
+  type: ClusterIP

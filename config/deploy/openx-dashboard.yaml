@@ -4,7 +4,7 @@ metadata:
   labels:
     appname: openx-dashboard
   name: openx-dashboard
-  namespace: test
+  namespace: kube-neverdown
 spec:
   replicas: 1
   selector:
@@ -27,7 +27,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: kongzz45/openx-dashboard:0.12.0
+        image: kongzz45/openx-dashboard:0.0.1
         imagePullPolicy: IfNotPresent
         name: openx-dashboard
         ports:
@@ -37,7 +37,7 @@ spec:
         - mountPath: /var/conf
           name: certs-volume
         - mountPath: /usr/share/nginx/html/config
-          name: dashboard-config-json
+          name: dashboard-config
       volumes:
       - configMap:
           defaultMode: 420
@@ -53,16 +53,16 @@ spec:
           items:
           - key: config.json
             path: config.json
-          name: openx-dashboard-config-json
-        name: dashboard-config-json
+          name: openx-dashboard-config
+        name: dashboard-config
 ---
 apiVersion: v1
 data:
-  config.json: '{"VITE_BASE_URL":"openx-apiserver.test.svc.cluster.local:8080"}'
+  config.json: '{"VITE_BASE_URL":"openx-apiserver.kube-neverdown.svc.cluster.local:8080"}'
 kind: ConfigMap
 metadata:
-  name: openx-dashboard-config-json
-  namespace: test
+  name: openx-dashboard-config
+  namespace: kube-neverdown
 ---
 apiVersion: v1
 kind: Service
@@ -70,10 +70,10 @@ metadata:
   labels:
     appname: openx-dashboard
   name: openx-dashboard
-  namespace: test
+  namespace: kube-neverdown
 spec:
   ports:
-  - port: 443
+  - port: 9443
     protocol: TCP
     targetPort: 443
   selector:
