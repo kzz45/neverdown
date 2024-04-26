@@ -19,3 +19,15 @@
 ## [本地测试](./local.md)
 
 ## 安装部署
+
+```sh
+kubectl apply -f config/crd/
+
+kubectl apply -f config/deploy/
+```
+
+## 联系
+
+有任何问题, 请联系我:
+
+![wechat](./doc/Wechat.jpg)

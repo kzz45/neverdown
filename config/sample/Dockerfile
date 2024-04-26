@@ -1,4 +1,3 @@
-# FROM kongzz45/nginx-ssl:latest
 FROM nginx:latest
 
 LABEL maintainer="kongzz"
