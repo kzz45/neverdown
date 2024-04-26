@@ -263,7 +263,6 @@ export default {
     },
     socket_onmessage(msg) {
       const result = protoRequest.Response.decode(msg);
-      // console.log(result, "-----------");
       if (result.code === 1) {
         const err_msg = String.fromCharCode.apply(null, result.raw);
         this.$message({

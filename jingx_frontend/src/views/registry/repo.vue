@@ -13,7 +13,7 @@
       >
         <el-table-column label="Repo名称" prop="name"></el-table-column>
         <el-table-column label="项目名称" prop="project_name"></el-table-column>
-        <el-table-column label="Tag"></el-table-column>
+        <!-- <el-table-column label="Tag"></el-table-column> -->
         <el-table-column label="创建时间">
           <template slot-scope="scoped">
             {{ scoped.row.create_time | parseTime("{y}-{m}-{d} {h}:{i}:{s}") }}

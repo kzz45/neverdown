@@ -24,8 +24,15 @@
         </el-table-column>
         <el-table-column label="拉取命令" width="120px;">
           <template slot-scope="scoped">
-            <el-tag @click="copy_public(scoped.row)">外网</el-tag>
-            <el-tag @click="copy_private(scoped.row)">内网</el-tag>
+            <el-tag
+              v-for="(item, index) in project_list"
+              :key="index"
+              @click="copy_public(item, scoped.row)"
+              style="margin-right: 5px"
+              >复制
+            </el-tag>
+            <!-- <el-tag @click="copy_public(scoped.row)">地址1</el-tag> -->
+            <!-- <el-tag @click="copy_private(scoped.row)">地址2</el-tag> -->
           </template>
         </el-table-column>
       </el-table>
@@ -61,6 +68,7 @@ export default {
   data() {
     return {
       tag_list: [],
+      project_list: [],
       currentPage: 1,
       projectName: localStorage.getItem("projectName"),
       repoName: localStorage.getItem("repoName"),
@@ -83,7 +91,9 @@ export default {
   mounted() {
     this.socket_connect();
   },
-  created() {},
+  created() {
+    this.get_project_list();
+  },
   methods: {
     goback() {
       this.$router.push({ path: "/repo/repo" });
@@ -96,34 +106,40 @@ export default {
       );
       sendSocketMessage(send_data, store);
     },
+    get_project_list() {
+      const send_data = init_socket_data(
+        "discovery-jingx",
+        "jingx-v1-Project",
+        "list"
+      );
+      sendSocketMessage(send_data, store);
+    },
     socket_onmessage(msg) {
       const result = protoRequest.Response.decode(msg);
-      if (result.verb === "list") {
-        const project_list = protoApi[
-          `${result.groupVersionKind.kind}List`
-        ].decode(result.raw).items;
-        // console.log(project_list);
-        const project_list_filter1 = project_list.filter((val) => {
+      if (result.verb === "list" && result.groupVersionKind.kind === "Tag") {
+        const tag_list = protoApi[`${result.groupVersionKind.kind}List`].decode(
+          result.raw
+        ).items;
+        const tag_list_filter1 = tag_list.filter((val) => {
           return (
             val.spec.repositoryMeta.projectName ===
             localStorage.getItem("projectName")
           );
         });
-        const project_list_filter2 = project_list_filter1.filter((val) => {
+        const tag_list_filter2 = tag_list_filter1.filter((val) => {
           return (
             val.spec.repositoryMeta.repositoryName ===
             localStorage.getItem("repoName")
           );
         });
-        project_list_filter2.sort((itemA, itemB) => {
+        tag_list_filter2.sort((itemA, itemB) => {
           return (
             itemA.metadata.creationTimestamp.seconds -
             itemB.metadata.creationTimestamp.seconds
           );
         });
-        // console.log(project_list_filter2);
         this.tag_list = [];
-        for (let pl of project_list_filter2) {
+        for (let pl of tag_list_filter2) {
           this.tag_list.push({
             name: pl.metadata.name,
             tag: pl.spec.tag,
@@ -132,11 +148,25 @@ export default {
             create_time: pl.metadata.creationTimestamp.seconds,
           });
         }
+      } else if (
+        result.verb === "list" &&
+        result.groupVersionKind.kind === "Project"
+      ) {
+        const project_list = protoApi[
+          `${result.groupVersionKind.kind}List`
+        ].decode(result.raw).items;
+        const indexPro = project_list.findIndex((val) => {
+          return val.metadata.name === localStorage.getItem("projectName");
+        });
+        this.project_list = project_list[indexPro].spec.domains;
       }
     },
-    copy_public(row) {
-      // console.log(row);
+    copy_public(url, row) {
+      // console.log(url, row);
       const public_addr =
+        "docker pull " +
+        url +
+        "/" +
         this.projectName +
         "/" +
         this.repoName +
