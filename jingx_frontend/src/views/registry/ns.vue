@@ -11,8 +11,13 @@
       >
       <el-table :data="ns_list" size="small" empty-text="啥也没有" border>
         <el-table-column label="项目" prop="name"></el-table-column>
-        <el-table-column label="公网" prop="publicAddr"></el-table-column>
-        <el-table-column label="内网" prop="privateAddr"></el-table-column>
+        <el-table-column label="地址">
+          <template slot-scope="scoped">
+            <el-tag v-for="item in scoped.row.domains" :key="item">{{
+              item
+            }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scoped">
             {{ scoped.row.create_time | parseTime("{y}-{m}-{d} {h}:{i}:{s}") }}
@@ -82,20 +87,20 @@
               <el-input v-model="ns_form.name" placeholder=""></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
+          <el-col :span="12">
             <el-form-item label="描述" prop="desc">
               <el-input v-model="ns_form.desc" placeholder=""></el-input>
             </el-form-item>
-          </el-col> -->
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="地址1" prop="addr1">
+            <el-form-item label="公网" prop="addr1">
               <el-input v-model="ns_form.publicAddr" placeholder=""></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="地址2" prop="addr2">
+            <el-form-item label="内网" prop="addr2">
               <el-input v-model="ns_form.privateAddr" placeholder=""></el-input>
             </el-form-item>
           </el-col>
@@ -176,7 +181,10 @@ export default {
     update_ns(row) {
       this.ns_dialog = true;
       this.dialogStatus = "update_ns";
-      this.ns_form = Object.assign({}, row);
+      this.ns_form.name = row.name;
+      // this.ns_form = Object.assign({}, row);
+      this.ns_form.publicAddr = row.domains[0];
+      this.ns_form.privateAddr = row.domains[1];
     },
     delete_ns(row) {
       const projectObj = new protoApi.Project();
@@ -202,8 +210,8 @@ export default {
         projectObj.metadata = { name: this.ns_form.name };
         projectObj.spec = {
           id: "",
-          publicAddr: this.ns_form.publicAddr,
-          privateAddr: this.ns_form.privateAddr,
+          generateId: "",
+          domains: [this.ns_form.publicAddr, this.ns_form.privateAddr],
         };
         const gvk = {
           group: "jingx",
@@ -225,8 +233,8 @@ export default {
         projectObj.metadata = { name: this.ns_form.name };
         projectObj.spec = {
           id: "",
-          publicAddr: this.ns_form.publicAddr,
-          privateAddr: this.ns_form.privateAddr,
+          generateId: "",
+          domains: [this.ns_form.publicAddr, this.ns_form.privateAddr],
         };
         const gvk = {
           group: "jingx",
@@ -278,8 +286,7 @@ export default {
         for (let pl of project_list) {
           this.ns_list.push({
             name: pl.metadata.name,
-            publicAddr: pl.spec.publicAddr,
-            privateAddr: pl.spec.privateAddr,
+            domains: pl.spec.domains,
             create_time: pl.metadata.creationTimestamp.seconds,
           });
         }

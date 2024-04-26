@@ -61,7 +61,7 @@ fi
 if [ "${GENS}" = "cli" ]; then
     isCi=$(env | grep -i CI_COMMIT_BRANCH | awk '{split($0,a,"="); print a[2]}')
     if [ -z "${isCi}" ]; then
-        image=$(docker images --digests | grep ${PROJECT} | grep ${REPOSITORY} | grep ${TAG} | awk '{print $3}' | awk '{split($0,a,":"); print a[2]}')
+        image=$(docker images --no-trunc | grep ${PROJECT} | grep ${REPOSITORY} | grep ${TAG} | awk '{print $3}' | awk '{split($0,a,":"); print a[2]}')
         jingx-cli \
             -address=${addr} \
             -username=${user} \
@@ -74,7 +74,7 @@ if [ "${GENS}" = "cli" ]; then
             -commitHash=${commitHash} \
             -sha256=${image}
     else
-        image=$(sudo docker images --digests | grep ${PROJECT} | grep ${REPOSITORY} | grep ${TAG} | awk '{print $3}' | awk '{split($0,a,":"); print a[2]}')
+        image=$(sudo docker images --no-trunc | grep ${PROJECT} | grep ${REPOSITORY} | grep ${TAG} | awk '{print $3}' | awk '{split($0,a,":"); print a[2]}')
         sudo jingx-cli \
             -address=${addr} \
             -username=${user} \
