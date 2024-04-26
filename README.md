@@ -30,4 +30,4 @@ kubectl apply -f config/deploy/
 
 有任何问题, 请联系我:
 
-![wechat](./doc/Wechat.jpg)
+![wechat](./doc/Wechat.png)
