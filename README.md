@@ -16,8 +16,6 @@
 | openx-apiserver | K8S 集群的管理       |
 | openx-frontend  | K8S 集群的管理, 前端 |
 
-## [本地测试](./local.md)
-
 ## 安装部署
 
 ```sh
@@ -25,6 +23,10 @@ kubectl apply -f config/crd/
 
 kubectl apply -f config/deploy/
 ```
+
+## [本地测试](./local.md)
+
+## [镜像服务使用](./jingx_usage.md)
 
 ## 联系
 
