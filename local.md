@@ -1,5 +1,7 @@
 # 本地测试
 
+## 集群创建
+
 - 本地测试环境通过 kind 来创建一个 K8S 集群
 
 ![install k8s](./doc/install_k8s_with_kind.png)
@@ -8,9 +10,13 @@
 
 ![install metrics-server](./doc/install_metrics_server.png)
 
+## 启动 etcd-server
+
 - 在 K8S 环境部署好之后, 需要外部启动 etcd 服务
 
 ![install etcd](./doc/install_etcd_out_cluster.png)
+
+## 安装 CRD
 
 - 安装 CRD
 
@@ -19,6 +25,8 @@
 - 安装 RBAC Role
   
 ![install rbac](./doc/install_rbac.png)
+
+## 本地启动服务
 
 - 启动 disovery 服务
 
@@ -36,11 +44,19 @@
 
 ![run-openx-local](./doc/run-openx-local.png)
 
-- 启动 authx-frontend 并复制 openx-apiserver 的密码
+- 启动 authx-frontend 登录认证平台
 
 ```sh
 make run-authx-frontend-local
 ```
+
+这个时候登录认证平台之后, 会看到如下界面, 一个是镜像服务, 一个是 K8S 服务
+
+点击后面的箭头进入, 会看到各自的账户、角色和 GVK 管理界面
+
+![authx-dashboard-app](./doc/authx-dashboard-app.png)
+
+进入并复制 openx-apiserver 的登录密码
 
 ![run-authx-frontend](./doc/run-authx-frontend.png)
 
