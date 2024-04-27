@@ -23,6 +23,14 @@ spec:
   - kubernetes
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: openx-controller
