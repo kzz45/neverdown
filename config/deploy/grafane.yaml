@@ -1,0 +1,91 @@
+apiVersion: v1
+data:
+  config.ini: |-
+    [auth.anonymous]
+    # enable anonymous access
+    enabled = true
+
+    # specify organization name that should be used for unauthenticated users
+    org_name = Main Org.
+
+    # specify role for unauthenticated users
+    org_role = Viewer
+
+    # mask the Grafana version number for unauthenticated users
+    hide_version = false
+kind: ConfigMap
+metadata:
+  name: grafana
+  namespace: monitoring
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: grafana
+  name: grafana-web
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: grafana
+  template:
+    metadata:
+      labels:
+        appname: grafana
+    spec:
+      containers:
+      - env:
+        - name: GF_PATHS_DATA
+          value: /data
+        - name: GF_PATHS_CONFIG
+          value: /grafana/config/config.ini
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: grafana/grafana:10.4.2
+        imagePullPolicy: IfNotPresent
+        name: grafana-web
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: storage-volume
+        - mountPath: /grafana/config
+          name: config-volume
+      volumes:
+      - hostPath:
+          path: /monitoring/grafana
+          type: DirectoryOrCreate
+        name: storage-volume
+      - configMap:
+          items:
+          - key: config.ini
+            path: config.ini
+          name: grafana
+        name: config-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appname: grafana
+  name: grafana-web
+  namespace: monitoring
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    appname: grafana
+  type: ClusterIP
