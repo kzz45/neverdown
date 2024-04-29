@@ -26,6 +26,8 @@ kubectl apply -f config/deploy/
 
 ## [本地测试](./local.md)
 
+## [线上部署](./online.md)
+
 ## [镜像服务使用](./jingx_usage.md)
 
 ## 联系

@@ -65,3 +65,5 @@ build-gamex:
 ```
 
 ![jingx_push](./doc/jingx_push.png)
+
+至此, 镜像已经上传到 jingx 服务了

@@ -8,6 +8,37 @@
 
 - 需要安装 metrics-server 用来获取资源使用情况
 
+```sh
+# 部署 metrics-server
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# 等待 metrics-server 启动 可能会面临如下的错误
+
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+ ...
+ ...
+ ...
+ ...            Readiness probe failed: HTTP probe failed with statuscode: 500
+
+# 修改 metrics-server 的配置 进行如下修改操作
+
+kubectl -n kube-system edit deploy metrics-server
+spec:
+      containers:
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=10250
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+        - --kubelet-insecure-tls
+
+# 等待 metrics-server 启动正常
+kubectl get pods -n kube-system | grep metrics
+```
+
 ![install metrics-server](./doc/install_metrics_server.png)
 
 ## 启动 etcd-server
