@@ -35,3 +35,7 @@ type OpenxExpansion interface{}
 type RedisExpansion interface{}
 
 type TolerationExpansion interface{}
+
+type VolcAccessControlExpansion interface{}
+
+type VolcLoadBalancerExpansion interface{}

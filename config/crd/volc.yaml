@@ -1,0 +1,59 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volcloadbalancers.openx.neverdown.io
+spec:
+  group: openx.neverdown.io
+  scope: Namespaced
+  names:
+    plural: volcloadbalancers
+    singular: volcloadbalancer
+    kind: VolcLoadBalancer
+    shortNames:
+    - vlb
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+      priority: 0
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volcaccesscontrols.openx.neverdown.io
+spec:
+  group: openx.neverdown.io
+  scope: Namespaced
+  names:
+    plural: volcaccesscontrols
+    singular: volcaccesscontrol
+    kind: VolcAccessControl
+    shortNames:
+    - vcl
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+      priority: 0
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            x-kubernetes-preserve-unknown-fields: true

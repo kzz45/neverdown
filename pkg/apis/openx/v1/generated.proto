@@ -313,3 +313,45 @@ message TolerationSpec {
   optional k8s.io.api.core.v1.Toleration toleration = 1;
 }
 
+message VolcAccessControl {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional VolcAccessControlSpec spec = 2;
+}
+
+message VolcAccessControlList {
+  // +optional
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated VolcAccessControl items = 2;
+}
+
+// 火山云的访问控制
+message VolcAccessControlSpec {
+  optional CloudLoadBalancerObject instance = 1;
+
+  optional CloudLoadBalancerObject status = 2;
+
+  optional CloudLoadBalancerObject type = 3;
+}
+
+message VolcLoadBalancer {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional VolcLoadBalancerSpec spec = 2;
+}
+
+message VolcLoadBalancerList {
+  // +optional
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated VolcLoadBalancer items = 2;
+}
+
+// 火山云的负载均衡
+message VolcLoadBalancerSpec {
+  optional CloudLoadBalancerObject instance = 1;
+
+  optional CloudLoadBalancerObject overrideListeners = 2;
+}
+

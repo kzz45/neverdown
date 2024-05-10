@@ -37,6 +37,8 @@ type OpenxV1Interface interface {
 	OpenxesGetter
 	RedisesGetter
 	TolerationsGetter
+	VolcAccessControlsGetter
+	VolcLoadBalancersGetter
 }
 
 // OpenxV1Client is used to interact with features provided by the openx group.
@@ -78,6 +80,14 @@ func (c *OpenxV1Client) Redises(namespace string) RedisInterface {
 
 func (c *OpenxV1Client) Tolerations(namespace string) TolerationInterface {
 	return newTolerations(c, namespace)
+}
+
+func (c *OpenxV1Client) VolcAccessControls(namespace string) VolcAccessControlInterface {
+	return newVolcAccessControls(c, namespace)
+}
+
+func (c *OpenxV1Client) VolcLoadBalancers(namespace string) VolcLoadBalancerInterface {
+	return newVolcLoadBalancers(c, namespace)
 }
 
 // NewForConfig creates a new OpenxV1Client for the given config.

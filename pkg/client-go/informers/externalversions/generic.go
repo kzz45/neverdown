@@ -77,6 +77,10 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Redises().Informer()}, nil
 	case openxv1.SchemeGroupVersion.WithResource("tolerations"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Tolerations().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("volcaccesscontrols"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().VolcAccessControls().Informer()}, nil
+	case openxv1.SchemeGroupVersion.WithResource("volcloadbalancers"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().VolcLoadBalancers().Informer()}, nil
 
 		// Group=rbac, Version=v1
 	case rbacv1.SchemeGroupVersion.WithResource("apps"):

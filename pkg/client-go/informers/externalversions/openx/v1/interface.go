@@ -42,6 +42,10 @@ type Interface interface {
 	Redises() RedisInformer
 	// Tolerations returns a TolerationInformer.
 	Tolerations() TolerationInformer
+	// VolcAccessControls returns a VolcAccessControlInformer.
+	VolcAccessControls() VolcAccessControlInformer
+	// VolcLoadBalancers returns a VolcLoadBalancerInformer.
+	VolcLoadBalancers() VolcLoadBalancerInformer
 }
 
 type version struct {
@@ -98,4 +102,14 @@ func (v *version) Redises() RedisInformer {
 // Tolerations returns a TolerationInformer.
 func (v *version) Tolerations() TolerationInformer {
 	return &tolerationInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// VolcAccessControls returns a VolcAccessControlInformer.
+func (v *version) VolcAccessControls() VolcAccessControlInformer {
+	return &volcAccessControlInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// VolcLoadBalancers returns a VolcLoadBalancerInformer.
+func (v *version) VolcLoadBalancers() VolcLoadBalancerInformer {
+	return &volcLoadBalancerInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

@@ -64,6 +64,14 @@ func (c *FakeOpenxV1) Tolerations(namespace string) v1.TolerationInterface {
 	return &FakeTolerations{c, namespace}
 }
 
+func (c *FakeOpenxV1) VolcAccessControls(namespace string) v1.VolcAccessControlInterface {
+	return &FakeVolcAccessControls{c, namespace}
+}
+
+func (c *FakeOpenxV1) VolcLoadBalancers(namespace string) v1.VolcLoadBalancerInterface {
+	return &FakeVolcLoadBalancers{c, namespace}
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeOpenxV1) RESTClient() rest.Interface {

@@ -116,7 +116,17 @@ func (r *Resources) registerInformer() {
 		UpdateFunc: r.updateFunc,
 		DeleteFunc: r.deleteFunc,
 	})
+	r.OpenXInformerFactory.Openx().V1().VolcAccessControls().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+		AddFunc:    r.addFunc,
+		UpdateFunc: r.updateFunc,
+		DeleteFunc: r.deleteFunc,
+	})
 	r.OpenXInformerFactory.Openx().V1().AliyunLoadBalancers().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+		AddFunc:    r.addFunc,
+		UpdateFunc: r.updateFunc,
+		DeleteFunc: r.deleteFunc,
+	})
+	r.OpenXInformerFactory.Openx().V1().VolcLoadBalancers().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc:    r.addFunc,
 		UpdateFunc: r.updateFunc,
 		DeleteFunc: r.deleteFunc,
@@ -272,12 +282,24 @@ func (r *Resources) create(gvk *schema.GroupVersionKind, namespace string, raw [
 			break
 		}
 		_, err = r.openxClientSet.OpenxV1().AliyunAccessControls(namespace).Create(ctx, obj, createOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcAccessControl"}:
+		obj := &openxv1.VolcAccessControl{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		_, err = r.openxClientSet.OpenxV1().VolcAccessControls(namespace).Create(ctx, obj, createOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunLoadBalancer"}:
 		obj := &openxv1.AliyunLoadBalancer{}
 		if err = obj.Unmarshal(raw); err != nil {
 			break
 		}
 		_, err = r.openxClientSet.OpenxV1().AliyunLoadBalancers(namespace).Create(ctx, obj, createOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcLoadBalancer"}:
+		obj := &openxv1.VolcLoadBalancer{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		_, err = r.openxClientSet.OpenxV1().VolcLoadBalancers(namespace).Create(ctx, obj, createOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "Etcd"}:
 		obj := &openxv1.Etcd{}
 		if err = obj.Unmarshal(raw); err != nil {
@@ -442,12 +464,24 @@ func (r *Resources) delete(gvk *schema.GroupVersionKind, namespace string, raw [
 			break
 		}
 		err = r.openxClientSet.OpenxV1().AliyunAccessControls(namespace).Delete(ctx, obj.Name, delOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcAccessControl"}:
+		obj := &openxv1.VolcAccessControl{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		err = r.openxClientSet.OpenxV1().VolcAccessControls(namespace).Delete(ctx, obj.Name, delOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunLoadBalancer"}:
 		obj := &openxv1.AliyunLoadBalancer{}
 		if err = obj.Unmarshal(raw); err != nil {
 			break
 		}
 		err = r.openxClientSet.OpenxV1().AliyunLoadBalancers(namespace).Delete(ctx, obj.Name, delOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcLoadBalancer"}:
+		obj := &openxv1.VolcLoadBalancer{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		err = r.openxClientSet.OpenxV1().VolcLoadBalancers(namespace).Delete(ctx, obj.Name, delOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "Etcd"}:
 		obj := &openxv1.Etcd{}
 		if err = obj.Unmarshal(raw); err != nil {
@@ -612,12 +646,24 @@ func (r *Resources) update(gvk *schema.GroupVersionKind, namespace string, raw [
 			break
 		}
 		_, err = r.openxClientSet.OpenxV1().AliyunAccessControls(namespace).Update(ctx, obj, updateOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcAccessControl"}:
+		obj := &openxv1.VolcAccessControl{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		_, err = r.openxClientSet.OpenxV1().VolcAccessControls(namespace).Update(ctx, obj, updateOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunLoadBalancer"}:
 		obj := &openxv1.AliyunLoadBalancer{}
 		if err = obj.Unmarshal(raw); err != nil {
 			break
 		}
 		_, err = r.openxClientSet.OpenxV1().AliyunLoadBalancers(namespace).Update(ctx, obj, updateOpts)
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcLoadBalancer"}:
+		obj := &openxv1.VolcLoadBalancer{}
+		if err = obj.Unmarshal(raw); err != nil {
+			break
+		}
+		_, err = r.openxClientSet.OpenxV1().VolcLoadBalancers(namespace).Update(ctx, obj, updateOpts)
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "Etcd"}:
 		obj := &openxv1.Etcd{}
 		if err = obj.Unmarshal(raw); err != nil {
@@ -866,12 +912,32 @@ func (r *Resources) list(gvk *schema.GroupVersionKind, namespace string, raw []b
 			listItem.Items = append(listItem.Items, *v)
 		}
 		objList = listItem
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcAccessControl"}:
+		obj, err := r.OpenXInformerFactory.Openx().V1().VolcAccessControls().Lister().VolcAccessControls(namespace).List(selector)
+		if err != nil {
+			break
+		}
+		listItem := &openxv1.VolcAccessControlList{Items: make([]openxv1.VolcAccessControl, 0)}
+		for _, v := range obj {
+			listItem.Items = append(listItem.Items, *v)
+		}
+		objList = listItem
 	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunLoadBalancer"}:
 		obj, err := r.OpenXInformerFactory.Openx().V1().AliyunLoadBalancers().Lister().AliyunLoadBalancers(namespace).List(selector)
 		if err != nil {
 			break
 		}
 		listItem := &openxv1.AliyunLoadBalancerList{Items: make([]openxv1.AliyunLoadBalancer, 0)}
+		for _, v := range obj {
+			listItem.Items = append(listItem.Items, *v)
+		}
+		objList = listItem
+	case schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcLoadBalancer"}:
+		obj, err := r.OpenXInformerFactory.Openx().V1().VolcLoadBalancers().Lister().VolcLoadBalancers(namespace).List(selector)
+		if err != nil {
+			break
+		}
+		listItem := &openxv1.VolcLoadBalancerList{Items: make([]openxv1.VolcLoadBalancer, 0)}
 		for _, v := range obj {
 			listItem.Items = append(listItem.Items, *v)
 		}
@@ -989,8 +1055,12 @@ func (r *Resources) convertGroupVersionKind(object interface{}) schema.GroupVers
 		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "Affinity"}
 	case reflect.TypeOf(&openxv1.AliyunAccessControl{}):
 		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunAccessControl"}
+	case reflect.TypeOf(&openxv1.VolcAccessControl{}):
+		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcAccessControl"}
 	case reflect.TypeOf(&openxv1.AliyunLoadBalancer{}):
 		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "AliyunLoadBalancer"}
+	case reflect.TypeOf(&openxv1.VolcLoadBalancer{}):
+		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "VolcLoadBalancer"}
 	case reflect.TypeOf(&openxv1.Etcd{}):
 		return schema.GroupVersionKind{Group: openxv1.GroupName, Version: openxv1.SchemeGroupVersion.Version, Kind: "Etcd"}
 	case reflect.TypeOf(&openxv1.Mysql{}):

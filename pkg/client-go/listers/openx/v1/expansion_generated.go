@@ -89,3 +89,19 @@ type TolerationListerExpansion interface{}
 // TolerationNamespaceListerExpansion allows custom methods to be added to
 // TolerationNamespaceLister.
 type TolerationNamespaceListerExpansion interface{}
+
+// VolcAccessControlListerExpansion allows custom methods to be added to
+// VolcAccessControlLister.
+type VolcAccessControlListerExpansion interface{}
+
+// VolcAccessControlNamespaceListerExpansion allows custom methods to be added to
+// VolcAccessControlNamespaceLister.
+type VolcAccessControlNamespaceListerExpansion interface{}
+
+// VolcLoadBalancerListerExpansion allows custom methods to be added to
+// VolcLoadBalancerLister.
+type VolcLoadBalancerListerExpansion interface{}
+
+// VolcLoadBalancerNamespaceListerExpansion allows custom methods to be added to
+// VolcLoadBalancerNamespaceLister.
+type VolcLoadBalancerNamespaceListerExpansion interface{}

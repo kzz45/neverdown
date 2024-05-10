@@ -118,6 +118,8 @@ rules:
 - apiGroups:
   - "openx.neverdown.io"
   resources:
+  - volcloadbalancers
+  - volcaccesscontrols
   - aliyunloadbalancers
   - aliyunaccesscontrols
   - mysqls

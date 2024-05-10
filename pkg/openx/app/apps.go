@@ -9,6 +9,7 @@ import (
 	"github.com/kzz45/neverdown/pkg/openx/controller/mysql"
 	"github.com/kzz45/neverdown/pkg/openx/controller/openx"
 	"github.com/kzz45/neverdown/pkg/openx/controller/redis"
+	"github.com/kzz45/neverdown/pkg/openx/controller/volcloadbalancer"
 )
 
 func startLoadBalancerController(ctx *ControllerContext) (http.Handler, bool, error) {
@@ -19,6 +20,22 @@ func startLoadBalancerController(ctx *ControllerContext) (http.Handler, bool, er
 		ctx.OpenXInformerFactory.Openx().V1().AliyunLoadBalancers(),
 		ctx.OpenXInformerFactory.Openx().V1().AliyunAccessControls(),
 		ctx.ClientBuilder.OpenxClientOrDie("loadbalancer-controller-extension"),
+	)
+	if err != nil {
+		return nil, true, fmt.Errorf("error creating loadbalancer controller: %v", err)
+	}
+	ctx.loadBalancher = dc
+	return nil, true, nil
+}
+
+func startVolcLoadBalancerController(ctx *ControllerContext) (http.Handler, bool, error) {
+	//if !ctx.AvailableResources[schema.GroupVersionResource{Group: "openx", Version: "v1", Resource: "mysqls"}] {
+	//	return nil, false, nil
+	//}
+	dc, err := volcloadbalancer.NewVolcLoadBalancerController(
+		ctx.OpenXInformerFactory.Openx().V1().VolcLoadBalancers(),
+		ctx.OpenXInformerFactory.Openx().V1().VolcAccessControls(),
+		ctx.ClientBuilder.OpenxClientOrDie("volcloadbalancer-controller-extension"),
 	)
 	if err != nil {
 		return nil, true, fmt.Errorf("error creating loadbalancer controller: %v", err)
