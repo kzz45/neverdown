@@ -10,10 +10,10 @@ import (
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 	"go.uber.org/zap"
 
-	jingxv1 "github.com/kzz45/neverdown/pkg/apis/jingx/v1"
-	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
-	authority "github.com/kzz45/neverdown/pkg/authx/client-go"
-	"github.com/kzz45/neverdown/pkg/jingx/registry"
+	jingxv1 "github.com/kzz45/discovery/pkg/apis/jingx/v1"
+	rbacv1 "github.com/kzz45/discovery/pkg/apis/rbac/v1"
+	authority "github.com/kzz45/discovery/pkg/authx/client-go"
+	"github.com/kzz45/discovery/pkg/jingx/registry"
 
 	"github.com/kzz45/neverdown/pkg/openx/aggregator/proto"
 

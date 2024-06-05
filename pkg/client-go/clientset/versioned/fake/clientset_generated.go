@@ -20,14 +20,8 @@ package fake
 
 import (
 	clientset "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"
-	auditv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/audit/v1"
-	fakeauditv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/audit/v1/fake"
-	jingxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/jingx/v1"
-	fakejingxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/jingx/v1/fake"
 	openxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/openx/v1"
 	fakeopenxv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/openx/v1/fake"
-	rbacv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/rbac/v1"
-	fakerbacv1 "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned/typed/rbac/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -85,22 +79,7 @@ var (
 	_ testing.FakeClient  = &Clientset{}
 )
 
-// AuditV1 retrieves the AuditV1Client
-func (c *Clientset) AuditV1() auditv1.AuditV1Interface {
-	return &fakeauditv1.FakeAuditV1{Fake: &c.Fake}
-}
-
-// JingxV1 retrieves the JingxV1Client
-func (c *Clientset) JingxV1() jingxv1.JingxV1Interface {
-	return &fakejingxv1.FakeJingxV1{Fake: &c.Fake}
-}
-
 // OpenxV1 retrieves the OpenxV1Client
 func (c *Clientset) OpenxV1() openxv1.OpenxV1Interface {
 	return &fakeopenxv1.FakeOpenxV1{Fake: &c.Fake}
-}
-
-// RbacV1 retrieves the RbacV1Client
-func (c *Clientset) RbacV1() rbacv1.RbacV1Interface {
-	return &fakerbacv1.FakeRbacV1{Fake: &c.Fake}
 }

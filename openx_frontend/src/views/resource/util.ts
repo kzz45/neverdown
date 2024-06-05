@@ -344,7 +344,7 @@ const Affinity: any = {
     }
   }
 }
-const AliyunAccessControl: any = {
+const AccessControl: any = {
   metadata,
   spec: {
     instance: {
@@ -358,7 +358,7 @@ const AliyunAccessControl: any = {
     }
   }
 }
-const AliyunLoadBalancer: any = {
+const LoadBalancer: any = {
   metadata,
   spec: {
     instance: {
@@ -573,8 +573,8 @@ const objectInitInfo: any = {
   'apps-v1-Deployment': Deployment,
   'apps-v1-StatefulSet': Deployment,
   'openx.neverdown.io-v1-Affinity': Affinity,
-  'openx.neverdown.io-v1-AliyunAccessControl': AliyunAccessControl,
-  'openx.neverdown.io-v1-AliyunLoadBalancer': AliyunLoadBalancer,
+  'openx.neverdown.io-v1-AccessControl': AccessControl,
+  'openx.neverdown.io-v1-LoadBalancer': LoadBalancer,
   'openx.neverdown.io-v1-NodeSelector': NodeSelector,
   'openx.neverdown.io-v1-Toleration': Toleration,
   'openx.neverdown.io-v1-Mysql': Mysql,
@@ -617,8 +617,8 @@ import rbacv1ClusterRoleBinding from './rbac.authorization.k8s.iov1ClusterRoleBi
 import rbacv1ClusterRole from './rbac.authorization.k8s.iov1ClusterRole.vue'
 
 import openxv1Affinity from './openx.neverdown.iov1Affinity.vue'
-import openxv1AliyunAccessControl from './openx.neverdown.iov1AliyunAccessControl.vue'
-import openxv1AliyunLoadBalancer from './openx.neverdown.iov1AliyunLoadBalancer.vue'
+import openxv1AccessControl from './openx.neverdown.iov1AccessControl.vue'
+import openxv1LoadBalancer from './openx.neverdown.iov1LoadBalancer.vue'
 import openxv1Mysql from './openx.neverdown.iov1Mysql.vue'
 import openxv1NodeSelector from './openx.neverdown.iov1NodeSelector.vue'
 import openxv1Redis from './openx.neverdown.iov1Redis.vue'
@@ -630,7 +630,7 @@ const modules: any = {
   appsv1Deployment, appsv1StatefulSet,
   corev1ConfigMap, corev1Endpoints, corev1Event, corev1Namespace, corev1Node, corev1PersistentVolume,
   corev1PersistentVolumeClaim, corev1Pod, corev1Secret, corev1Service, corev1ServiceAccount,
-  openxv1Affinity, openxv1AliyunAccessControl, openxv1AliyunLoadBalancer,
+  openxv1Affinity, openxv1AccessControl, openxv1LoadBalancer,
   openxv1Mysql, openxv1NodeSelector, openxv1Redis, openxv1Openx, openxv1Toleration,
   openxv1Etcd, rbacv1ClusterRoleBinding, rbacv1ClusterRole
 }

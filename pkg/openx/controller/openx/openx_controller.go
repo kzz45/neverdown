@@ -9,7 +9,7 @@ import (
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 	"go.uber.org/zap"
 
-	"github.com/kzz45/neverdown/pkg/jingx/aggregator"
+	"github.com/kzz45/discovery/pkg/jingx/aggregator"
 
 	openxv1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
 	openx "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"

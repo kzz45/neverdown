@@ -38,6 +38,36 @@ func init() {
 // RegisterConversions adds conversion functions to the given scheme.
 // Public to allow building arbitrary schemes.
 func RegisterConversions(s *runtime.Scheme) error {
+	if err := s.AddGeneratedConversionFunc((*AccessControl)(nil), (*openx.AccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_AccessControl_To_openx_AccessControl(a.(*AccessControl), b.(*openx.AccessControl), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.AccessControl)(nil), (*AccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_AccessControl_To_v1_AccessControl(a.(*openx.AccessControl), b.(*AccessControl), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*AccessControlList)(nil), (*openx.AccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_AccessControlList_To_openx_AccessControlList(a.(*AccessControlList), b.(*openx.AccessControlList), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.AccessControlList)(nil), (*AccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_AccessControlList_To_v1_AccessControlList(a.(*openx.AccessControlList), b.(*AccessControlList), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*AccessControlSpec)(nil), (*openx.AccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_AccessControlSpec_To_openx_AccessControlSpec(a.(*AccessControlSpec), b.(*openx.AccessControlSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.AccessControlSpec)(nil), (*AccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_AccessControlSpec_To_v1_AccessControlSpec(a.(*openx.AccessControlSpec), b.(*AccessControlSpec), scope)
+	}); err != nil {
+		return err
+	}
 	if err := s.AddGeneratedConversionFunc((*Affinity)(nil), (*openx.Affinity)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_v1_Affinity_To_openx_Affinity(a.(*Affinity), b.(*openx.Affinity), scope)
 	}); err != nil {
@@ -65,76 +95,6 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}
 	if err := s.AddGeneratedConversionFunc((*openx.AffinitySpec)(nil), (*AffinitySpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_openx_AffinitySpec_To_v1_AffinitySpec(a.(*openx.AffinitySpec), b.(*AffinitySpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunAccessControl)(nil), (*openx.AliyunAccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunAccessControl_To_openx_AliyunAccessControl(a.(*AliyunAccessControl), b.(*openx.AliyunAccessControl), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunAccessControl)(nil), (*AliyunAccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunAccessControl_To_v1_AliyunAccessControl(a.(*openx.AliyunAccessControl), b.(*AliyunAccessControl), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunAccessControlList)(nil), (*openx.AliyunAccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunAccessControlList_To_openx_AliyunAccessControlList(a.(*AliyunAccessControlList), b.(*openx.AliyunAccessControlList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunAccessControlList)(nil), (*AliyunAccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunAccessControlList_To_v1_AliyunAccessControlList(a.(*openx.AliyunAccessControlList), b.(*AliyunAccessControlList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunAccessControlSpec)(nil), (*openx.AliyunAccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec(a.(*AliyunAccessControlSpec), b.(*openx.AliyunAccessControlSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunAccessControlSpec)(nil), (*AliyunAccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec(a.(*openx.AliyunAccessControlSpec), b.(*AliyunAccessControlSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunLoadBalancer)(nil), (*openx.AliyunLoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunLoadBalancer_To_openx_AliyunLoadBalancer(a.(*AliyunLoadBalancer), b.(*openx.AliyunLoadBalancer), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunLoadBalancer)(nil), (*AliyunLoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunLoadBalancer_To_v1_AliyunLoadBalancer(a.(*openx.AliyunLoadBalancer), b.(*AliyunLoadBalancer), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunLoadBalancerList)(nil), (*openx.AliyunLoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunLoadBalancerList_To_openx_AliyunLoadBalancerList(a.(*AliyunLoadBalancerList), b.(*openx.AliyunLoadBalancerList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunLoadBalancerList)(nil), (*AliyunLoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunLoadBalancerList_To_v1_AliyunLoadBalancerList(a.(*openx.AliyunLoadBalancerList), b.(*AliyunLoadBalancerList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunLoadBalancerSpec)(nil), (*openx.AliyunLoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec(a.(*AliyunLoadBalancerSpec), b.(*openx.AliyunLoadBalancerSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunLoadBalancerSpec)(nil), (*AliyunLoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec(a.(*openx.AliyunLoadBalancerSpec), b.(*AliyunLoadBalancerSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*AliyunSLB)(nil), (*openx.AliyunSLB)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_AliyunSLB_To_openx_AliyunSLB(a.(*AliyunSLB), b.(*openx.AliyunSLB), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.AliyunSLB)(nil), (*AliyunSLB)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_AliyunSLB_To_v1_AliyunSLB(a.(*openx.AliyunSLB), b.(*AliyunSLB), scope)
 	}); err != nil {
 		return err
 	}
@@ -178,6 +138,16 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}); err != nil {
 		return err
 	}
+	if err := s.AddGeneratedConversionFunc((*CloudSLB)(nil), (*openx.CloudSLB)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_CloudSLB_To_openx_CloudSLB(a.(*CloudSLB), b.(*openx.CloudSLB), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.CloudSLB)(nil), (*CloudSLB)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_CloudSLB_To_v1_CloudSLB(a.(*openx.CloudSLB), b.(*CloudSLB), scope)
+	}); err != nil {
+		return err
+	}
 	if err := s.AddGeneratedConversionFunc((*ClusterStatus)(nil), (*openx.ClusterStatus)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_v1_ClusterStatus_To_openx_ClusterStatus(a.(*ClusterStatus), b.(*openx.ClusterStatus), scope)
 	}); err != nil {
@@ -215,6 +185,36 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}
 	if err := s.AddGeneratedConversionFunc((*openx.EtcdSpec)(nil), (*EtcdSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_openx_EtcdSpec_To_v1_EtcdSpec(a.(*openx.EtcdSpec), b.(*EtcdSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*LoadBalancer)(nil), (*openx.LoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_LoadBalancer_To_openx_LoadBalancer(a.(*LoadBalancer), b.(*openx.LoadBalancer), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.LoadBalancer)(nil), (*LoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_LoadBalancer_To_v1_LoadBalancer(a.(*openx.LoadBalancer), b.(*LoadBalancer), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*LoadBalancerList)(nil), (*openx.LoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_LoadBalancerList_To_openx_LoadBalancerList(a.(*LoadBalancerList), b.(*openx.LoadBalancerList), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.LoadBalancerList)(nil), (*LoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_LoadBalancerList_To_v1_LoadBalancerList(a.(*openx.LoadBalancerList), b.(*LoadBalancerList), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*LoadBalancerSpec)(nil), (*openx.LoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec(a.(*LoadBalancerSpec), b.(*openx.LoadBalancerSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*openx.LoadBalancerSpec)(nil), (*LoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec(a.(*openx.LoadBalancerSpec), b.(*LoadBalancerSpec), scope)
 	}); err != nil {
 		return err
 	}
@@ -418,67 +418,91 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}); err != nil {
 		return err
 	}
-	if err := s.AddGeneratedConversionFunc((*VolcAccessControl)(nil), (*openx.VolcAccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcAccessControl_To_openx_VolcAccessControl(a.(*VolcAccessControl), b.(*openx.VolcAccessControl), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcAccessControl)(nil), (*VolcAccessControl)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcAccessControl_To_v1_VolcAccessControl(a.(*openx.VolcAccessControl), b.(*VolcAccessControl), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*VolcAccessControlList)(nil), (*openx.VolcAccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcAccessControlList_To_openx_VolcAccessControlList(a.(*VolcAccessControlList), b.(*openx.VolcAccessControlList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcAccessControlList)(nil), (*VolcAccessControlList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcAccessControlList_To_v1_VolcAccessControlList(a.(*openx.VolcAccessControlList), b.(*VolcAccessControlList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*VolcAccessControlSpec)(nil), (*openx.VolcAccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec(a.(*VolcAccessControlSpec), b.(*openx.VolcAccessControlSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcAccessControlSpec)(nil), (*VolcAccessControlSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec(a.(*openx.VolcAccessControlSpec), b.(*VolcAccessControlSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*VolcLoadBalancer)(nil), (*openx.VolcLoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcLoadBalancer_To_openx_VolcLoadBalancer(a.(*VolcLoadBalancer), b.(*openx.VolcLoadBalancer), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcLoadBalancer)(nil), (*VolcLoadBalancer)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcLoadBalancer_To_v1_VolcLoadBalancer(a.(*openx.VolcLoadBalancer), b.(*VolcLoadBalancer), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*VolcLoadBalancerList)(nil), (*openx.VolcLoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcLoadBalancerList_To_openx_VolcLoadBalancerList(a.(*VolcLoadBalancerList), b.(*openx.VolcLoadBalancerList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcLoadBalancerList)(nil), (*VolcLoadBalancerList)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcLoadBalancerList_To_v1_VolcLoadBalancerList(a.(*openx.VolcLoadBalancerList), b.(*VolcLoadBalancerList), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*VolcLoadBalancerSpec)(nil), (*openx.VolcLoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec(a.(*VolcLoadBalancerSpec), b.(*openx.VolcLoadBalancerSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*openx.VolcLoadBalancerSpec)(nil), (*VolcLoadBalancerSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec(a.(*openx.VolcLoadBalancerSpec), b.(*VolcLoadBalancerSpec), scope)
-	}); err != nil {
+	return nil
+}
+
+func autoConvert_v1_AccessControl_To_openx_AccessControl(in *AccessControl, out *openx.AccessControl, s conversion.Scope) error {
+	out.ObjectMeta = in.ObjectMeta
+	if err := Convert_v1_AccessControlSpec_To_openx_AccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
 		return err
 	}
 	return nil
+}
+
+// Convert_v1_AccessControl_To_openx_AccessControl is an autogenerated conversion function.
+func Convert_v1_AccessControl_To_openx_AccessControl(in *AccessControl, out *openx.AccessControl, s conversion.Scope) error {
+	return autoConvert_v1_AccessControl_To_openx_AccessControl(in, out, s)
+}
+
+func autoConvert_openx_AccessControl_To_v1_AccessControl(in *openx.AccessControl, out *AccessControl, s conversion.Scope) error {
+	out.ObjectMeta = in.ObjectMeta
+	if err := Convert_openx_AccessControlSpec_To_v1_AccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_openx_AccessControl_To_v1_AccessControl is an autogenerated conversion function.
+func Convert_openx_AccessControl_To_v1_AccessControl(in *openx.AccessControl, out *AccessControl, s conversion.Scope) error {
+	return autoConvert_openx_AccessControl_To_v1_AccessControl(in, out, s)
+}
+
+func autoConvert_v1_AccessControlList_To_openx_AccessControlList(in *AccessControlList, out *openx.AccessControlList, s conversion.Scope) error {
+	out.ListMeta = in.ListMeta
+	out.Items = *(*[]openx.AccessControl)(unsafe.Pointer(&in.Items))
+	return nil
+}
+
+// Convert_v1_AccessControlList_To_openx_AccessControlList is an autogenerated conversion function.
+func Convert_v1_AccessControlList_To_openx_AccessControlList(in *AccessControlList, out *openx.AccessControlList, s conversion.Scope) error {
+	return autoConvert_v1_AccessControlList_To_openx_AccessControlList(in, out, s)
+}
+
+func autoConvert_openx_AccessControlList_To_v1_AccessControlList(in *openx.AccessControlList, out *AccessControlList, s conversion.Scope) error {
+	out.ListMeta = in.ListMeta
+	out.Items = *(*[]AccessControl)(unsafe.Pointer(&in.Items))
+	return nil
+}
+
+// Convert_openx_AccessControlList_To_v1_AccessControlList is an autogenerated conversion function.
+func Convert_openx_AccessControlList_To_v1_AccessControlList(in *openx.AccessControlList, out *AccessControlList, s conversion.Scope) error {
+	return autoConvert_openx_AccessControlList_To_v1_AccessControlList(in, out, s)
+}
+
+func autoConvert_v1_AccessControlSpec_To_openx_AccessControlSpec(in *AccessControlSpec, out *openx.AccessControlSpec, s conversion.Scope) error {
+	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
+		return err
+	}
+	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
+		return err
+	}
+	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_v1_AccessControlSpec_To_openx_AccessControlSpec is an autogenerated conversion function.
+func Convert_v1_AccessControlSpec_To_openx_AccessControlSpec(in *AccessControlSpec, out *openx.AccessControlSpec, s conversion.Scope) error {
+	return autoConvert_v1_AccessControlSpec_To_openx_AccessControlSpec(in, out, s)
+}
+
+func autoConvert_openx_AccessControlSpec_To_v1_AccessControlSpec(in *openx.AccessControlSpec, out *AccessControlSpec, s conversion.Scope) error {
+	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
+		return err
+	}
+	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
+		return err
+	}
+	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_openx_AccessControlSpec_To_v1_AccessControlSpec is an autogenerated conversion function.
+func Convert_openx_AccessControlSpec_To_v1_AccessControlSpec(in *openx.AccessControlSpec, out *AccessControlSpec, s conversion.Scope) error {
+	return autoConvert_openx_AccessControlSpec_To_v1_AccessControlSpec(in, out, s)
 }
 
 func autoConvert_v1_Affinity_To_openx_Affinity(in *Affinity, out *openx.Affinity, s conversion.Scope) error {
@@ -547,194 +571,6 @@ func autoConvert_openx_AffinitySpec_To_v1_AffinitySpec(in *openx.AffinitySpec, o
 // Convert_openx_AffinitySpec_To_v1_AffinitySpec is an autogenerated conversion function.
 func Convert_openx_AffinitySpec_To_v1_AffinitySpec(in *openx.AffinitySpec, out *AffinitySpec, s conversion.Scope) error {
 	return autoConvert_openx_AffinitySpec_To_v1_AffinitySpec(in, out, s)
-}
-
-func autoConvert_v1_AliyunAccessControl_To_openx_AliyunAccessControl(in *AliyunAccessControl, out *openx.AliyunAccessControl, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_AliyunAccessControl_To_openx_AliyunAccessControl is an autogenerated conversion function.
-func Convert_v1_AliyunAccessControl_To_openx_AliyunAccessControl(in *AliyunAccessControl, out *openx.AliyunAccessControl, s conversion.Scope) error {
-	return autoConvert_v1_AliyunAccessControl_To_openx_AliyunAccessControl(in, out, s)
-}
-
-func autoConvert_openx_AliyunAccessControl_To_v1_AliyunAccessControl(in *openx.AliyunAccessControl, out *AliyunAccessControl, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_AliyunAccessControl_To_v1_AliyunAccessControl is an autogenerated conversion function.
-func Convert_openx_AliyunAccessControl_To_v1_AliyunAccessControl(in *openx.AliyunAccessControl, out *AliyunAccessControl, s conversion.Scope) error {
-	return autoConvert_openx_AliyunAccessControl_To_v1_AliyunAccessControl(in, out, s)
-}
-
-func autoConvert_v1_AliyunAccessControlList_To_openx_AliyunAccessControlList(in *AliyunAccessControlList, out *openx.AliyunAccessControlList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]openx.AliyunAccessControl)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_v1_AliyunAccessControlList_To_openx_AliyunAccessControlList is an autogenerated conversion function.
-func Convert_v1_AliyunAccessControlList_To_openx_AliyunAccessControlList(in *AliyunAccessControlList, out *openx.AliyunAccessControlList, s conversion.Scope) error {
-	return autoConvert_v1_AliyunAccessControlList_To_openx_AliyunAccessControlList(in, out, s)
-}
-
-func autoConvert_openx_AliyunAccessControlList_To_v1_AliyunAccessControlList(in *openx.AliyunAccessControlList, out *AliyunAccessControlList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]AliyunAccessControl)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_openx_AliyunAccessControlList_To_v1_AliyunAccessControlList is an autogenerated conversion function.
-func Convert_openx_AliyunAccessControlList_To_v1_AliyunAccessControlList(in *openx.AliyunAccessControlList, out *AliyunAccessControlList, s conversion.Scope) error {
-	return autoConvert_openx_AliyunAccessControlList_To_v1_AliyunAccessControlList(in, out, s)
-}
-
-func autoConvert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec(in *AliyunAccessControlSpec, out *openx.AliyunAccessControlSpec, s conversion.Scope) error {
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec is an autogenerated conversion function.
-func Convert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec(in *AliyunAccessControlSpec, out *openx.AliyunAccessControlSpec, s conversion.Scope) error {
-	return autoConvert_v1_AliyunAccessControlSpec_To_openx_AliyunAccessControlSpec(in, out, s)
-}
-
-func autoConvert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec(in *openx.AliyunAccessControlSpec, out *AliyunAccessControlSpec, s conversion.Scope) error {
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec is an autogenerated conversion function.
-func Convert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec(in *openx.AliyunAccessControlSpec, out *AliyunAccessControlSpec, s conversion.Scope) error {
-	return autoConvert_openx_AliyunAccessControlSpec_To_v1_AliyunAccessControlSpec(in, out, s)
-}
-
-func autoConvert_v1_AliyunLoadBalancer_To_openx_AliyunLoadBalancer(in *AliyunLoadBalancer, out *openx.AliyunLoadBalancer, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_AliyunLoadBalancer_To_openx_AliyunLoadBalancer is an autogenerated conversion function.
-func Convert_v1_AliyunLoadBalancer_To_openx_AliyunLoadBalancer(in *AliyunLoadBalancer, out *openx.AliyunLoadBalancer, s conversion.Scope) error {
-	return autoConvert_v1_AliyunLoadBalancer_To_openx_AliyunLoadBalancer(in, out, s)
-}
-
-func autoConvert_openx_AliyunLoadBalancer_To_v1_AliyunLoadBalancer(in *openx.AliyunLoadBalancer, out *AliyunLoadBalancer, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_AliyunLoadBalancer_To_v1_AliyunLoadBalancer is an autogenerated conversion function.
-func Convert_openx_AliyunLoadBalancer_To_v1_AliyunLoadBalancer(in *openx.AliyunLoadBalancer, out *AliyunLoadBalancer, s conversion.Scope) error {
-	return autoConvert_openx_AliyunLoadBalancer_To_v1_AliyunLoadBalancer(in, out, s)
-}
-
-func autoConvert_v1_AliyunLoadBalancerList_To_openx_AliyunLoadBalancerList(in *AliyunLoadBalancerList, out *openx.AliyunLoadBalancerList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]openx.AliyunLoadBalancer)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_v1_AliyunLoadBalancerList_To_openx_AliyunLoadBalancerList is an autogenerated conversion function.
-func Convert_v1_AliyunLoadBalancerList_To_openx_AliyunLoadBalancerList(in *AliyunLoadBalancerList, out *openx.AliyunLoadBalancerList, s conversion.Scope) error {
-	return autoConvert_v1_AliyunLoadBalancerList_To_openx_AliyunLoadBalancerList(in, out, s)
-}
-
-func autoConvert_openx_AliyunLoadBalancerList_To_v1_AliyunLoadBalancerList(in *openx.AliyunLoadBalancerList, out *AliyunLoadBalancerList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]AliyunLoadBalancer)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_openx_AliyunLoadBalancerList_To_v1_AliyunLoadBalancerList is an autogenerated conversion function.
-func Convert_openx_AliyunLoadBalancerList_To_v1_AliyunLoadBalancerList(in *openx.AliyunLoadBalancerList, out *AliyunLoadBalancerList, s conversion.Scope) error {
-	return autoConvert_openx_AliyunLoadBalancerList_To_v1_AliyunLoadBalancerList(in, out, s)
-}
-
-func autoConvert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec(in *AliyunLoadBalancerSpec, out *openx.AliyunLoadBalancerSpec, s conversion.Scope) error {
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec is an autogenerated conversion function.
-func Convert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec(in *AliyunLoadBalancerSpec, out *openx.AliyunLoadBalancerSpec, s conversion.Scope) error {
-	return autoConvert_v1_AliyunLoadBalancerSpec_To_openx_AliyunLoadBalancerSpec(in, out, s)
-}
-
-func autoConvert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec(in *openx.AliyunLoadBalancerSpec, out *AliyunLoadBalancerSpec, s conversion.Scope) error {
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec is an autogenerated conversion function.
-func Convert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec(in *openx.AliyunLoadBalancerSpec, out *AliyunLoadBalancerSpec, s conversion.Scope) error {
-	return autoConvert_openx_AliyunLoadBalancerSpec_To_v1_AliyunLoadBalancerSpec(in, out, s)
-}
-
-func autoConvert_v1_AliyunSLB_To_openx_AliyunSLB(in *AliyunSLB, out *openx.AliyunSLB, s conversion.Scope) error {
-	out.LoadBalancerId = in.LoadBalancerId
-	out.OverrideListeners = in.OverrideListeners
-	out.Status = openx.CloudLoadBalancerStatus(in.Status)
-	out.AccessControlId = in.AccessControlId
-	return nil
-}
-
-// Convert_v1_AliyunSLB_To_openx_AliyunSLB is an autogenerated conversion function.
-func Convert_v1_AliyunSLB_To_openx_AliyunSLB(in *AliyunSLB, out *openx.AliyunSLB, s conversion.Scope) error {
-	return autoConvert_v1_AliyunSLB_To_openx_AliyunSLB(in, out, s)
-}
-
-func autoConvert_openx_AliyunSLB_To_v1_AliyunSLB(in *openx.AliyunSLB, out *AliyunSLB, s conversion.Scope) error {
-	out.LoadBalancerId = in.LoadBalancerId
-	out.OverrideListeners = in.OverrideListeners
-	out.Status = CloudLoadBalancerStatus(in.Status)
-	out.AccessControlId = in.AccessControlId
-	return nil
-}
-
-// Convert_openx_AliyunSLB_To_v1_AliyunSLB is an autogenerated conversion function.
-func Convert_openx_AliyunSLB_To_v1_AliyunSLB(in *openx.AliyunSLB, out *AliyunSLB, s conversion.Scope) error {
-	return autoConvert_openx_AliyunSLB_To_v1_AliyunSLB(in, out, s)
 }
 
 func autoConvert_v1_App_To_openx_App(in *App, out *openx.App, s conversion.Scope) error {
@@ -826,7 +662,7 @@ func Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(in *ope
 }
 
 func autoConvert_v1_CloudNetworkConfig_To_openx_CloudNetworkConfig(in *CloudNetworkConfig, out *openx.CloudNetworkConfig, s conversion.Scope) error {
-	out.AliyunSLB = (*openx.AliyunSLB)(unsafe.Pointer(in.AliyunSLB))
+	out.CloudSLB = (*openx.CloudSLB)(unsafe.Pointer(in.CloudSLB))
 	return nil
 }
 
@@ -836,13 +672,39 @@ func Convert_v1_CloudNetworkConfig_To_openx_CloudNetworkConfig(in *CloudNetworkC
 }
 
 func autoConvert_openx_CloudNetworkConfig_To_v1_CloudNetworkConfig(in *openx.CloudNetworkConfig, out *CloudNetworkConfig, s conversion.Scope) error {
-	out.AliyunSLB = (*AliyunSLB)(unsafe.Pointer(in.AliyunSLB))
+	out.CloudSLB = (*CloudSLB)(unsafe.Pointer(in.CloudSLB))
 	return nil
 }
 
 // Convert_openx_CloudNetworkConfig_To_v1_CloudNetworkConfig is an autogenerated conversion function.
 func Convert_openx_CloudNetworkConfig_To_v1_CloudNetworkConfig(in *openx.CloudNetworkConfig, out *CloudNetworkConfig, s conversion.Scope) error {
 	return autoConvert_openx_CloudNetworkConfig_To_v1_CloudNetworkConfig(in, out, s)
+}
+
+func autoConvert_v1_CloudSLB_To_openx_CloudSLB(in *CloudSLB, out *openx.CloudSLB, s conversion.Scope) error {
+	out.LoadBalancerId = in.LoadBalancerId
+	out.OverrideListeners = in.OverrideListeners
+	out.Status = openx.CloudLoadBalancerStatus(in.Status)
+	out.AccessControlId = in.AccessControlId
+	return nil
+}
+
+// Convert_v1_CloudSLB_To_openx_CloudSLB is an autogenerated conversion function.
+func Convert_v1_CloudSLB_To_openx_CloudSLB(in *CloudSLB, out *openx.CloudSLB, s conversion.Scope) error {
+	return autoConvert_v1_CloudSLB_To_openx_CloudSLB(in, out, s)
+}
+
+func autoConvert_openx_CloudSLB_To_v1_CloudSLB(in *openx.CloudSLB, out *CloudSLB, s conversion.Scope) error {
+	out.LoadBalancerId = in.LoadBalancerId
+	out.OverrideListeners = in.OverrideListeners
+	out.Status = CloudLoadBalancerStatus(in.Status)
+	out.AccessControlId = in.AccessControlId
+	return nil
+}
+
+// Convert_openx_CloudSLB_To_v1_CloudSLB is an autogenerated conversion function.
+func Convert_openx_CloudSLB_To_v1_CloudSLB(in *openx.CloudSLB, out *CloudSLB, s conversion.Scope) error {
+	return autoConvert_openx_CloudSLB_To_v1_CloudSLB(in, out, s)
 }
 
 func autoConvert_v1_ClusterStatus_To_openx_ClusterStatus(in *ClusterStatus, out *openx.ClusterStatus, s conversion.Scope) error {
@@ -943,6 +805,84 @@ func autoConvert_openx_EtcdSpec_To_v1_EtcdSpec(in *openx.EtcdSpec, out *EtcdSpec
 // Convert_openx_EtcdSpec_To_v1_EtcdSpec is an autogenerated conversion function.
 func Convert_openx_EtcdSpec_To_v1_EtcdSpec(in *openx.EtcdSpec, out *EtcdSpec, s conversion.Scope) error {
 	return autoConvert_openx_EtcdSpec_To_v1_EtcdSpec(in, out, s)
+}
+
+func autoConvert_v1_LoadBalancer_To_openx_LoadBalancer(in *LoadBalancer, out *openx.LoadBalancer, s conversion.Scope) error {
+	out.ObjectMeta = in.ObjectMeta
+	if err := Convert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_v1_LoadBalancer_To_openx_LoadBalancer is an autogenerated conversion function.
+func Convert_v1_LoadBalancer_To_openx_LoadBalancer(in *LoadBalancer, out *openx.LoadBalancer, s conversion.Scope) error {
+	return autoConvert_v1_LoadBalancer_To_openx_LoadBalancer(in, out, s)
+}
+
+func autoConvert_openx_LoadBalancer_To_v1_LoadBalancer(in *openx.LoadBalancer, out *LoadBalancer, s conversion.Scope) error {
+	out.ObjectMeta = in.ObjectMeta
+	if err := Convert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_openx_LoadBalancer_To_v1_LoadBalancer is an autogenerated conversion function.
+func Convert_openx_LoadBalancer_To_v1_LoadBalancer(in *openx.LoadBalancer, out *LoadBalancer, s conversion.Scope) error {
+	return autoConvert_openx_LoadBalancer_To_v1_LoadBalancer(in, out, s)
+}
+
+func autoConvert_v1_LoadBalancerList_To_openx_LoadBalancerList(in *LoadBalancerList, out *openx.LoadBalancerList, s conversion.Scope) error {
+	out.ListMeta = in.ListMeta
+	out.Items = *(*[]openx.LoadBalancer)(unsafe.Pointer(&in.Items))
+	return nil
+}
+
+// Convert_v1_LoadBalancerList_To_openx_LoadBalancerList is an autogenerated conversion function.
+func Convert_v1_LoadBalancerList_To_openx_LoadBalancerList(in *LoadBalancerList, out *openx.LoadBalancerList, s conversion.Scope) error {
+	return autoConvert_v1_LoadBalancerList_To_openx_LoadBalancerList(in, out, s)
+}
+
+func autoConvert_openx_LoadBalancerList_To_v1_LoadBalancerList(in *openx.LoadBalancerList, out *LoadBalancerList, s conversion.Scope) error {
+	out.ListMeta = in.ListMeta
+	out.Items = *(*[]LoadBalancer)(unsafe.Pointer(&in.Items))
+	return nil
+}
+
+// Convert_openx_LoadBalancerList_To_v1_LoadBalancerList is an autogenerated conversion function.
+func Convert_openx_LoadBalancerList_To_v1_LoadBalancerList(in *openx.LoadBalancerList, out *LoadBalancerList, s conversion.Scope) error {
+	return autoConvert_openx_LoadBalancerList_To_v1_LoadBalancerList(in, out, s)
+}
+
+func autoConvert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec(in *LoadBalancerSpec, out *openx.LoadBalancerSpec, s conversion.Scope) error {
+	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
+		return err
+	}
+	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec is an autogenerated conversion function.
+func Convert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec(in *LoadBalancerSpec, out *openx.LoadBalancerSpec, s conversion.Scope) error {
+	return autoConvert_v1_LoadBalancerSpec_To_openx_LoadBalancerSpec(in, out, s)
+}
+
+func autoConvert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec(in *openx.LoadBalancerSpec, out *LoadBalancerSpec, s conversion.Scope) error {
+	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
+		return err
+	}
+	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Convert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec is an autogenerated conversion function.
+func Convert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec(in *openx.LoadBalancerSpec, out *LoadBalancerSpec, s conversion.Scope) error {
+	return autoConvert_openx_LoadBalancerSpec_To_v1_LoadBalancerSpec(in, out, s)
 }
 
 func autoConvert_v1_Mysql_To_openx_Mysql(in *Mysql, out *openx.Mysql, s conversion.Scope) error {
@@ -1473,166 +1413,4 @@ func autoConvert_openx_TolerationSpec_To_v1_TolerationSpec(in *openx.TolerationS
 // Convert_openx_TolerationSpec_To_v1_TolerationSpec is an autogenerated conversion function.
 func Convert_openx_TolerationSpec_To_v1_TolerationSpec(in *openx.TolerationSpec, out *TolerationSpec, s conversion.Scope) error {
 	return autoConvert_openx_TolerationSpec_To_v1_TolerationSpec(in, out, s)
-}
-
-func autoConvert_v1_VolcAccessControl_To_openx_VolcAccessControl(in *VolcAccessControl, out *openx.VolcAccessControl, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_VolcAccessControl_To_openx_VolcAccessControl is an autogenerated conversion function.
-func Convert_v1_VolcAccessControl_To_openx_VolcAccessControl(in *VolcAccessControl, out *openx.VolcAccessControl, s conversion.Scope) error {
-	return autoConvert_v1_VolcAccessControl_To_openx_VolcAccessControl(in, out, s)
-}
-
-func autoConvert_openx_VolcAccessControl_To_v1_VolcAccessControl(in *openx.VolcAccessControl, out *VolcAccessControl, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_VolcAccessControl_To_v1_VolcAccessControl is an autogenerated conversion function.
-func Convert_openx_VolcAccessControl_To_v1_VolcAccessControl(in *openx.VolcAccessControl, out *VolcAccessControl, s conversion.Scope) error {
-	return autoConvert_openx_VolcAccessControl_To_v1_VolcAccessControl(in, out, s)
-}
-
-func autoConvert_v1_VolcAccessControlList_To_openx_VolcAccessControlList(in *VolcAccessControlList, out *openx.VolcAccessControlList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]openx.VolcAccessControl)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_v1_VolcAccessControlList_To_openx_VolcAccessControlList is an autogenerated conversion function.
-func Convert_v1_VolcAccessControlList_To_openx_VolcAccessControlList(in *VolcAccessControlList, out *openx.VolcAccessControlList, s conversion.Scope) error {
-	return autoConvert_v1_VolcAccessControlList_To_openx_VolcAccessControlList(in, out, s)
-}
-
-func autoConvert_openx_VolcAccessControlList_To_v1_VolcAccessControlList(in *openx.VolcAccessControlList, out *VolcAccessControlList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]VolcAccessControl)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_openx_VolcAccessControlList_To_v1_VolcAccessControlList is an autogenerated conversion function.
-func Convert_openx_VolcAccessControlList_To_v1_VolcAccessControlList(in *openx.VolcAccessControlList, out *VolcAccessControlList, s conversion.Scope) error {
-	return autoConvert_openx_VolcAccessControlList_To_v1_VolcAccessControlList(in, out, s)
-}
-
-func autoConvert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec(in *VolcAccessControlSpec, out *openx.VolcAccessControlSpec, s conversion.Scope) error {
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec is an autogenerated conversion function.
-func Convert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec(in *VolcAccessControlSpec, out *openx.VolcAccessControlSpec, s conversion.Scope) error {
-	return autoConvert_v1_VolcAccessControlSpec_To_openx_VolcAccessControlSpec(in, out, s)
-}
-
-func autoConvert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec(in *openx.VolcAccessControlSpec, out *VolcAccessControlSpec, s conversion.Scope) error {
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Status, &out.Status, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Type, &out.Type, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec is an autogenerated conversion function.
-func Convert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec(in *openx.VolcAccessControlSpec, out *VolcAccessControlSpec, s conversion.Scope) error {
-	return autoConvert_openx_VolcAccessControlSpec_To_v1_VolcAccessControlSpec(in, out, s)
-}
-
-func autoConvert_v1_VolcLoadBalancer_To_openx_VolcLoadBalancer(in *VolcLoadBalancer, out *openx.VolcLoadBalancer, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_VolcLoadBalancer_To_openx_VolcLoadBalancer is an autogenerated conversion function.
-func Convert_v1_VolcLoadBalancer_To_openx_VolcLoadBalancer(in *VolcLoadBalancer, out *openx.VolcLoadBalancer, s conversion.Scope) error {
-	return autoConvert_v1_VolcLoadBalancer_To_openx_VolcLoadBalancer(in, out, s)
-}
-
-func autoConvert_openx_VolcLoadBalancer_To_v1_VolcLoadBalancer(in *openx.VolcLoadBalancer, out *VolcLoadBalancer, s conversion.Scope) error {
-	out.ObjectMeta = in.ObjectMeta
-	if err := Convert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec(&in.Spec, &out.Spec, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_VolcLoadBalancer_To_v1_VolcLoadBalancer is an autogenerated conversion function.
-func Convert_openx_VolcLoadBalancer_To_v1_VolcLoadBalancer(in *openx.VolcLoadBalancer, out *VolcLoadBalancer, s conversion.Scope) error {
-	return autoConvert_openx_VolcLoadBalancer_To_v1_VolcLoadBalancer(in, out, s)
-}
-
-func autoConvert_v1_VolcLoadBalancerList_To_openx_VolcLoadBalancerList(in *VolcLoadBalancerList, out *openx.VolcLoadBalancerList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]openx.VolcLoadBalancer)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_v1_VolcLoadBalancerList_To_openx_VolcLoadBalancerList is an autogenerated conversion function.
-func Convert_v1_VolcLoadBalancerList_To_openx_VolcLoadBalancerList(in *VolcLoadBalancerList, out *openx.VolcLoadBalancerList, s conversion.Scope) error {
-	return autoConvert_v1_VolcLoadBalancerList_To_openx_VolcLoadBalancerList(in, out, s)
-}
-
-func autoConvert_openx_VolcLoadBalancerList_To_v1_VolcLoadBalancerList(in *openx.VolcLoadBalancerList, out *VolcLoadBalancerList, s conversion.Scope) error {
-	out.ListMeta = in.ListMeta
-	out.Items = *(*[]VolcLoadBalancer)(unsafe.Pointer(&in.Items))
-	return nil
-}
-
-// Convert_openx_VolcLoadBalancerList_To_v1_VolcLoadBalancerList is an autogenerated conversion function.
-func Convert_openx_VolcLoadBalancerList_To_v1_VolcLoadBalancerList(in *openx.VolcLoadBalancerList, out *VolcLoadBalancerList, s conversion.Scope) error {
-	return autoConvert_openx_VolcLoadBalancerList_To_v1_VolcLoadBalancerList(in, out, s)
-}
-
-func autoConvert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec(in *VolcLoadBalancerSpec, out *openx.VolcLoadBalancerSpec, s conversion.Scope) error {
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_v1_CloudLoadBalancerObject_To_openx_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec is an autogenerated conversion function.
-func Convert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec(in *VolcLoadBalancerSpec, out *openx.VolcLoadBalancerSpec, s conversion.Scope) error {
-	return autoConvert_v1_VolcLoadBalancerSpec_To_openx_VolcLoadBalancerSpec(in, out, s)
-}
-
-func autoConvert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec(in *openx.VolcLoadBalancerSpec, out *VolcLoadBalancerSpec, s conversion.Scope) error {
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.Instance, &out.Instance, s); err != nil {
-		return err
-	}
-	if err := Convert_openx_CloudLoadBalancerObject_To_v1_CloudLoadBalancerObject(&in.OverrideListeners, &out.OverrideListeners, s); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Convert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec is an autogenerated conversion function.
-func Convert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec(in *openx.VolcLoadBalancerSpec, out *VolcLoadBalancerSpec, s conversion.Scope) error {
-	return autoConvert_openx_VolcLoadBalancerSpec_To_v1_VolcLoadBalancerSpec(in, out, s)
 }

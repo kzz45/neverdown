@@ -21,7 +21,7 @@ Packages="$ROOT_PACKAGE/pkg/openx/$CUSTOM_RESOURCE_NAME/$CUSTOM_RESOURCE_VERSION
 # protobuf
 go-to-protobuf \
     --go-header-file="${GOPATH}/src/github.com/kzz45/neverdown/hack/boilerplate.go.txt" \
-    --apimachinery-packages="-k8s.io/apimachinery/pkg/apis/meta/v1,-k8s.io/apimachinery/pkg/runtime/schema,-github.com/kzz45/neverdown/pkg/apis/rbac/v1" \
+    --apimachinery-packages="-k8s.io/apimachinery/pkg/apis/meta/v1,-k8s.io/apimachinery/pkg/runtime/schema,-github.com/kzz45/discovery/pkg/apis/rbac/v1" \
     --verify-only=false \
     --packages="${Packages}" \
     --proto-import="${GOPATH}/pkg/mod/" \

@@ -132,8 +132,8 @@ rules:
 - apiGroups:
   - "openx.neverdown.io"
   resources:
-  - aliyunloadbalancers
-  - aliyunaccesscontrols
+  - loadbalancers
+  - accesscontrols
   - mysqls
   - mysqls/status
   - redises

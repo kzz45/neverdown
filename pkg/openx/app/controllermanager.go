@@ -9,7 +9,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/kzz45/neverdown/pkg/jingx/aggregator"
+	"github.com/kzz45/discovery/pkg/jingx/aggregator"
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
 	openxinformers "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions"
@@ -18,7 +18,6 @@ import (
 	"github.com/kzz45/neverdown/pkg/openx/app/config"
 	"github.com/kzz45/neverdown/pkg/openx/clientbuilder"
 	"github.com/kzz45/neverdown/pkg/openx/controller/loadbalancer"
-	"github.com/kzz45/neverdown/pkg/openx/controller/volcloadbalancer"
 	"github.com/kzz45/neverdown/pkg/openx/metrics"
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -157,8 +156,7 @@ func Run(c *config.CompletedConfig, stopCh <-chan struct{}) error {
 type ControllerContext struct {
 	jingx *aggregator.Aggregator
 
-	loadBalancher    loadbalancer.Interface
-	volcloadbalancer volcloadbalancer.Interface
+	loadBalancher loadbalancer.Interface
 
 	// ClientBuilder will provide a client for this controller to use
 	ClientBuilder clientbuilder.ControllerClientBuilder
@@ -231,10 +229,6 @@ func NewControllerInitializers(loopMode ControllerLoopMode) []ControllerObject {
 		{
 			Name:     "loadbalancer",
 			InitFunc: startLoadBalancerController,
-		},
-		{
-			Name:     "volcloadbalancer",
-			InitFunc: startVolcLoadBalancerController,
 		},
 		{
 			Name:     "mysql",

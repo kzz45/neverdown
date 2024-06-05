@@ -30,6 +30,28 @@ import "k8s.io/apimachinery/pkg/runtime/schema/generated.proto";
 // Package-wide variables from generator "generated".
 option go_package = "github.com/kzz45/neverdown/pkg/apis/openx/v1";
 
+message AccessControl {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional AccessControlSpec spec = 2;
+}
+
+message AccessControlList {
+  // +optional
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated AccessControl items = 2;
+}
+
+// 阿里云的访问控制
+message AccessControlSpec {
+  optional CloudLoadBalancerObject instance = 1;
+
+  optional CloudLoadBalancerObject status = 2;
+
+  optional CloudLoadBalancerObject type = 3;
+}
+
 message Affinity {
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
 
@@ -45,58 +67,6 @@ message AffinityList {
 
 message AffinitySpec {
   optional k8s.io.api.core.v1.Affinity affinity = 1;
-}
-
-message AliyunAccessControl {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional AliyunAccessControlSpec spec = 2;
-}
-
-message AliyunAccessControlList {
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated AliyunAccessControl items = 2;
-}
-
-// 阿里云的访问控制
-message AliyunAccessControlSpec {
-  optional CloudLoadBalancerObject instance = 1;
-
-  optional CloudLoadBalancerObject status = 2;
-
-  optional CloudLoadBalancerObject type = 3;
-}
-
-message AliyunLoadBalancer {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional AliyunLoadBalancerSpec spec = 2;
-}
-
-message AliyunLoadBalancerList {
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated AliyunLoadBalancer items = 2;
-}
-
-// 阿里云的负载均衡
-message AliyunLoadBalancerSpec {
-  optional CloudLoadBalancerObject instance = 1;
-
-  optional CloudLoadBalancerObject overrideListeners = 2;
-}
-
-message AliyunSLB {
-  optional string loadBalancerId = 1;
-
-  optional bool overrideListeners = 2;
-
-  optional string status = 3;
-
-  optional string accessControlId = 4;
 }
 
 message App {
@@ -133,7 +103,17 @@ message CloudLoadBalancerObject {
 
 // CloudNetworkConfig was the config for the cloud service provider, e.g. Aliyun
 message CloudNetworkConfig {
-  optional AliyunSLB aliyunSLB = 1;
+  optional CloudSLB cloudSLB = 1;
+}
+
+message CloudSLB {
+  optional string loadBalancerId = 1;
+
+  optional bool overrideListeners = 2;
+
+  optional string status = 3;
+
+  optional string accessControlId = 4;
 }
 
 message ClusterStatus {
@@ -163,6 +143,26 @@ message EtcdSpec {
   optional PersistentStorage persistentStorage = 2;
 
   optional k8s.io.api.core.v1.Pod pod = 3;
+}
+
+message LoadBalancer {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional LoadBalancerSpec spec = 2;
+}
+
+message LoadBalancerList {
+  // +optional
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated LoadBalancer items = 2;
+}
+
+// 阿里云的负载均衡
+message LoadBalancerSpec {
+  optional CloudLoadBalancerObject instance = 1;
+
+  optional CloudLoadBalancerObject overrideListeners = 2;
 }
 
 message Mysql {
@@ -311,47 +311,5 @@ message TolerationList {
 
 message TolerationSpec {
   optional k8s.io.api.core.v1.Toleration toleration = 1;
-}
-
-message VolcAccessControl {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional VolcAccessControlSpec spec = 2;
-}
-
-message VolcAccessControlList {
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated VolcAccessControl items = 2;
-}
-
-// 火山云的访问控制
-message VolcAccessControlSpec {
-  optional CloudLoadBalancerObject instance = 1;
-
-  optional CloudLoadBalancerObject status = 2;
-
-  optional CloudLoadBalancerObject type = 3;
-}
-
-message VolcLoadBalancer {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional VolcLoadBalancerSpec spec = 2;
-}
-
-message VolcLoadBalancerList {
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated VolcLoadBalancer items = 2;
-}
-
-// 火山云的负载均衡
-message VolcLoadBalancerSpec {
-  optional CloudLoadBalancerObject instance = 1;
-
-  optional CloudLoadBalancerObject overrideListeners = 2;
 }
 

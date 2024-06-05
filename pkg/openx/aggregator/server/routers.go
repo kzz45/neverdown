@@ -11,7 +11,7 @@ import (
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 	"go.uber.org/zap"
 
-	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
+	rbacv1 "github.com/kzz45/discovery/pkg/apis/rbac/v1"
 	"github.com/kzz45/neverdown/pkg/execpod"
 
 	"github.com/kzz45/neverdown/pkg/openx/aggregator/proto"

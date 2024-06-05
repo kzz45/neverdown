@@ -1,6 +1,6 @@
 package proto
 
-import rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
+import rbacv1 "github.com/kzz45/discovery/pkg/apis/rbac/v1"
 
 type Verb string
 

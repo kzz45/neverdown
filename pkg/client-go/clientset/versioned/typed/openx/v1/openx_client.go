@@ -28,17 +28,15 @@ import (
 
 type OpenxV1Interface interface {
 	RESTClient() rest.Interface
+	AccessControlsGetter
 	AffinitiesGetter
-	AliyunAccessControlsGetter
-	AliyunLoadBalancersGetter
 	EtcdsGetter
+	LoadBalancersGetter
 	MysqlsGetter
 	NodeSelectorsGetter
 	OpenxesGetter
 	RedisesGetter
 	TolerationsGetter
-	VolcAccessControlsGetter
-	VolcLoadBalancersGetter
 }
 
 // OpenxV1Client is used to interact with features provided by the openx group.
@@ -46,20 +44,20 @@ type OpenxV1Client struct {
 	restClient rest.Interface
 }
 
+func (c *OpenxV1Client) AccessControls(namespace string) AccessControlInterface {
+	return newAccessControls(c, namespace)
+}
+
 func (c *OpenxV1Client) Affinities(namespace string) AffinityInterface {
 	return newAffinities(c, namespace)
 }
 
-func (c *OpenxV1Client) AliyunAccessControls(namespace string) AliyunAccessControlInterface {
-	return newAliyunAccessControls(c, namespace)
-}
-
-func (c *OpenxV1Client) AliyunLoadBalancers(namespace string) AliyunLoadBalancerInterface {
-	return newAliyunLoadBalancers(c, namespace)
-}
-
 func (c *OpenxV1Client) Etcds(namespace string) EtcdInterface {
 	return newEtcds(c, namespace)
+}
+
+func (c *OpenxV1Client) LoadBalancers(namespace string) LoadBalancerInterface {
+	return newLoadBalancers(c, namespace)
 }
 
 func (c *OpenxV1Client) Mysqls(namespace string) MysqlInterface {
@@ -80,14 +78,6 @@ func (c *OpenxV1Client) Redises(namespace string) RedisInterface {
 
 func (c *OpenxV1Client) Tolerations(namespace string) TolerationInterface {
 	return newTolerations(c, namespace)
-}
-
-func (c *OpenxV1Client) VolcAccessControls(namespace string) VolcAccessControlInterface {
-	return newVolcAccessControls(c, namespace)
-}
-
-func (c *OpenxV1Client) VolcLoadBalancers(namespace string) VolcLoadBalancerInterface {
-	return newVolcLoadBalancers(c, namespace)
 }
 
 // NewForConfig creates a new OpenxV1Client for the given config.

@@ -1501,6 +1501,300 @@ export namespace github {
                             /** Namespace v1. */
                             namespace v1 {
 
+                                /** Properties of an AccessControl. */
+                                interface IAccessControl {
+
+                                    /** AccessControl metadata */
+                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
+
+                                    /** AccessControl spec */
+                                    spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec|null);
+                                }
+
+                                /** Represents an AccessControl. */
+                                class AccessControl implements IAccessControl {
+
+                                    /**
+                                     * Constructs a new AccessControl.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl);
+
+                                    /** AccessControl metadata. */
+                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
+
+                                    /** AccessControl spec. */
+                                    public spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec|null);
+
+                                    /**
+                                     * Creates a new AccessControl instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns AccessControl instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl;
+
+                                    /**
+                                     * Encodes the specified AccessControl message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl.verify|verify} messages.
+                                     * @param message AccessControl message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified AccessControl message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl.verify|verify} messages.
+                                     * @param message AccessControl message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes an AccessControl message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns AccessControl
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl;
+
+                                    /**
+                                     * Decodes an AccessControl message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns AccessControl
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl;
+
+                                    /**
+                                     * Verifies an AccessControl message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates an AccessControl message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns AccessControl
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl;
+
+                                    /**
+                                     * Creates a plain object from an AccessControl message. Also converts values to other types if specified.
+                                     * @param message AccessControl
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControl, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this AccessControl to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of an AccessControlList. */
+                                interface IAccessControlList {
+
+                                    /** AccessControlList metadata */
+                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
+
+                                    /** AccessControlList items */
+                                    items?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl[]|null);
+                                }
+
+                                /** Represents an AccessControlList. */
+                                class AccessControlList implements IAccessControlList {
+
+                                    /**
+                                     * Constructs a new AccessControlList.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlList);
+
+                                    /** AccessControlList metadata. */
+                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
+
+                                    /** AccessControlList items. */
+                                    public items: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControl[];
+
+                                    /**
+                                     * Creates a new AccessControlList instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns AccessControlList instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlList): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList;
+
+                                    /**
+                                     * Encodes the specified AccessControlList message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList.verify|verify} messages.
+                                     * @param message AccessControlList message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified AccessControlList message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList.verify|verify} messages.
+                                     * @param message AccessControlList message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes an AccessControlList message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns AccessControlList
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList;
+
+                                    /**
+                                     * Decodes an AccessControlList message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns AccessControlList
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList;
+
+                                    /**
+                                     * Verifies an AccessControlList message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates an AccessControlList message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns AccessControlList
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList;
+
+                                    /**
+                                     * Creates a plain object from an AccessControlList message. Also converts values to other types if specified.
+                                     * @param message AccessControlList
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlList, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this AccessControlList to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of an AccessControlSpec. */
+                                interface IAccessControlSpec {
+
+                                    /** AccessControlSpec instance */
+                                    instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** AccessControlSpec status */
+                                    status?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** AccessControlSpec type */
+                                    type?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+                                }
+
+                                /** Represents an AccessControlSpec. */
+                                class AccessControlSpec implements IAccessControlSpec {
+
+                                    /**
+                                     * Constructs a new AccessControlSpec.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec);
+
+                                    /** AccessControlSpec instance. */
+                                    public instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** AccessControlSpec status. */
+                                    public status?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** AccessControlSpec type. */
+                                    public type?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /**
+                                     * Creates a new AccessControlSpec instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns AccessControlSpec instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec;
+
+                                    /**
+                                     * Encodes the specified AccessControlSpec message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec.verify|verify} messages.
+                                     * @param message AccessControlSpec message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified AccessControlSpec message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec.verify|verify} messages.
+                                     * @param message AccessControlSpec message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAccessControlSpec, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes an AccessControlSpec message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns AccessControlSpec
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec;
+
+                                    /**
+                                     * Decodes an AccessControlSpec message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns AccessControlSpec
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec;
+
+                                    /**
+                                     * Verifies an AccessControlSpec message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates an AccessControlSpec message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns AccessControlSpec
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec;
+
+                                    /**
+                                     * Creates a plain object from an AccessControlSpec message. Also converts values to other types if specified.
+                                     * @param message AccessControlSpec
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AccessControlSpec, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this AccessControlSpec to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
                                 /** Properties of an Affinity. */
                                 interface IAffinity {
 
@@ -1778,696 +2072,6 @@ export namespace github {
 
                                     /**
                                      * Converts this AffinitySpec to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunAccessControl. */
-                                interface IAliyunAccessControl {
-
-                                    /** AliyunAccessControl metadata */
-                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
-
-                                    /** AliyunAccessControl spec */
-                                    spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec|null);
-                                }
-
-                                /** Represents an AliyunAccessControl. */
-                                class AliyunAccessControl implements IAliyunAccessControl {
-
-                                    /**
-                                     * Constructs a new AliyunAccessControl.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl);
-
-                                    /** AliyunAccessControl metadata. */
-                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
-
-                                    /** AliyunAccessControl spec. */
-                                    public spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec|null);
-
-                                    /**
-                                     * Creates a new AliyunAccessControl instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunAccessControl instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControl message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl.verify|verify} messages.
-                                     * @param message AliyunAccessControl message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControl message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl.verify|verify} messages.
-                                     * @param message AliyunAccessControl message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunAccessControl message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunAccessControl
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl;
-
-                                    /**
-                                     * Decodes an AliyunAccessControl message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunAccessControl
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl;
-
-                                    /**
-                                     * Verifies an AliyunAccessControl message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunAccessControl message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunAccessControl
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl;
-
-                                    /**
-                                     * Creates a plain object from an AliyunAccessControl message. Also converts values to other types if specified.
-                                     * @param message AliyunAccessControl
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControl, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunAccessControl to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunAccessControlList. */
-                                interface IAliyunAccessControlList {
-
-                                    /** AliyunAccessControlList metadata */
-                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
-
-                                    /** AliyunAccessControlList items */
-                                    items?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl[]|null);
-                                }
-
-                                /** Represents an AliyunAccessControlList. */
-                                class AliyunAccessControlList implements IAliyunAccessControlList {
-
-                                    /**
-                                     * Constructs a new AliyunAccessControlList.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlList);
-
-                                    /** AliyunAccessControlList metadata. */
-                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
-
-                                    /** AliyunAccessControlList items. */
-                                    public items: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControl[];
-
-                                    /**
-                                     * Creates a new AliyunAccessControlList instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunAccessControlList instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlList): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControlList message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList.verify|verify} messages.
-                                     * @param message AliyunAccessControlList message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlList, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControlList message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList.verify|verify} messages.
-                                     * @param message AliyunAccessControlList message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlList, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunAccessControlList message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunAccessControlList
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList;
-
-                                    /**
-                                     * Decodes an AliyunAccessControlList message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunAccessControlList
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList;
-
-                                    /**
-                                     * Verifies an AliyunAccessControlList message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunAccessControlList message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunAccessControlList
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList;
-
-                                    /**
-                                     * Creates a plain object from an AliyunAccessControlList message. Also converts values to other types if specified.
-                                     * @param message AliyunAccessControlList
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlList, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunAccessControlList to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunAccessControlSpec. */
-                                interface IAliyunAccessControlSpec {
-
-                                    /** AliyunAccessControlSpec instance */
-                                    instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunAccessControlSpec status */
-                                    status?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunAccessControlSpec type */
-                                    type?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-                                }
-
-                                /** Represents an AliyunAccessControlSpec. */
-                                class AliyunAccessControlSpec implements IAliyunAccessControlSpec {
-
-                                    /**
-                                     * Constructs a new AliyunAccessControlSpec.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec);
-
-                                    /** AliyunAccessControlSpec instance. */
-                                    public instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunAccessControlSpec status. */
-                                    public status?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunAccessControlSpec type. */
-                                    public type?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /**
-                                     * Creates a new AliyunAccessControlSpec instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunAccessControlSpec instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControlSpec message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec.verify|verify} messages.
-                                     * @param message AliyunAccessControlSpec message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunAccessControlSpec message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec.verify|verify} messages.
-                                     * @param message AliyunAccessControlSpec message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunAccessControlSpec, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunAccessControlSpec message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunAccessControlSpec
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec;
-
-                                    /**
-                                     * Decodes an AliyunAccessControlSpec message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunAccessControlSpec
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec;
-
-                                    /**
-                                     * Verifies an AliyunAccessControlSpec message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunAccessControlSpec message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunAccessControlSpec
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec;
-
-                                    /**
-                                     * Creates a plain object from an AliyunAccessControlSpec message. Also converts values to other types if specified.
-                                     * @param message AliyunAccessControlSpec
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunAccessControlSpec, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunAccessControlSpec to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunLoadBalancer. */
-                                interface IAliyunLoadBalancer {
-
-                                    /** AliyunLoadBalancer metadata */
-                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
-
-                                    /** AliyunLoadBalancer spec */
-                                    spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec|null);
-                                }
-
-                                /** Represents an AliyunLoadBalancer. */
-                                class AliyunLoadBalancer implements IAliyunLoadBalancer {
-
-                                    /**
-                                     * Constructs a new AliyunLoadBalancer.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer);
-
-                                    /** AliyunLoadBalancer metadata. */
-                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
-
-                                    /** AliyunLoadBalancer spec. */
-                                    public spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec|null);
-
-                                    /**
-                                     * Creates a new AliyunLoadBalancer instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunLoadBalancer instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancer message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer.verify|verify} messages.
-                                     * @param message AliyunLoadBalancer message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancer message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer.verify|verify} messages.
-                                     * @param message AliyunLoadBalancer message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancer message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunLoadBalancer
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancer message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunLoadBalancer
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer;
-
-                                    /**
-                                     * Verifies an AliyunLoadBalancer message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunLoadBalancer message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunLoadBalancer
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer;
-
-                                    /**
-                                     * Creates a plain object from an AliyunLoadBalancer message. Also converts values to other types if specified.
-                                     * @param message AliyunLoadBalancer
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancer, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunLoadBalancer to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunLoadBalancerList. */
-                                interface IAliyunLoadBalancerList {
-
-                                    /** AliyunLoadBalancerList metadata */
-                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
-
-                                    /** AliyunLoadBalancerList items */
-                                    items?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer[]|null);
-                                }
-
-                                /** Represents an AliyunLoadBalancerList. */
-                                class AliyunLoadBalancerList implements IAliyunLoadBalancerList {
-
-                                    /**
-                                     * Constructs a new AliyunLoadBalancerList.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerList);
-
-                                    /** AliyunLoadBalancerList metadata. */
-                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
-
-                                    /** AliyunLoadBalancerList items. */
-                                    public items: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancer[];
-
-                                    /**
-                                     * Creates a new AliyunLoadBalancerList instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunLoadBalancerList instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerList): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancerList message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList.verify|verify} messages.
-                                     * @param message AliyunLoadBalancerList message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerList, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancerList message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList.verify|verify} messages.
-                                     * @param message AliyunLoadBalancerList message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerList, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancerList message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunLoadBalancerList
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancerList message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunLoadBalancerList
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList;
-
-                                    /**
-                                     * Verifies an AliyunLoadBalancerList message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunLoadBalancerList message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunLoadBalancerList
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList;
-
-                                    /**
-                                     * Creates a plain object from an AliyunLoadBalancerList message. Also converts values to other types if specified.
-                                     * @param message AliyunLoadBalancerList
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerList, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunLoadBalancerList to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunLoadBalancerSpec. */
-                                interface IAliyunLoadBalancerSpec {
-
-                                    /** AliyunLoadBalancerSpec instance */
-                                    instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunLoadBalancerSpec overrideListeners */
-                                    overrideListeners?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-                                }
-
-                                /** Represents an AliyunLoadBalancerSpec. */
-                                class AliyunLoadBalancerSpec implements IAliyunLoadBalancerSpec {
-
-                                    /**
-                                     * Constructs a new AliyunLoadBalancerSpec.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec);
-
-                                    /** AliyunLoadBalancerSpec instance. */
-                                    public instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /** AliyunLoadBalancerSpec overrideListeners. */
-                                    public overrideListeners?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
-
-                                    /**
-                                     * Creates a new AliyunLoadBalancerSpec instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunLoadBalancerSpec instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancerSpec message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec.verify|verify} messages.
-                                     * @param message AliyunLoadBalancerSpec message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunLoadBalancerSpec message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec.verify|verify} messages.
-                                     * @param message AliyunLoadBalancerSpec message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunLoadBalancerSpec, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancerSpec message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunLoadBalancerSpec
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec;
-
-                                    /**
-                                     * Decodes an AliyunLoadBalancerSpec message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunLoadBalancerSpec
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec;
-
-                                    /**
-                                     * Verifies an AliyunLoadBalancerSpec message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunLoadBalancerSpec message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunLoadBalancerSpec
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec;
-
-                                    /**
-                                     * Creates a plain object from an AliyunLoadBalancerSpec message. Also converts values to other types if specified.
-                                     * @param message AliyunLoadBalancerSpec
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunLoadBalancerSpec, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunLoadBalancerSpec to JSON.
-                                     * @returns JSON object
-                                     */
-                                    public toJSON(): { [k: string]: any };
-                                }
-
-                                /** Properties of an AliyunSLB. */
-                                interface IAliyunSLB {
-
-                                    /** AliyunSLB loadBalancerId */
-                                    loadBalancerId?: (string|null);
-
-                                    /** AliyunSLB overrideListeners */
-                                    overrideListeners?: (boolean|null);
-
-                                    /** AliyunSLB status */
-                                    status?: (string|null);
-
-                                    /** AliyunSLB accessControlId */
-                                    accessControlId?: (string|null);
-                                }
-
-                                /** Represents an AliyunSLB. */
-                                class AliyunSLB implements IAliyunSLB {
-
-                                    /**
-                                     * Constructs a new AliyunSLB.
-                                     * @param [properties] Properties to set
-                                     */
-                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB);
-
-                                    /** AliyunSLB loadBalancerId. */
-                                    public loadBalancerId: string;
-
-                                    /** AliyunSLB overrideListeners. */
-                                    public overrideListeners: boolean;
-
-                                    /** AliyunSLB status. */
-                                    public status: string;
-
-                                    /** AliyunSLB accessControlId. */
-                                    public accessControlId: string;
-
-                                    /**
-                                     * Creates a new AliyunSLB instance using the specified properties.
-                                     * @param [properties] Properties to set
-                                     * @returns AliyunSLB instance
-                                     */
-                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB;
-
-                                    /**
-                                     * Encodes the specified AliyunSLB message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB.verify|verify} messages.
-                                     * @param message AliyunSLB message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Encodes the specified AliyunSLB message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB.verify|verify} messages.
-                                     * @param message AliyunSLB message or plain object to encode
-                                     * @param [writer] Writer to encode to
-                                     * @returns Writer
-                                     */
-                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                                    /**
-                                     * Decodes an AliyunSLB message from the specified reader or buffer.
-                                     * @param reader Reader or buffer to decode from
-                                     * @param [length] Message length if known beforehand
-                                     * @returns AliyunSLB
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB;
-
-                                    /**
-                                     * Decodes an AliyunSLB message from the specified reader or buffer, length delimited.
-                                     * @param reader Reader or buffer to decode from
-                                     * @returns AliyunSLB
-                                     * @throws {Error} If the payload is not a reader or valid buffer
-                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                                     */
-                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB;
-
-                                    /**
-                                     * Verifies an AliyunSLB message.
-                                     * @param message Plain object to verify
-                                     * @returns `null` if valid, otherwise the reason why it is not
-                                     */
-                                    public static verify(message: { [k: string]: any }): (string|null);
-
-                                    /**
-                                     * Creates an AliyunSLB message from a plain object. Also converts values to their respective internal types.
-                                     * @param object Plain object
-                                     * @returns AliyunSLB
-                                     */
-                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB;
-
-                                    /**
-                                     * Creates a plain object from an AliyunSLB message. Also converts values to other types if specified.
-                                     * @param message AliyunSLB
-                                     * @param [options] Conversion options
-                                     * @returns Plain object
-                                     */
-                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.AliyunSLB, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                                    /**
-                                     * Converts this AliyunSLB to JSON.
                                      * @returns JSON object
                                      */
                                     public toJSON(): { [k: string]: any };
@@ -2806,8 +2410,8 @@ export namespace github {
                                 /** Properties of a CloudNetworkConfig. */
                                 interface ICloudNetworkConfig {
 
-                                    /** CloudNetworkConfig aliyunSLB */
-                                    aliyunSLB?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB|null);
+                                    /** CloudNetworkConfig cloudSLB */
+                                    cloudSLB?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB|null);
                                 }
 
                                 /** Represents a CloudNetworkConfig. */
@@ -2819,8 +2423,8 @@ export namespace github {
                                      */
                                     constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudNetworkConfig);
 
-                                    /** CloudNetworkConfig aliyunSLB. */
-                                    public aliyunSLB?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.IAliyunSLB|null);
+                                    /** CloudNetworkConfig cloudSLB. */
+                                    public cloudSLB?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB|null);
 
                                     /**
                                      * Creates a new CloudNetworkConfig instance using the specified properties.
@@ -2888,6 +2492,114 @@ export namespace github {
 
                                     /**
                                      * Converts this CloudNetworkConfig to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of a CloudSLB. */
+                                interface ICloudSLB {
+
+                                    /** CloudSLB loadBalancerId */
+                                    loadBalancerId?: (string|null);
+
+                                    /** CloudSLB overrideListeners */
+                                    overrideListeners?: (boolean|null);
+
+                                    /** CloudSLB status */
+                                    status?: (string|null);
+
+                                    /** CloudSLB accessControlId */
+                                    accessControlId?: (string|null);
+                                }
+
+                                /** Represents a CloudSLB. */
+                                class CloudSLB implements ICloudSLB {
+
+                                    /**
+                                     * Constructs a new CloudSLB.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB);
+
+                                    /** CloudSLB loadBalancerId. */
+                                    public loadBalancerId: string;
+
+                                    /** CloudSLB overrideListeners. */
+                                    public overrideListeners: boolean;
+
+                                    /** CloudSLB status. */
+                                    public status: string;
+
+                                    /** CloudSLB accessControlId. */
+                                    public accessControlId: string;
+
+                                    /**
+                                     * Creates a new CloudSLB instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns CloudSLB instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB): github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB;
+
+                                    /**
+                                     * Encodes the specified CloudSLB message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB.verify|verify} messages.
+                                     * @param message CloudSLB message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified CloudSLB message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB.verify|verify} messages.
+                                     * @param message CloudSLB message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudSLB, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes a CloudSLB message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns CloudSLB
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB;
+
+                                    /**
+                                     * Decodes a CloudSLB message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns CloudSLB
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB;
+
+                                    /**
+                                     * Verifies a CloudSLB message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates a CloudSLB message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns CloudSLB
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB;
+
+                                    /**
+                                     * Creates a plain object from a CloudSLB message. Also converts values to other types if specified.
+                                     * @param message CloudSLB
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.CloudSLB, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this CloudSLB to JSON.
                                      * @returns JSON object
                                      */
                                     public toJSON(): { [k: string]: any };
@@ -3284,6 +2996,294 @@ export namespace github {
 
                                     /**
                                      * Converts this EtcdSpec to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of a LoadBalancer. */
+                                interface ILoadBalancer {
+
+                                    /** LoadBalancer metadata */
+                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
+
+                                    /** LoadBalancer spec */
+                                    spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec|null);
+                                }
+
+                                /** Represents a LoadBalancer. */
+                                class LoadBalancer implements ILoadBalancer {
+
+                                    /**
+                                     * Constructs a new LoadBalancer.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer);
+
+                                    /** LoadBalancer metadata. */
+                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IObjectMeta|null);
+
+                                    /** LoadBalancer spec. */
+                                    public spec?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec|null);
+
+                                    /**
+                                     * Creates a new LoadBalancer instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns LoadBalancer instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer;
+
+                                    /**
+                                     * Encodes the specified LoadBalancer message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer.verify|verify} messages.
+                                     * @param message LoadBalancer message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified LoadBalancer message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer.verify|verify} messages.
+                                     * @param message LoadBalancer message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes a LoadBalancer message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns LoadBalancer
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer;
+
+                                    /**
+                                     * Decodes a LoadBalancer message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns LoadBalancer
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer;
+
+                                    /**
+                                     * Verifies a LoadBalancer message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates a LoadBalancer message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns LoadBalancer
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer;
+
+                                    /**
+                                     * Creates a plain object from a LoadBalancer message. Also converts values to other types if specified.
+                                     * @param message LoadBalancer
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancer, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this LoadBalancer to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of a LoadBalancerList. */
+                                interface ILoadBalancerList {
+
+                                    /** LoadBalancerList metadata */
+                                    metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
+
+                                    /** LoadBalancerList items */
+                                    items?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer[]|null);
+                                }
+
+                                /** Represents a LoadBalancerList. */
+                                class LoadBalancerList implements ILoadBalancerList {
+
+                                    /**
+                                     * Constructs a new LoadBalancerList.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerList);
+
+                                    /** LoadBalancerList metadata. */
+                                    public metadata?: (k8s.io.apimachinery.pkg.apis.meta.v1.IListMeta|null);
+
+                                    /** LoadBalancerList items. */
+                                    public items: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancer[];
+
+                                    /**
+                                     * Creates a new LoadBalancerList instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns LoadBalancerList instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerList): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList;
+
+                                    /**
+                                     * Encodes the specified LoadBalancerList message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList.verify|verify} messages.
+                                     * @param message LoadBalancerList message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified LoadBalancerList message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList.verify|verify} messages.
+                                     * @param message LoadBalancerList message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes a LoadBalancerList message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns LoadBalancerList
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList;
+
+                                    /**
+                                     * Decodes a LoadBalancerList message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns LoadBalancerList
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList;
+
+                                    /**
+                                     * Verifies a LoadBalancerList message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates a LoadBalancerList message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns LoadBalancerList
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList;
+
+                                    /**
+                                     * Creates a plain object from a LoadBalancerList message. Also converts values to other types if specified.
+                                     * @param message LoadBalancerList
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerList, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this LoadBalancerList to JSON.
+                                     * @returns JSON object
+                                     */
+                                    public toJSON(): { [k: string]: any };
+                                }
+
+                                /** Properties of a LoadBalancerSpec. */
+                                interface ILoadBalancerSpec {
+
+                                    /** LoadBalancerSpec instance */
+                                    instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** LoadBalancerSpec overrideListeners */
+                                    overrideListeners?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+                                }
+
+                                /** Represents a LoadBalancerSpec. */
+                                class LoadBalancerSpec implements ILoadBalancerSpec {
+
+                                    /**
+                                     * Constructs a new LoadBalancerSpec.
+                                     * @param [properties] Properties to set
+                                     */
+                                    constructor(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec);
+
+                                    /** LoadBalancerSpec instance. */
+                                    public instance?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /** LoadBalancerSpec overrideListeners. */
+                                    public overrideListeners?: (github.com.kzz45.neverdown.pkg.apis.openx.v1.ICloudLoadBalancerObject|null);
+
+                                    /**
+                                     * Creates a new LoadBalancerSpec instance using the specified properties.
+                                     * @param [properties] Properties to set
+                                     * @returns LoadBalancerSpec instance
+                                     */
+                                    public static create(properties?: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec;
+
+                                    /**
+                                     * Encodes the specified LoadBalancerSpec message. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec.verify|verify} messages.
+                                     * @param message LoadBalancerSpec message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encode(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Encodes the specified LoadBalancerSpec message, length delimited. Does not implicitly {@link github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec.verify|verify} messages.
+                                     * @param message LoadBalancerSpec message or plain object to encode
+                                     * @param [writer] Writer to encode to
+                                     * @returns Writer
+                                     */
+                                    public static encodeDelimited(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.ILoadBalancerSpec, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                                    /**
+                                     * Decodes a LoadBalancerSpec message from the specified reader or buffer.
+                                     * @param reader Reader or buffer to decode from
+                                     * @param [length] Message length if known beforehand
+                                     * @returns LoadBalancerSpec
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec;
+
+                                    /**
+                                     * Decodes a LoadBalancerSpec message from the specified reader or buffer, length delimited.
+                                     * @param reader Reader or buffer to decode from
+                                     * @returns LoadBalancerSpec
+                                     * @throws {Error} If the payload is not a reader or valid buffer
+                                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                                     */
+                                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec;
+
+                                    /**
+                                     * Verifies a LoadBalancerSpec message.
+                                     * @param message Plain object to verify
+                                     * @returns `null` if valid, otherwise the reason why it is not
+                                     */
+                                    public static verify(message: { [k: string]: any }): (string|null);
+
+                                    /**
+                                     * Creates a LoadBalancerSpec message from a plain object. Also converts values to their respective internal types.
+                                     * @param object Plain object
+                                     * @returns LoadBalancerSpec
+                                     */
+                                    public static fromObject(object: { [k: string]: any }): github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec;
+
+                                    /**
+                                     * Creates a plain object from a LoadBalancerSpec message. Also converts values to other types if specified.
+                                     * @param message LoadBalancerSpec
+                                     * @param [options] Conversion options
+                                     * @returns Plain object
+                                     */
+                                    public static toObject(message: github.com.kzz45.neverdown.pkg.apis.openx.v1.LoadBalancerSpec, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                                    /**
+                                     * Converts this LoadBalancerSpec to JSON.
                                      * @returns JSON object
                                      */
                                     public toJSON(): { [k: string]: any };

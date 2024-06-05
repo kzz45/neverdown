@@ -19,10 +19,7 @@ limitations under the License.
 package fake
 
 import (
-	auditv1 "github.com/kzz45/neverdown/pkg/apis/audit/v1"
-	jingxv1 "github.com/kzz45/neverdown/pkg/apis/jingx/v1"
 	openxv1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
-	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -34,10 +31,7 @@ var scheme = runtime.NewScheme()
 var codecs = serializer.NewCodecFactory(scheme)
 
 var localSchemeBuilder = runtime.SchemeBuilder{
-	auditv1.AddToScheme,
-	jingxv1.AddToScheme,
 	openxv1.AddToScheme,
-	rbacv1.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition

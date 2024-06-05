@@ -18,13 +18,13 @@ limitations under the License.
 
 package v1
 
+type AccessControlExpansion interface{}
+
 type AffinityExpansion interface{}
 
-type AliyunAccessControlExpansion interface{}
-
-type AliyunLoadBalancerExpansion interface{}
-
 type EtcdExpansion interface{}
+
+type LoadBalancerExpansion interface{}
 
 type MysqlExpansion interface{}
 
@@ -35,7 +35,3 @@ type OpenxExpansion interface{}
 type RedisExpansion interface{}
 
 type TolerationExpansion interface{}
-
-type VolcAccessControlExpansion interface{}
-
-type VolcLoadBalancerExpansion interface{}

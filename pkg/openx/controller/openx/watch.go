@@ -12,9 +12,9 @@ import (
 	"github.com/hashicorp/go-version"
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
-	jingxv1 "github.com/kzz45/neverdown/pkg/apis/jingx/v1"
-	"github.com/kzz45/neverdown/pkg/jingx/aggregator"
-	"github.com/kzz45/neverdown/pkg/jingx/registry"
+	jingxv1 "github.com/kzz45/discovery/pkg/apis/jingx/v1"
+	"github.com/kzz45/discovery/pkg/jingx/aggregator"
+	"github.com/kzz45/discovery/pkg/jingx/registry"
 
 	openxv1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
 	"github.com/kzz45/neverdown/pkg/openx/controller"

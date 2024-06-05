@@ -20,7 +20,7 @@ syntax = "proto2";
 
 package github.com.kzz45.neverdown.pkg.openx.aggregator.proto;
 
-import "github.com/kzz45/neverdown/pkg/apis/rbac/v1/generated.proto";
+import "github.com/kzz45/discovery/pkg/apis/rbac/v1/generated.proto";
 
 // Package-wide variables from generator "generated".
 option go_package = "github.com/kzz45/neverdown/pkg/openx/aggregator/proto";
@@ -32,11 +32,11 @@ message Context {
 
   optional int32 expireAt = 3;
 
-  optional github.com.kzz45.neverdown.pkg.apis.rbac.v1.ClusterRole clusterRole = 4;
+  optional github.com.kzz45.discovery.pkg.apis.rbac.v1.ClusterRole clusterRole = 4;
 }
 
 message Request {
-  optional github.com.kzz45.neverdown.pkg.apis.rbac.v1.GroupVersionKind groupVersionKind = 1;
+  optional github.com.kzz45.discovery.pkg.apis.rbac.v1.GroupVersionKind groupVersionKind = 1;
 
   optional string namespace = 2;
 
@@ -48,7 +48,7 @@ message Request {
 message Response {
   optional int32 code = 1;
 
-  optional github.com.kzz45.neverdown.pkg.apis.rbac.v1.GroupVersionKind groupVersionKind = 2;
+  optional github.com.kzz45.discovery.pkg.apis.rbac.v1.GroupVersionKind groupVersionKind = 2;
 
   optional string namespace = 3;
 

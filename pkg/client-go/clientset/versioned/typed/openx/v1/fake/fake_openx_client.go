@@ -28,20 +28,20 @@ type FakeOpenxV1 struct {
 	*testing.Fake
 }
 
+func (c *FakeOpenxV1) AccessControls(namespace string) v1.AccessControlInterface {
+	return &FakeAccessControls{c, namespace}
+}
+
 func (c *FakeOpenxV1) Affinities(namespace string) v1.AffinityInterface {
 	return &FakeAffinities{c, namespace}
 }
 
-func (c *FakeOpenxV1) AliyunAccessControls(namespace string) v1.AliyunAccessControlInterface {
-	return &FakeAliyunAccessControls{c, namespace}
-}
-
-func (c *FakeOpenxV1) AliyunLoadBalancers(namespace string) v1.AliyunLoadBalancerInterface {
-	return &FakeAliyunLoadBalancers{c, namespace}
-}
-
 func (c *FakeOpenxV1) Etcds(namespace string) v1.EtcdInterface {
 	return &FakeEtcds{c, namespace}
+}
+
+func (c *FakeOpenxV1) LoadBalancers(namespace string) v1.LoadBalancerInterface {
+	return &FakeLoadBalancers{c, namespace}
 }
 
 func (c *FakeOpenxV1) Mysqls(namespace string) v1.MysqlInterface {
@@ -62,14 +62,6 @@ func (c *FakeOpenxV1) Redises(namespace string) v1.RedisInterface {
 
 func (c *FakeOpenxV1) Tolerations(namespace string) v1.TolerationInterface {
 	return &FakeTolerations{c, namespace}
-}
-
-func (c *FakeOpenxV1) VolcAccessControls(namespace string) v1.VolcAccessControlInterface {
-	return &FakeVolcAccessControls{c, namespace}
-}
-
-func (c *FakeOpenxV1) VolcLoadBalancers(namespace string) v1.VolcLoadBalancerInterface {
-	return &FakeVolcLoadBalancers{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

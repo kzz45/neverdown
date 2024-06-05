@@ -21,9 +21,7 @@ package externalversions
 import (
 	"fmt"
 
-	v1 "github.com/kzz45/neverdown/pkg/apis/audit/v1"
-	openxv1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
-	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
+	v1 "github.com/kzz45/neverdown/pkg/apis/openx/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -54,45 +52,25 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=audit, Version=v1
-	case v1.SchemeGroupVersion.WithResource("recorders"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Audit().V1().Recorders().Informer()}, nil
-
-		// Group=openx, Version=v1
-	case openxv1.SchemeGroupVersion.WithResource("affinities"):
+	// Group=openx, Version=v1
+	case v1.SchemeGroupVersion.WithResource("accesscontrols"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().AccessControls().Informer()}, nil
+	case v1.SchemeGroupVersion.WithResource("affinities"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Affinities().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("aliyunaccesscontrols"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().AliyunAccessControls().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("aliyunloadbalancers"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().AliyunLoadBalancers().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("etcds"):
+	case v1.SchemeGroupVersion.WithResource("etcds"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Etcds().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("mysqls"):
+	case v1.SchemeGroupVersion.WithResource("loadbalancers"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().LoadBalancers().Informer()}, nil
+	case v1.SchemeGroupVersion.WithResource("mysqls"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Mysqls().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("nodeselectors"):
+	case v1.SchemeGroupVersion.WithResource("nodeselectors"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().NodeSelectors().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("openxes"):
+	case v1.SchemeGroupVersion.WithResource("openxes"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Openxes().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("redises"):
+	case v1.SchemeGroupVersion.WithResource("redises"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Redises().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("tolerations"):
+	case v1.SchemeGroupVersion.WithResource("tolerations"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().Tolerations().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("volcaccesscontrols"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().VolcAccessControls().Informer()}, nil
-	case openxv1.SchemeGroupVersion.WithResource("volcloadbalancers"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Openx().V1().VolcLoadBalancers().Informer()}, nil
-
-		// Group=rbac, Version=v1
-	case rbacv1.SchemeGroupVersion.WithResource("apps"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rbac().V1().Apps().Informer()}, nil
-	case rbacv1.SchemeGroupVersion.WithResource("appserviceaccounts"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rbac().V1().AppServiceAccounts().Informer()}, nil
-	case rbacv1.SchemeGroupVersion.WithResource("clusterroles"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rbac().V1().ClusterRoles().Informer()}, nil
-	case rbacv1.SchemeGroupVersion.WithResource("groupversionkindrules"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rbac().V1().GroupVersionKindRules().Informer()}, nil
-	case rbacv1.SchemeGroupVersion.WithResource("rbacserviceaccounts"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rbac().V1().RbacServiceAccounts().Informer()}, nil
 
 	}
 

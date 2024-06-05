@@ -24,14 +24,14 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
+	// AccessControls returns a AccessControlInformer.
+	AccessControls() AccessControlInformer
 	// Affinities returns a AffinityInformer.
 	Affinities() AffinityInformer
-	// AliyunAccessControls returns a AliyunAccessControlInformer.
-	AliyunAccessControls() AliyunAccessControlInformer
-	// AliyunLoadBalancers returns a AliyunLoadBalancerInformer.
-	AliyunLoadBalancers() AliyunLoadBalancerInformer
 	// Etcds returns a EtcdInformer.
 	Etcds() EtcdInformer
+	// LoadBalancers returns a LoadBalancerInformer.
+	LoadBalancers() LoadBalancerInformer
 	// Mysqls returns a MysqlInformer.
 	Mysqls() MysqlInformer
 	// NodeSelectors returns a NodeSelectorInformer.
@@ -42,10 +42,6 @@ type Interface interface {
 	Redises() RedisInformer
 	// Tolerations returns a TolerationInformer.
 	Tolerations() TolerationInformer
-	// VolcAccessControls returns a VolcAccessControlInformer.
-	VolcAccessControls() VolcAccessControlInformer
-	// VolcLoadBalancers returns a VolcLoadBalancerInformer.
-	VolcLoadBalancers() VolcLoadBalancerInformer
 }
 
 type version struct {
@@ -59,24 +55,24 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
+// AccessControls returns a AccessControlInformer.
+func (v *version) AccessControls() AccessControlInformer {
+	return &accessControlInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
 // Affinities returns a AffinityInformer.
 func (v *version) Affinities() AffinityInformer {
 	return &affinityInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
-// AliyunAccessControls returns a AliyunAccessControlInformer.
-func (v *version) AliyunAccessControls() AliyunAccessControlInformer {
-	return &aliyunAccessControlInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// AliyunLoadBalancers returns a AliyunLoadBalancerInformer.
-func (v *version) AliyunLoadBalancers() AliyunLoadBalancerInformer {
-	return &aliyunLoadBalancerInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
 // Etcds returns a EtcdInformer.
 func (v *version) Etcds() EtcdInformer {
 	return &etcdInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// LoadBalancers returns a LoadBalancerInformer.
+func (v *version) LoadBalancers() LoadBalancerInformer {
+	return &loadBalancerInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // Mysqls returns a MysqlInformer.
@@ -102,14 +98,4 @@ func (v *version) Redises() RedisInformer {
 // Tolerations returns a TolerationInformer.
 func (v *version) Tolerations() TolerationInformer {
 	return &tolerationInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// VolcAccessControls returns a VolcAccessControlInformer.
-func (v *version) VolcAccessControls() VolcAccessControlInformer {
-	return &volcAccessControlInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// VolcLoadBalancers returns a VolcLoadBalancerInformer.
-func (v *version) VolcLoadBalancers() VolcLoadBalancerInformer {
-	return &volcLoadBalancerInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

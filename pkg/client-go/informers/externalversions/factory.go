@@ -24,10 +24,8 @@ import (
 	time "time"
 
 	versioned "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"
-	audit "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions/audit"
 	internalinterfaces "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions/internalinterfaces"
 	openx "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions/openx"
-	rbac "github.com/kzz45/neverdown/pkg/client-go/informers/externalversions/rbac"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -255,19 +253,9 @@ type SharedInformerFactory interface {
 	// client.
 	InformerFor(obj runtime.Object, newFunc internalinterfaces.NewInformerFunc) cache.SharedIndexInformer
 
-	Audit() audit.Interface
 	Openx() openx.Interface
-	Rbac() rbac.Interface
-}
-
-func (f *sharedInformerFactory) Audit() audit.Interface {
-	return audit.New(f, f.namespace, f.tweakListOptions)
 }
 
 func (f *sharedInformerFactory) Openx() openx.Interface {
 	return openx.New(f, f.namespace, f.tweakListOptions)
-}
-
-func (f *sharedInformerFactory) Rbac() rbac.Interface {
-	return rbac.New(f, f.namespace, f.tweakListOptions)
 }

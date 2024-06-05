@@ -509,42 +509,9 @@ func DefaultKubernetesUserAgent() string {
 // kubernetes gives to pods. It's intended for clients that expect to be
 // running inside a pod running on kubernetes. It will return ErrNotInCluster
 // if called from a process not running in a kubernetes environment.
-
 func InClusterConfig() (*Config, error) {
 	const (
-		tokenFile  = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-		rootCAFile = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-	)
-	host, port := os.Getenv("KUBERNETES_SERVICE_HOST"), os.Getenv("KUBERNETES_SERVICE_PORT")
-	if len(host) == 0 || len(port) == 0 {
-		return nil, ErrNotInCluster
-	}
-
-	token, err := os.ReadFile(tokenFile)
-	if err != nil {
-		return nil, err
-	}
-
-	tlsClientConfig := TLSClientConfig{}
-
-	if _, err := certutil.NewPool(rootCAFile); err != nil {
-		klog.Errorf("Expected to load root CA config from %s, but got err: %v", rootCAFile, err)
-	} else {
-		tlsClientConfig.CAFile = rootCAFile
-	}
-
-	return &Config{
-		// TODO: switch to using cluster DNS.
-		Host:            "https://" + net.JoinHostPort(host, port),
-		TLSClientConfig: tlsClientConfig,
-		BearerToken:     string(token),
-		BearerTokenFile: tokenFile,
-	}, nil
-}
-
-func InDicoveryClusterConfig() (*Config, error) {
-	const (
-		tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+	// tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	// rootCAFile = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	)
 	host, port := os.Getenv("DISCOVERY_SERVICE_HOST"), os.Getenv("DISCOVERY_SERVICE_PORT")
@@ -573,9 +540,6 @@ func InDicoveryClusterConfig() (*Config, error) {
 		// TODO: switch to using cluster DNS.
 		Host:            "https://" + net.JoinHostPort(host, port),
 		TLSClientConfig: tlsClientConfig,
-		ContentConfig: ContentConfig{
-			ContentType: runtime.ContentTypeProtobuf,
-		},
 		// BearerToken:     string(token),
 		// BearerTokenFile: tokenFile,
 	}, nil
@@ -583,7 +547,7 @@ func InDicoveryClusterConfig() (*Config, error) {
 
 func InAuthorityClusterConfig() (*Config, error) {
 	const (
-		tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+	// tokenFile = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	// rootCAFile = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	)
 	host, port := os.Getenv("AUTHORITY_SERVICE_HOST"), os.Getenv("AUTHORITY_SERVICE_PORT")
@@ -612,9 +576,6 @@ func InAuthorityClusterConfig() (*Config, error) {
 		// TODO: switch to using cluster DNS.
 		Host:            "https://" + net.JoinHostPort(host, port),
 		TLSClientConfig: tlsClientConfig,
-		ContentConfig: ContentConfig{
-			ContentType: runtime.ContentTypeProtobuf,
-		},
 		// BearerToken:     string(token),
 		// BearerTokenFile: tokenFile,
 	}, nil
@@ -718,9 +679,9 @@ func CopyConfig(config *Config) *Config {
 			Groups:   config.Impersonate.Groups,
 			Extra:    config.Impersonate.Extra,
 		},
-		// AuthProvider:        config.AuthProvider,
-		// AuthConfigPersister: config.AuthConfigPersister,
-		// ExecProvider:        config.ExecProvider,
+		AuthProvider:        config.AuthProvider,
+		AuthConfigPersister: config.AuthConfigPersister,
+		ExecProvider:        config.ExecProvider,
 		TLSClientConfig: TLSClientConfig{
 			Insecure:   config.TLSClientConfig.Insecure,
 			ServerName: config.TLSClientConfig.ServerName,
@@ -744,8 +705,8 @@ func CopyConfig(config *Config) *Config {
 		Dial:               config.Dial,
 		Proxy:              config.Proxy,
 	}
-	// if config.ExecProvider != nil && config.ExecProvider.Config != nil {
-	// 	c.ExecProvider.Config = config.ExecProvider.Config.DeepCopyObject()
-	// }
+	if config.ExecProvider != nil && config.ExecProvider.Config != nil {
+		c.ExecProvider.Config = config.ExecProvider.Config.DeepCopyObject()
+	}
 	return c
 }

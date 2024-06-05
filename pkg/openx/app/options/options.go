@@ -1,10 +1,10 @@
 package options
 
 import (
+	discoveryrestclient "github.com/kzz45/discovery/pkg/client-go/rest"
 	"github.com/kzz45/neverdown/pkg/openx/aggregator/server"
-	"github.com/kzz45/neverdown/pkg/zaplogger"
-
 	kubecontrollerconfig "github.com/kzz45/neverdown/pkg/openx/app/config"
+	"github.com/kzz45/neverdown/pkg/zaplogger"
 
 	corev1 "k8s.io/api/core/v1"
 	clientset "k8s.io/client-go/kubernetes"
@@ -126,16 +126,16 @@ func createRecorder(kubeClient clientset.Interface, userAgent string) record.Eve
 	return eventBroadcaster.NewRecorder(clientgokubescheme.Scheme, corev1.EventSource{Component: userAgent})
 }
 
-func loadDiscoveryKubernetes() *restclient.Config {
-	kubeconfig, err := restclient.InDicoveryClusterConfig()
+func loadDiscoveryKubernetes() *discoveryrestclient.Config {
+	kubeconfig, err := discoveryrestclient.InDicoveryClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}
 	return kubeconfig
 }
 
-func loadAuthorityKubernetes() *restclient.Config {
-	kubeconfig, err := restclient.InAuthorityClusterConfig()
+func loadAuthorityKubernetes() *discoveryrestclient.Config {
+	kubeconfig, err := discoveryrestclient.InAuthorityClusterConfig()
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
 	}

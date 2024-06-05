@@ -1,6 +1,8 @@
 package clientbuilder
 
 import (
+	discoveryclientset "github.com/kzz45/discovery/pkg/client-go/kubernetes"
+	discoveryrestclient "github.com/kzz45/discovery/pkg/client-go/rest"
 	kubernetes "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"
 	"github.com/kzz45/neverdown/pkg/zaplogger"
 
@@ -22,15 +24,15 @@ type ControllerClientBuilder interface {
 	OpenxClient(name string) (kubernetes.Interface, error)
 	OpenxClientOrDie(name string) kubernetes.Interface
 	// DiscoveryConfig was the discovery config
-	DiscoveryConfig(name string) (*restclient.Config, error)
-	DiscoveryConfigOrDie(name string) *restclient.Config
-	DiscoveryClient(name string) (kubernetes.Interface, error)
-	DiscoveryClientOrDie(name string) kubernetes.Interface
+	DiscoveryConfig(name string) (*discoveryrestclient.Config, error)
+	DiscoveryConfigOrDie(name string) *discoveryrestclient.Config
+	DiscoveryClient(name string) (discoveryclientset.Interface, error)
+	DiscoveryClientOrDie(name string) discoveryclientset.Interface
 	// AuthxConfig was the authority config
-	AuthxConfig(name string) (*restclient.Config, error)
-	AuthxConfigOrDie(name string) *restclient.Config
-	AuthxClient(name string) (kubernetes.Interface, error)
-	AuthxClientOrDie(name string) kubernetes.Interface
+	AuthxConfig(name string) (*discoveryrestclient.Config, error)
+	AuthxConfigOrDie(name string) *discoveryrestclient.Config
+	AuthxClient(name string) (discoveryclientset.Interface, error)
+	AuthxClientOrDie(name string) discoveryclientset.Interface
 }
 
 // SimpleControllerClientBuilder returns a fixed client with different user agents
@@ -38,9 +40,9 @@ type SimpleControllerClientBuilder struct {
 	// ClientConfig is a skeleton config to clone and use as the basis for each controller client
 	ClientConfig *restclient.Config
 	// DiscoveryClientConfig is a skeleton config to clone and use as the basis for each controller client
-	DiscoveryClientConfig *restclient.Config
+	DiscoveryClientConfig *discoveryrestclient.Config
 	// AuthxClientConfig is a skeleton config to clone and use as the basis for each controller client
-	AuthxClientConfig *restclient.Config
+	AuthxClientConfig *discoveryrestclient.Config
 }
 
 // Config returns a client config for a fixed client
@@ -116,12 +118,12 @@ func (b SimpleControllerClientBuilder) OpenxClientOrDie(name string) kubernetes.
 	return client
 }
 
-func (b SimpleControllerClientBuilder) DiscoveryConfig(name string) (*restclient.Config, error) {
+func (b SimpleControllerClientBuilder) DiscoveryConfig(name string) (*discoveryrestclient.Config, error) {
 	clientConfig := *b.DiscoveryClientConfig
-	return restclient.AddUserAgent(&clientConfig, name), nil
+	return discoveryrestclient.AddUserAgent(&clientConfig, name), nil
 }
 
-func (b SimpleControllerClientBuilder) DiscoveryConfigOrDie(name string) *restclient.Config {
+func (b SimpleControllerClientBuilder) DiscoveryConfigOrDie(name string) *discoveryrestclient.Config {
 	clientConfig, err := b.DiscoveryConfig(name)
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
@@ -129,15 +131,15 @@ func (b SimpleControllerClientBuilder) DiscoveryConfigOrDie(name string) *restcl
 	return clientConfig
 }
 
-func (b SimpleControllerClientBuilder) DiscoveryClient(name string) (kubernetes.Interface, error) {
+func (b SimpleControllerClientBuilder) DiscoveryClient(name string) (discoveryclientset.Interface, error) {
 	clientConfig, err := b.DiscoveryConfig(name)
 	if err != nil {
 		return nil, err
 	}
-	return kubernetes.NewForConfig(clientConfig)
+	return discoveryclientset.NewForConfig(clientConfig)
 }
 
-func (b SimpleControllerClientBuilder) DiscoveryClientOrDie(name string) kubernetes.Interface {
+func (b SimpleControllerClientBuilder) DiscoveryClientOrDie(name string) discoveryclientset.Interface {
 	client, err := b.DiscoveryClient(name)
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
@@ -145,12 +147,12 @@ func (b SimpleControllerClientBuilder) DiscoveryClientOrDie(name string) kuberne
 	return client
 }
 
-func (b SimpleControllerClientBuilder) AuthxConfig(name string) (*restclient.Config, error) {
+func (b SimpleControllerClientBuilder) AuthxConfig(name string) (*discoveryrestclient.Config, error) {
 	clientConfig := *b.AuthxClientConfig
-	return restclient.AddUserAgent(&clientConfig, name), nil
+	return discoveryrestclient.AddUserAgent(&clientConfig, name), nil
 }
 
-func (b SimpleControllerClientBuilder) AuthxConfigOrDie(name string) *restclient.Config {
+func (b SimpleControllerClientBuilder) AuthxConfigOrDie(name string) *discoveryrestclient.Config {
 	clientConfig, err := b.AuthxConfig(name)
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)
@@ -158,15 +160,15 @@ func (b SimpleControllerClientBuilder) AuthxConfigOrDie(name string) *restclient
 	return clientConfig
 }
 
-func (b SimpleControllerClientBuilder) AuthxClient(name string) (kubernetes.Interface, error) {
+func (b SimpleControllerClientBuilder) AuthxClient(name string) (discoveryclientset.Interface, error) {
 	clientConfig, err := b.AuthxConfig(name)
 	if err != nil {
 		return nil, err
 	}
-	return kubernetes.NewForConfig(clientConfig)
+	return discoveryclientset.NewForConfig(clientConfig)
 }
 
-func (b SimpleControllerClientBuilder) AuthxClientOrDie(name string) kubernetes.Interface {
+func (b SimpleControllerClientBuilder) AuthxClientOrDie(name string) discoveryclientset.Interface {
 	client, err := b.AuthxClient(name)
 	if err != nil {
 		zaplogger.Sugar().Fatal(err)

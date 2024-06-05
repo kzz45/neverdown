@@ -29,8 +29,8 @@ type LoadBalancerController struct {
 	openx         openx.Interface
 	eventRecorder record.EventRecorder
 
-	lbLister openxlistersv1.AliyunLoadBalancerLister
-	acLister openxlistersv1.AliyunAccessControlLister
+	lbLister openxlistersv1.LoadBalancerLister
+	acLister openxlistersv1.AccessControlLister
 
 	lbListerSynced cache.InformerSynced
 	acListerSynced cache.InformerSynced
@@ -39,7 +39,7 @@ type LoadBalancerController struct {
 	queue workqueue.RateLimitingInterface
 }
 
-func NewLoadBalancerController(lbInformer openxinformersv1.AliyunLoadBalancerInformer, acInformer openxinformersv1.AliyunAccessControlInformer, openx openx.Interface) (*LoadBalancerController, error) {
+func NewLoadBalancerController(lbInformer openxinformersv1.LoadBalancerInformer, acInformer openxinformersv1.AccessControlInformer, openx openx.Interface) (*LoadBalancerController, error) {
 	//eventBroadcaster := record.NewBroadcaster()
 	//eventBroadcaster.StartStructuredLogging(0)
 	//eventBroadcaster.StartRecordingToSink(&v1core.EventSinkImpl{Interface: client.CoreV1().Events("")})
@@ -74,18 +74,18 @@ func (lbc *LoadBalancerController) Annotations(svcType corev1.ServiceType, cnc o
 	if svcType != corev1.ServiceTypeLoadBalancer {
 		return map[string]string{}, nil
 	}
-	if cnc.AliyunSLB != nil {
-		return lbc.aliyun(cnc.AliyunSLB, namespace)
+	if cnc.CloudSLB != nil {
+		return lbc.aliyun(cnc.CloudSLB, namespace)
 	}
 	return map[string]string{}, nil
 }
 
-func (lbc *LoadBalancerController) aliyun(slb *openxv1.AliyunSLB, namespace string) (map[string]string, error) {
+func (lbc *LoadBalancerController) aliyun(slb *openxv1.CloudSLB, namespace string) (map[string]string, error) {
 	annotations := make(map[string]string)
 	if slb.LoadBalancerId == "" {
 		return nil, fmt.Errorf("AliyunSLB LoadBalancerId must be specified")
 	}
-	lb, err := lbc.lbLister.AliyunLoadBalancers(namespace).Get(slb.LoadBalancerId)
+	lb, err := lbc.lbLister.LoadBalancers(namespace).Get(slb.LoadBalancerId)
 	if err != nil {
 		return nil, err
 	}
@@ -99,22 +99,22 @@ func (lbc *LoadBalancerController) aliyun(slb *openxv1.AliyunSLB, namespace stri
 		return annotations, nil
 	}
 	if slb.AccessControlId == "" {
-		return nil, fmt.Errorf("AliyunSLB AccessControlId must be specified when the Staus is `on`")
+		return nil, fmt.Errorf("SLB AccessControlId must be specified when the Staus is `on`")
 	}
-	ac, err := lbc.acLister.AliyunAccessControls(namespace).Get(slb.AccessControlId)
+	ac, err := lbc.acLister.AccessControls(namespace).Get(slb.AccessControlId)
 	if err != nil {
 		return nil, err
 	}
 	if ac.Spec.Instance.Key == "" {
-		return nil, fmt.Errorf("AliyunSLB AccessControl spec Instance key was nil name:%s", slb.AccessControlId)
+		return nil, fmt.Errorf("SLB AccessControl spec Instance key was nil name:%s", slb.AccessControlId)
 	}
 	annotations[ac.Spec.Instance.Key] = ac.Spec.Instance.Value
 	if ac.Spec.Status.Key == "" {
-		return nil, fmt.Errorf("AliyunSLB AccessControl spec Status key was nil name:%s", slb.AccessControlId)
+		return nil, fmt.Errorf("SLB AccessControl spec Status key was nil name:%s", slb.AccessControlId)
 	}
 	annotations[ac.Spec.Status.Key] = string(slb.Status)
 	if ac.Spec.Type.Key == "" {
-		return nil, fmt.Errorf("AliyunSLB AccessControl spec Type key was nil name:%s", slb.AccessControlId)
+		return nil, fmt.Errorf("SLB AccessControl spec Type key was nil name:%s", slb.AccessControlId)
 	}
 	annotations[ac.Spec.Type.Key] = ac.Spec.Type.Value
 	return annotations, nil

@@ -15,10 +15,13 @@ import (
 	"github.com/kzz45/neverdown/pkg/openx/clientbuilder"
 	"github.com/kzz45/neverdown/pkg/openx/metrics"
 
-	rbacv1 "github.com/kzz45/neverdown/pkg/apis/rbac/v1"
-	authority "github.com/kzz45/neverdown/pkg/authx/client-go"
-	"github.com/kzz45/neverdown/pkg/authx/rbac/admin"
-	discoveryclientset "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"
+	jingxv1 "github.com/kzz45/discovery/pkg/apis/jingx/v1"
+	rbacv1 "github.com/kzz45/discovery/pkg/apis/rbac/v1"
+	authority "github.com/kzz45/discovery/pkg/authx/client-go"
+	"github.com/kzz45/discovery/pkg/authx/rbac/admin"
+	discoveryclientset "github.com/kzz45/discovery/pkg/client-go/kubernetes"
+	discoveryscheme "github.com/kzz45/discovery/pkg/client-go/kubernetes/scheme"
+	openxclientset "github.com/kzz45/neverdown/pkg/client-go/clientset/versioned"
 
 	appsv1 "k8s.io/api/apps/v1"
 	autoscalingv2 "k8s.io/api/autoscaling/v2"
@@ -50,7 +53,7 @@ type Resources struct {
 
 	// nativa k8s interface
 	nativeClientSet  kubernetes.Interface
-	openxClientSet   discoveryclientset.Interface
+	openxClientSet   openxclientset.Interface
 	metricsClientSet metricsclientset.Interface
 	// authx interface
 	authorityClientSet discoveryclientset.Interface
@@ -161,7 +164,7 @@ func nativeKindFilters(gvk schema.GroupVersionKind) bool {
 		appsv1.SchemeGroupVersion: {
 			"Deployment",
 			"StatefulSet",
-			"DaemonSet",
+			// "DaemonSet",
 		},
 		// networkingv1.SchemeGroupVersion: {
 		// 	"Ingress",
@@ -270,26 +273,26 @@ func GetRegisterKinds() []rbacv1.GroupVersionKind {
 		})
 	}
 	// discovery jingx
-	// for gvk, _ := range discoveryscheme.Scheme.AllKnownTypes() {
-	// 	if !reflect.DeepEqual(gvk.GroupVersion(), jingxv1.SchemeGroupVersion) {
-	// 		continue
-	// 	}
-	// 	if _, ok := filters[gvk.Kind]; ok {
-	// 		continue
-	// 	}
-	// 	if gvk.Kind == metav1.WatchEventKind {
-	// 		continue
-	// 	}
-	// 	reg := regexp.MustCompile(`(.*?)List`)
-	// 	if isList := reg.Match([]byte(gvk.Kind)); isList {
-	// 		continue
-	// 	}
-	// 	res = append(res, rbacv1.GroupVersionKind{
-	// 		Group:   gvk.Group,
-	// 		Version: gvk.Version,
-	// 		Kind:    gvk.Kind,
-	// 	})
-	// }
+	for gvk, _ := range discoveryscheme.Scheme.AllKnownTypes() {
+		if !reflect.DeepEqual(gvk.GroupVersion(), jingxv1.SchemeGroupVersion) {
+			continue
+		}
+		if _, ok := filters[gvk.Kind]; ok {
+			continue
+		}
+		if gvk.Kind == metav1.WatchEventKind {
+			continue
+		}
+		reg := regexp.MustCompile(`(.*?)List`)
+		if isList := reg.Match([]byte(gvk.Kind)); isList {
+			continue
+		}
+		res = append(res, rbacv1.GroupVersionKind{
+			Group:   gvk.Group,
+			Version: gvk.Version,
+			Kind:    gvk.Kind,
+		})
+	}
 	return res
 }
 

@@ -16,39 +16,39 @@ type CloudLoadBalancerObject struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:subresource:nostatus
 
-type AliyunLoadBalancer struct {
+type LoadBalancer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              AliyunLoadBalancerSpec `json:"spec" protobuf:"bytes,2,opt,name=spec"`
+	Spec              LoadBalancerSpec `json:"spec" protobuf:"bytes,2,opt,name=spec"`
 }
 
 // 阿里云的负载均衡
-type AliyunLoadBalancerSpec struct {
+type LoadBalancerSpec struct {
 	Instance          CloudLoadBalancerObject `protobuf:"bytes,1,opt,name=instance"`
 	OverrideListeners CloudLoadBalancerObject `protobuf:"bytes,2,opt,name=overrideListeners"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type AliyunLoadBalancerList struct {
+type LoadBalancerList struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
 	metav1.ListMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
-	Items           []AliyunLoadBalancer `json:"items" protobuf:"bytes,2,rep,name=items"`
+	Items           []LoadBalancer `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
 
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:subresource:nostatus
 
-type AliyunAccessControl struct {
+type AccessControl struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              AliyunAccessControlSpec `json:"spec" protobuf:"bytes,2,opt,name=spec"`
+	Spec              AccessControlSpec `json:"spec" protobuf:"bytes,2,opt,name=spec"`
 }
 
 // 阿里云的访问控制
-type AliyunAccessControlSpec struct {
+type AccessControlSpec struct {
 	Instance CloudLoadBalancerObject `protobuf:"bytes,1,opt,name=instance"`
 	Status   CloudLoadBalancerObject `protobuf:"bytes,2,opt,name=status"`
 	Type     CloudLoadBalancerObject `protobuf:"bytes,3,opt,name=type"`
@@ -56,11 +56,11 @@ type AliyunAccessControlSpec struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type AliyunAccessControlList struct {
+type AccessControlList struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
 	metav1.ListMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
-	Items           []AliyunAccessControl `json:"items" protobuf:"bytes,2,rep,name=items"`
+	Items           []AccessControl `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
 
 type CloudLoadBalancerStatus string
@@ -70,7 +70,7 @@ const (
 	CloudLoadBalancerOff CloudLoadBalancerStatus = "off"
 )
 
-type AliyunSLB struct {
+type CloudSLB struct {
 	LoadBalancerId    string                  `protobuf:"bytes,1,opt,name=loadBalancerId"`
 	OverrideListeners bool                    `protobuf:"varint,2,opt,name=overrideListeners"`
 	Status            CloudLoadBalancerStatus `protobuf:"bytes,3,opt,name=status,casttype=CloudLoadBalancerStatus"`
@@ -79,7 +79,7 @@ type AliyunSLB struct {
 
 // CloudNetworkConfig was the config for the cloud service provider, e.g. Aliyun
 type CloudNetworkConfig struct {
-	AliyunSLB *AliyunSLB `protobuf:"bytes,1,opt,name=aliyunSLB"`
+	CloudSLB *CloudSLB `protobuf:"bytes,1,opt,name=cloudSLB"`
 }
 
 type ClusterRole string

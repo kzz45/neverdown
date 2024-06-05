@@ -100,15 +100,15 @@ let getList = function (gvk: string) {
   sendSocketMessage(senddata, store);
 };
 
-getList("openx.neverdown.io-v1-AliyunLoadBalancer");
-getList("openx.neverdown.io-v1-AliyunAccessControl");
+getList("openx.neverdown.io-v1-LoadBalancer");
+getList("openx.neverdown.io-v1-AccessControl");
 
 watch(
   () => store.state.socket.socket.message,
   (msg) => {
     const requestList = [
-      "openx.neverdown.io-v1-AliyunLoadBalancer",
-      "openx.neverdown.io-v1-AliyunAccessControl",
+      "openx.neverdown.io-v1-LoadBalancer",
+      "openx.neverdown.io-v1-AccessControl",
     ];
     for (let requestType of requestList) {
       initMessage(msg, requestType);
@@ -135,10 +135,10 @@ function initMessage(msg: any, type: string) {
         const itemRTime = itemR.metadata.creationTimestamp.seconds;
         return itemRTime - itemLTime;
       });
-      if (type === "openx.neverdown.io-v1-AliyunLoadBalancer") {
+      if (type === "openx.neverdown.io-v1-LoadBalancer") {
         albList.value = resultList;
       }
-      if (type === "openx.neverdown.io-v1-AliyunAccessControl") {
+      if (type === "openx.neverdown.io-v1-AccessControl") {
         aacList.value = resultList;
       }
     }

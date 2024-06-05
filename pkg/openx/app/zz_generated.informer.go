@@ -96,23 +96,13 @@ func (c *ControllerContext) runInformer(stop <-chan struct{}) {
 	go c.runSharedIndexInformer(schema.GroupVersionKind{
 		Group:   "openx",
 		Version: "v1",
-		Kind:    "AliyunAccessControls",
-	}, c.OpenXInformerFactory.Openx().V1().AliyunAccessControls().Informer(), stop)
+		Kind:    "AccessControls",
+	}, c.OpenXInformerFactory.Openx().V1().AccessControls().Informer(), stop)
 	go c.runSharedIndexInformer(schema.GroupVersionKind{
 		Group:   "openx",
 		Version: "v1",
-		Kind:    "VolcAccessControls",
-	}, c.OpenXInformerFactory.Openx().V1().VolcAccessControls().Informer(), stop)
-	go c.runSharedIndexInformer(schema.GroupVersionKind{
-		Group:   "openx",
-		Version: "v1",
-		Kind:    "AliyunLoadBalancers",
-	}, c.OpenXInformerFactory.Openx().V1().AliyunLoadBalancers().Informer(), stop)
-	go c.runSharedIndexInformer(schema.GroupVersionKind{
-		Group:   "openx",
-		Version: "v1",
-		Kind:    "VolcLoadBalancers",
-	}, c.OpenXInformerFactory.Openx().V1().VolcLoadBalancers().Informer(), stop)
+		Kind:    "LoadBalancers",
+	}, c.OpenXInformerFactory.Openx().V1().LoadBalancers().Informer(), stop)
 	go c.runSharedIndexInformer(schema.GroupVersionKind{
 		Group:   "openx",
 		Version: "v1",

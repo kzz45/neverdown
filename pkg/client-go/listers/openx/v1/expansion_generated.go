@@ -18,6 +18,14 @@ limitations under the License.
 
 package v1
 
+// AccessControlListerExpansion allows custom methods to be added to
+// AccessControlLister.
+type AccessControlListerExpansion interface{}
+
+// AccessControlNamespaceListerExpansion allows custom methods to be added to
+// AccessControlNamespaceLister.
+type AccessControlNamespaceListerExpansion interface{}
+
 // AffinityListerExpansion allows custom methods to be added to
 // AffinityLister.
 type AffinityListerExpansion interface{}
@@ -26,22 +34,6 @@ type AffinityListerExpansion interface{}
 // AffinityNamespaceLister.
 type AffinityNamespaceListerExpansion interface{}
 
-// AliyunAccessControlListerExpansion allows custom methods to be added to
-// AliyunAccessControlLister.
-type AliyunAccessControlListerExpansion interface{}
-
-// AliyunAccessControlNamespaceListerExpansion allows custom methods to be added to
-// AliyunAccessControlNamespaceLister.
-type AliyunAccessControlNamespaceListerExpansion interface{}
-
-// AliyunLoadBalancerListerExpansion allows custom methods to be added to
-// AliyunLoadBalancerLister.
-type AliyunLoadBalancerListerExpansion interface{}
-
-// AliyunLoadBalancerNamespaceListerExpansion allows custom methods to be added to
-// AliyunLoadBalancerNamespaceLister.
-type AliyunLoadBalancerNamespaceListerExpansion interface{}
-
 // EtcdListerExpansion allows custom methods to be added to
 // EtcdLister.
 type EtcdListerExpansion interface{}
@@ -49,6 +41,14 @@ type EtcdListerExpansion interface{}
 // EtcdNamespaceListerExpansion allows custom methods to be added to
 // EtcdNamespaceLister.
 type EtcdNamespaceListerExpansion interface{}
+
+// LoadBalancerListerExpansion allows custom methods to be added to
+// LoadBalancerLister.
+type LoadBalancerListerExpansion interface{}
+
+// LoadBalancerNamespaceListerExpansion allows custom methods to be added to
+// LoadBalancerNamespaceLister.
+type LoadBalancerNamespaceListerExpansion interface{}
 
 // MysqlListerExpansion allows custom methods to be added to
 // MysqlLister.
@@ -89,19 +89,3 @@ type TolerationListerExpansion interface{}
 // TolerationNamespaceListerExpansion allows custom methods to be added to
 // TolerationNamespaceLister.
 type TolerationNamespaceListerExpansion interface{}
-
-// VolcAccessControlListerExpansion allows custom methods to be added to
-// VolcAccessControlLister.
-type VolcAccessControlListerExpansion interface{}
-
-// VolcAccessControlNamespaceListerExpansion allows custom methods to be added to
-// VolcAccessControlNamespaceLister.
-type VolcAccessControlNamespaceListerExpansion interface{}
-
-// VolcLoadBalancerListerExpansion allows custom methods to be added to
-// VolcLoadBalancerLister.
-type VolcLoadBalancerListerExpansion interface{}
-
-// VolcLoadBalancerNamespaceListerExpansion allows custom methods to be added to
-// VolcLoadBalancerNamespaceLister.
-type VolcLoadBalancerNamespaceListerExpansion interface{}

@@ -35,10 +35,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&Affinity{}, &AffinityList{},
 		&Toleration{}, &TolerationList{},
 		&NodeSelector{}, &NodeSelectorList{},
-		&VolcLoadBalancer{}, &VolcLoadBalancerList{},
-		&VolcAccessControl{}, &VolcAccessControlList{},
-		&AliyunLoadBalancer{}, &AliyunLoadBalancerList{},
-		&AliyunAccessControl{}, &AliyunAccessControlList{},
+		&LoadBalancer{}, &LoadBalancerList{},
+		&AccessControl{}, &AccessControlList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

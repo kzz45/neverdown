@@ -1,9 +1,0 @@
-FROM ubuntu:20.04
-
-LABEL maintainer="kongzz"
-
-WORKDIR /server/
-
-COPY authx-apiserver .
-
-CMD ["/server/authx-apiserver"]

@@ -1,6 +1,7 @@
 package config
 
 import (
+	discoveryrestclient "github.com/kzz45/discovery/pkg/client-go/rest"
 	"github.com/kzz45/neverdown/pkg/openx/aggregator/server"
 	clientset "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
@@ -31,9 +32,9 @@ type Config struct {
 	Kubeconfig *restclient.Config
 
 	// AuthorityKubeConfig *discoveryrestclient.Config
-	AuthorityKubeConfig *restclient.Config
+	AuthorityKubeConfig *discoveryrestclient.Config
 	// DiscoveryKubeConfig *discoveryrestclient.Config
-	DiscoveryKubeConfig *restclient.Config
+	DiscoveryKubeConfig *discoveryrestclient.Config
 
 	// the event sink
 	EventRecorder record.EventRecorder
