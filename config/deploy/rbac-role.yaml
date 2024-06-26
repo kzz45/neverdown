@@ -107,6 +107,7 @@ rules:
   - extensions
   resources:
   - ingresses
+  - ingressclasses
   verbs:
   - create
   - get
